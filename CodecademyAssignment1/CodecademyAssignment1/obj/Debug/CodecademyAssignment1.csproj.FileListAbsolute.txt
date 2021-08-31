@@ -1,0 +1,7 @@
+C:\Users\oliver_elion\source\repos\CodecademyAssignment1\CodecademyAssignment1\bin\Debug\CodecademyAssignment1.exe.config
+C:\Users\oliver_elion\source\repos\CodecademyAssignment1\CodecademyAssignment1\bin\Debug\CodecademyAssignment1.exe
+C:\Users\oliver_elion\source\repos\CodecademyAssignment1\CodecademyAssignment1\bin\Debug\CodecademyAssignment1.pdb
+C:\Users\oliver_elion\source\repos\CodecademyAssignment1\CodecademyAssignment1\obj\Debug\CodecademyAssignment1.csproj.AssemblyReference.cache
+C:\Users\oliver_elion\source\repos\CodecademyAssignment1\CodecademyAssignment1\obj\Debug\CodecademyAssignment1.csproj.CoreCompileInputs.cache
+C:\Users\oliver_elion\source\repos\CodecademyAssignment1\CodecademyAssignment1\obj\Debug\CodecademyAssignment1.exe
+C:\Users\oliver_elion\source\repos\CodecademyAssignment1\CodecademyAssignment1\obj\Debug\CodecademyAssignment1.pdb
