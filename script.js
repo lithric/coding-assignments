@@ -1,12 +1,23 @@
-function FindPrime(numb) {
-    var i = 2;
-    while(i <= Math.sqrt(numb)) {
-        if (numb % i == 0) {
-            return i;
-        }
-        i++
-    }
-    return "prime"
+var control = document.getElementById("abba");
+var line = document.createElement("span");
+line.id = "line";
+line.innerHTML = "|";
+line.style.position = "absolute";
+
+function abbra() {
+    control.appendChild(line);
 }
 
-alert(FindPrime(prompt("enter a number")));
+function cada() {
+    line.hidden = line.hidden ? false:true;
+}
+
+abbra();
+var lineBlink = setInterval(() => {cada()},500);
+
+function moveLeft() {
+    if (line.previousSibling.textContent.at(-1)) {
+        line.after(line.previousSibling.textContent.at(-1));
+        line.previousSibling.textContent = line.previousSibling.textContent.slice(0,-1);
+    }
+}

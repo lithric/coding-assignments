@@ -1,0 +1,7 @@
+C:\Users\oliver_elion\source\repos\MoneyMakerproject\MoneyMakerproject\bin\Debug\MoneyMakerproject.exe.config
+C:\Users\oliver_elion\source\repos\MoneyMakerproject\MoneyMakerproject\bin\Debug\MoneyMakerproject.exe
+C:\Users\oliver_elion\source\repos\MoneyMakerproject\MoneyMakerproject\bin\Debug\MoneyMakerproject.pdb
+C:\Users\oliver_elion\source\repos\MoneyMakerproject\MoneyMakerproject\obj\Debug\MoneyMakerproject.csproj.AssemblyReference.cache
+C:\Users\oliver_elion\source\repos\MoneyMakerproject\MoneyMakerproject\obj\Debug\MoneyMakerproject.csproj.CoreCompileInputs.cache
+C:\Users\oliver_elion\source\repos\MoneyMakerproject\MoneyMakerproject\obj\Debug\MoneyMakerproject.exe
+C:\Users\oliver_elion\source\repos\MoneyMakerproject\MoneyMakerproject\obj\Debug\MoneyMakerproject.pdb
