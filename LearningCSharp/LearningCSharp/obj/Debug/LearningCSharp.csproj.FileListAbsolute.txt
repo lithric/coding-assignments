@@ -1,0 +1,7 @@
+C:\Users\oliver_elion\Documents\coding assignments\LearningCSharp\LearningCSharp\bin\Debug\LearningCSharp.exe.config
+C:\Users\oliver_elion\Documents\coding assignments\LearningCSharp\LearningCSharp\bin\Debug\LearningCSharp.exe
+C:\Users\oliver_elion\Documents\coding assignments\LearningCSharp\LearningCSharp\bin\Debug\LearningCSharp.pdb
+C:\Users\oliver_elion\Documents\coding assignments\LearningCSharp\LearningCSharp\obj\Debug\LearningCSharp.csproj.AssemblyReference.cache
+C:\Users\oliver_elion\Documents\coding assignments\LearningCSharp\LearningCSharp\obj\Debug\LearningCSharp.csproj.CoreCompileInputs.cache
+C:\Users\oliver_elion\Documents\coding assignments\LearningCSharp\LearningCSharp\obj\Debug\LearningCSharp.exe
+C:\Users\oliver_elion\Documents\coding assignments\LearningCSharp\LearningCSharp\obj\Debug\LearningCSharp.pdb
