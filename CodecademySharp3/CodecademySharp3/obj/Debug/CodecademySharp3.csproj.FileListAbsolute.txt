@@ -1,0 +1,7 @@
+C:\Users\oliver_elion\Documents\coding assignments\CodecademySharp3\CodecademySharp3\bin\Debug\CodecademySharp3.exe.config
+C:\Users\oliver_elion\Documents\coding assignments\CodecademySharp3\CodecademySharp3\bin\Debug\CodecademySharp3.exe
+C:\Users\oliver_elion\Documents\coding assignments\CodecademySharp3\CodecademySharp3\bin\Debug\CodecademySharp3.pdb
+C:\Users\oliver_elion\Documents\coding assignments\CodecademySharp3\CodecademySharp3\obj\Debug\CodecademySharp3.csproj.AssemblyReference.cache
+C:\Users\oliver_elion\Documents\coding assignments\CodecademySharp3\CodecademySharp3\obj\Debug\CodecademySharp3.csproj.CoreCompileInputs.cache
+C:\Users\oliver_elion\Documents\coding assignments\CodecademySharp3\CodecademySharp3\obj\Debug\CodecademySharp3.exe
+C:\Users\oliver_elion\Documents\coding assignments\CodecademySharp3\CodecademySharp3\obj\Debug\CodecademySharp3.pdb
