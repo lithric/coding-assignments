@@ -1,5 +1,0 @@
-%StoryID%00.00.00:
-%StoryPart%Intro 0:
-%StoryStart%
-hello world!
-%StoryEnd%
