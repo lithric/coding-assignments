@@ -8,6 +8,10 @@ using System.Text.RegularExpressions;
 
 namespace TextAdventure
 {
+    public struct Literal
+    {
+        public int x;
+    }
     class Program
     {
         public static StreamReader StoryFile = new StreamReader("../../Story.txt");
@@ -31,13 +35,11 @@ namespace TextAdventure
             }
             return returnValue;
         }
-        public static List<List<string>> GetStoriesByBook(string StoryBook) {
-            Regex rx = new Regex($@"(?<=%StoryPage%(.*)\*(?:[^\*]|\r\n|\r|\n)*)%StoryID%(?:.*)\:(?:\r\n|\r|\n)*((?:[^%]|\r\n|\r|\n)*)(?:\r\n|\r|\n)%End%");
+        public static List<List<string>> GetStoriesByChapter(string StoryChapter) {
+            Regex rx1 = new Regex($@"Adventure1\^([^\^]|\n)*(?=\n.*\^)");
             return new List<List<string>>();
         }
-        static void Main(string[] args)
-        {
-            StoryFile.Close();
+        static void Main(string[] args) {StoryFile.Close();
             List<string> test = GetStoriesByPage("Intro");
             Console.WriteLine(test[1]);
             Console.ReadLine();

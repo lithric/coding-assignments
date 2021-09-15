@@ -1,4 +1,4 @@
-﻿%StoryBook%Adventure1^
+﻿%StoryChapter%Adventure1^
 
 %StoryPage%Intro*
 
@@ -25,7 +25,7 @@ hello
 hello
 %End%
 
-%StoryBook%Adventure2^
+%StoryChapter%Adventure2^
 
 %StoryPage%Intro*
 
