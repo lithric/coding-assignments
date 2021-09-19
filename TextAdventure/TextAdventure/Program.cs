@@ -151,6 +151,9 @@ namespace TextAdventure
         public static string[] SectionSymbolList = {@"\:",@"\*",@"\^",@"\#",@"\$",@"\@"};
         public static StreamReader StoryFile = new StreamReader("../../Story.txt");
         public static string StoryScript = StoryFile.ReadToEnd();
+
+        /* all useless in the face of     GetStoriesBySection
+
         public static string GetStoryById(string StoryID="00.00.00", string scriptStory = "") {
             Regex rx1 = new Regex($@"%StoryID%{StoryID}\:(?:\r\n|\r|\n)*((?:[^%]|\r\n|\r|\n)*)(?:\r\n|\r|\n)%End%");
             Match m1 = rx1.Match(scriptStory != "" ? scriptStory : StoryScript);
@@ -191,48 +194,53 @@ namespace TextAdventure
 
             return returnValue;
         }
+        
+        * all useless in the face of     GetStoriesBySection
+        */
 
-        public static object GetStoriesBySection(int SectionLevel, string StorySectionID, string scriptStory = "") {
+        public static object GetStoriesBySection(int SectionLevel, string StorySectionID, string scriptStory = "")
+        {
             object returnValue = new object();
             if (SectionLevel != 0)
             {
                 Regex rx1 = RetrieveNest($@"%Story[A-Za-z]+%{StorySectionID}", $@"{SectionSymbolList[SectionLevel]}");
                 Match m1 = rx1.Match(scriptStory != "" ? scriptStory : StoryScript);
                 string tempScript = m1.Groups[0].Value;
-                Regex rx2 = RetrieveNest(@"%Story[A-Za-z]+%(.*)", $@"{SectionSymbolList[SectionLevel-1]}");
+                Regex rx2 = RetrieveNest(@"%Story[A-Za-z]+%(.*)", $@"{SectionSymbolList[SectionLevel - 1]}");
                 MatchCollection m2 = rx2.Matches(tempScript);
                 foreach (Match section in m2)
                 {
                     object tempReturn = new object();
+                    bool active = returnValue.GetType().ToString() == "System.Object";
                     switch (SectionLevel)
                     {
                         case 1:
-                            returnValue = new List<object>();
+                            returnValue = active ? new List<object>():returnValue;
                             tempReturn = GetStoriesBySection(SectionLevel - 1, section.Groups[1].Value, tempScript);
                             ((List<object>)returnValue).Add(tempReturn);
                             break;
                         case 2:
-                            returnValue = new List<List<object>>();
+                            returnValue = active ? new List<List<object>>() : returnValue;
                             tempReturn = (List<object>)GetStoriesBySection(SectionLevel - 1, section.Groups[1].Value, tempScript);
                             ((List<List<object>>)returnValue).Add((List<object>)tempReturn);
                             break;
                         case 3:
-                            returnValue = new List<List<List<object>>>();
+                            returnValue = active ? new List<List<List<object>>>() : returnValue;
                             tempReturn = (List<List<object>>)GetStoriesBySection(SectionLevel - 1, section.Groups[1].Value, tempScript);
                             ((List<List<List<object>>>)returnValue).Add((List<List<object>>)tempReturn);
                             break;
                         case 4:
-                            returnValue = new List<List<List<List<object>>>>();
+                            returnValue = active ? new List<List<List<List<object>>>>() : returnValue;
                             tempReturn = (List<List<List<object>>>)GetStoriesBySection(SectionLevel - 1, section.Groups[1].Value, tempScript);
                             ((List<List<List<List<object>>>>)returnValue).Add((List<List<List<object>>>)tempReturn);
                             break;
                         case 5:
-                            returnValue = new List<List<List<List<List<object>>>>>();
+                            returnValue = active ? new List<List<List<List<List<object>>>>>() : returnValue;
                             tempReturn = (List<List<List<List<object>>>>)GetStoriesBySection(SectionLevel - 1, section.Groups[1].Value, tempScript);
                             ((List<List<List<List<List<object>>>>>)returnValue).Add((List<List<List<List<object>>>>)tempReturn);
                             break;
                         default:
-                            returnValue = new List<object>();
+                            returnValue = active ? new List<object>() : returnValue;
                             tempReturn = GetStoriesBySection(SectionLevel - 1, section.Groups[1].Value, tempScript);
                             ((List<object>)returnValue).Add(tempReturn);
                             break;
@@ -253,7 +261,7 @@ namespace TextAdventure
         }
         static void Main(string[] args) {StoryFile.Close();
             List<List<object>> test = (List<List<object>>)GetStoriesBySection(2,"Adventure1");
-            Console.WriteLine(test[0][0]);
+            Console.WriteLine(test[1][0]);
             //Literal num = "5";
             //int[] a = { 5 };
             //if (num == 5)
