@@ -20,7 +20,7 @@ public struct Literal
                 str = val.ToString();
                 break;
             case "System.String":
-                integ = Int32.TryParse((string)val, out int temp) ? temp:0;
+                integ = Int32.TryParse((string)val, out int temp) ? temp : 0;
                 str = (string)val;
                 break;
             default:
@@ -44,7 +44,8 @@ public struct Literal
         if (x.integ != 0)
         {
             return true;
-        } else
+        }
+        else
         {
             return false;
         }
@@ -76,7 +77,7 @@ public struct Literal
                 if (x.str == (string)y)
                 {
                     return 1;
-                } 
+                }
                 else
                 {
                     return 0;
@@ -140,45 +141,135 @@ public struct Literal
         }
     }
 }
+
 namespace TextAdventure
 {
     class Program
     {
+        public static Regex RetrieveNest(string pre, string denote)
+        {
+            return new Regex($@"{pre}{denote}([^{denote}]|\n)*(?!.*{denote})");
+        }
+        public static string[] SectionSymbolList = { @"\:", @"\*", @"\^", @"\#", @"\$", @"\@" };
         public static StreamReader StoryFile = new StreamReader("../../Story.txt");
         public static string StoryScript = StoryFile.ReadToEnd();
-        public static string GetStoryById(string StoryID="00.00.00") {
-            Regex rx = new Regex($@"%StoryID%{StoryID}\:(?:\r\n|\r|\n)*((?:[^%]|\r\n|\r|\n)*)(?:\r\n|\r|\n)%End%");
-            Match m = rx.Match(StoryScript);
-            if (!m.Success)
+
+        /* all useless in the face of     GetStoriesBySection
+        public static string GetStoryById(string StoryID="00.00.00", string scriptStory = "") {
+            Regex rx1 = new Regex($@"%StoryID%{StoryID}\:(?:\r\n|\r|\n)*((?:[^%]|\r\n|\r|\n)*)(?:\r\n|\r|\n)%End%");
+            Match m1 = rx1.Match(scriptStory != "" ? scriptStory : StoryScript);
+            if (!m1.Success)
             {
                 return "StoryID Not Found";
             }
-            return m.Groups[1].Value;
+            return m1.Groups[1].Value;
         }
-        public static List<string> GetStoriesByPage(string StoryPage) {
-            Regex rx = new Regex($@"(?<=%StoryPage%{StoryPage}\*(?:[^\*]|\r\n|\r|\n)*)%StoryID%(?:.*)\:(?:\r\n|\r|\n)*((?:[^%]|\r\n|\r|\n)*)(?:\r\n|\r|\n)%End%");
-            MatchCollection m = rx.Matches(StoryScript);
+        public static List<string> GetStoriesByPage(string StoryPage, string scriptStory = "") {
+            Regex rx1 = RetrieveNest($@"%Story[A-Za-z]+%{StoryPage}",@"\*");
+            Match m1 = rx1.Match(scriptStory != "" ? scriptStory:StoryScript);
+            string tempScript = m1.Groups[0].Value;
+            Regex rx2 = RetrieveNest(@"%Story[A-Za-z]+%(.*)", @"\:");
+            MatchCollection m2 = rx2.Matches(tempScript);
             List<string> returnValue = new List<string>();
-            for (int i=0; i<m.Count; i++)
+            foreach (Match section in m2)
             {
-                returnValue.Add(m[i].Groups[1].Value);
+                string tempReturn = GetStoryById(section.Groups[1].Value, tempScript);
+                returnValue.Add(tempReturn);
             }
             return returnValue;
         }
-        public static List<List<string>> GetStoriesByChapter(string StoryChapter) {
-            Regex rx1 = new Regex($@"Adventure1\^([^\^]|\n)*(?=\n.*\^)");
-            return new List<List<string>>();
-        }
-        static void Main(string[] args) {StoryFile.Close();
-            //List<string> test = GetStoriesByPage("Intro");
-            //Console.WriteLine(test[1]);
-            Literal num = "5";
-            int[] a = { 5 };
-            if (num == 5)
+        public static List<List<string>> GetStoriesByChapter(string StoryChapter, string scriptStory = "") {
+            Regex rx1 = RetrieveNest($@"%Story[A-Za-z]+%{StoryChapter}", @"\^");
+            Match m1 = rx1.Match(scriptStory != "" ? scriptStory : StoryScript);
+            string tempScript = m1.Groups[0].Value;
+            Regex rx2 = RetrieveNest(@"%Story[A-Za-z]+%(.*)", @"\*");
+            MatchCollection m2 = rx2.Matches(tempScript);
+            List<List<string>> returnValue = new List<List<string>>();
+            foreach(Match section in m2)
             {
-                Console.WriteLine("true");
+                List<string> tempReturn = GetStoriesByPage(section.Groups[1].Value, tempScript);
+                returnValue.Add(tempReturn);
             }
-            Console.WriteLine(num.integ);
+            return returnValue;
+        }
+        
+        * all useless in the face of     GetStoriesBySection
+        */
+
+        public static object GetStoriesBySection(int SectionLevel, string StorySectionID, string scriptStory = "")
+        {
+            object returnValue = new object();
+            if (SectionLevel != 0)
+            {
+                Regex rx1 = RetrieveNest($@"%Story[A-Za-z]+%{StorySectionID}", $@"{SectionSymbolList[SectionLevel]}");
+                Match m1 = rx1.Match(scriptStory != "" ? scriptStory : StoryScript);
+                string tempScript = m1.Groups[0].Value;
+                Regex rx2 = RetrieveNest(@"%Story[A-Za-z]+%(.*)", $@"{SectionSymbolList[SectionLevel - 1]}");
+                MatchCollection m2 = rx2.Matches(tempScript);
+                foreach (Match section in m2)
+                {
+                    object tempReturn = new object();
+                    bool active = returnValue.GetType().ToString() == "System.Object";
+                    switch (SectionLevel)
+                    {
+                        case 1:
+                            returnValue = active ? new List<object>() : returnValue;
+                            tempReturn = GetStoriesBySection(SectionLevel - 1, section.Groups[1].Value, tempScript);
+                            ((List<object>)returnValue).Add(tempReturn);
+                            break;
+                        case 2:
+                            returnValue = active ? new List<List<object>>() : returnValue;
+                            tempReturn = (List<object>)GetStoriesBySection(SectionLevel - 1, section.Groups[1].Value, tempScript);
+                            ((List<List<object>>)returnValue).Add((List<object>)tempReturn);
+                            break;
+                        case 3:
+                            returnValue = active ? new List<List<List<object>>>() : returnValue;
+                            tempReturn = (List<List<object>>)GetStoriesBySection(SectionLevel - 1, section.Groups[1].Value, tempScript);
+                            ((List<List<List<object>>>)returnValue).Add((List<List<object>>)tempReturn);
+                            break;
+                        case 4:
+                            returnValue = active ? new List<List<List<List<object>>>>() : returnValue;
+                            tempReturn = (List<List<List<object>>>)GetStoriesBySection(SectionLevel - 1, section.Groups[1].Value, tempScript);
+                            ((List<List<List<List<object>>>>)returnValue).Add((List<List<List<object>>>)tempReturn);
+                            break;
+                        case 5:
+                            returnValue = active ? new List<List<List<List<List<object>>>>>() : returnValue;
+                            tempReturn = (List<List<List<List<object>>>>)GetStoriesBySection(SectionLevel - 1, section.Groups[1].Value, tempScript);
+                            ((List<List<List<List<List<object>>>>>)returnValue).Add((List<List<List<List<object>>>>)tempReturn);
+                            break;
+                        default:
+                            returnValue = active ? new List<object>() : returnValue;
+                            tempReturn = GetStoriesBySection(SectionLevel - 1, section.Groups[1].Value, tempScript);
+                            ((List<object>)returnValue).Add(tempReturn);
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                Regex rx1 = new Regex($@"%Story[A-Za-z]+%{StorySectionID}\:(?:\r\n|\r|\n)*((?:[^%]|\r\n|\r|\n)*)(?:\r\n|\r|\n)%End%");
+                Match m1 = rx1.Match(scriptStory != "" ? scriptStory : StoryScript);
+                if (!m1.Success)
+                {
+                    return "StoryID Not Found";
+                }
+                returnValue = m1.Groups[1].Value;
+            }
+            return returnValue;
+        }
+        
+        static void Main(string[] args)
+        {
+            StoryFile.Close();
+            List<List<object>> test = (List<List<object>>)GetStoriesBySection(2, "Adventure1");
+            Console.WriteLine(test[1][0]);
+            //Literal num = "5";
+            //int[] a = { 5 };
+            //if (num == 5)
+            //{
+            //    Console.WriteLine("true");
+            //}
+            //Console.WriteLine(num.integ);
             Console.ReadLine();
         }
     }
