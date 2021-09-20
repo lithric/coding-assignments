@@ -155,7 +155,9 @@ namespace AllCodingProjectsFromNowUntilTheEnd
         static void Main(string[] args)
         {
             //TextAdventure.Start();
-            Codecademy.lesson2P6.Start();
+            //Codecademy.lesson1P6.Start();
+            //Codecademy.lesson2P6.Start();
+            ClassExamples.Start();
             Console.ReadLine();
         }
     }
