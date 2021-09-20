@@ -30,7 +30,7 @@ hello
 %StoryPage%Intro*
 
 %StoryID%00.00.00:
-fjwo
+fjw
 fiew
 %End%
 

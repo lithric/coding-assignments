@@ -5,3 +5,10 @@ C:\Users\oliver_elion\Documents\coding assignments\TextAdventure\TextAdventure\o
 C:\Users\oliver_elion\Documents\coding assignments\TextAdventure\TextAdventure\obj\Debug\TextAdventure.csproj.CoreCompileInputs.cache
 C:\Users\oliver_elion\Documents\coding assignments\TextAdventure\TextAdventure\obj\Debug\TextAdventure.exe
 C:\Users\oliver_elion\Documents\coding assignments\TextAdventure\TextAdventure\obj\Debug\TextAdventure.pdb
+C:\Users\Administrator\Documents\GitHub\coding-assignments\TextAdventure\TextAdventure\bin\Debug\TextAdventure.exe.config
+C:\Users\Administrator\Documents\GitHub\coding-assignments\TextAdventure\TextAdventure\bin\Debug\TextAdventure.exe
+C:\Users\Administrator\Documents\GitHub\coding-assignments\TextAdventure\TextAdventure\bin\Debug\TextAdventure.pdb
+C:\Users\Administrator\Documents\GitHub\coding-assignments\TextAdventure\TextAdventure\obj\Debug\TextAdventure.csprojAssemblyReference.cache
+C:\Users\Administrator\Documents\GitHub\coding-assignments\TextAdventure\TextAdventure\obj\Debug\TextAdventure.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\Documents\GitHub\coding-assignments\TextAdventure\TextAdventure\obj\Debug\TextAdventure.exe
+C:\Users\Administrator\Documents\GitHub\coding-assignments\TextAdventure\TextAdventure\obj\Debug\TextAdventure.pdb

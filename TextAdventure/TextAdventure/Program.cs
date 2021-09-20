@@ -20,7 +20,7 @@ public struct Literal
                 str = val.ToString();
                 break;
             case "System.String":
-                integ = Int32.TryParse((string)val, out int temp) ? temp : 0;
+                integ = Int32.TryParse((string)val, out int temp) ? temp:0;
                 str = (string)val;
                 break;
             default:
@@ -44,8 +44,7 @@ public struct Literal
         if (x.integ != 0)
         {
             return true;
-        }
-        else
+        } else
         {
             return false;
         }
@@ -77,7 +76,7 @@ public struct Literal
                 if (x.str == (string)y)
                 {
                     return 1;
-                }
+                } 
                 else
                 {
                     return 0;
@@ -141,7 +140,6 @@ public struct Literal
         }
     }
 }
-
 namespace TextAdventure
 {
     class Program
@@ -150,11 +148,12 @@ namespace TextAdventure
         {
             return new Regex($@"{pre}{denote}([^{denote}]|\n)*(?!.*{denote})");
         }
-        public static string[] SectionSymbolList = { @"\:", @"\*", @"\^", @"\#", @"\$", @"\@" };
+        public static string[] SectionSymbolList = {@"\:",@"\*",@"\^",@"\#",@"\$",@"\@"};
         public static StreamReader StoryFile = new StreamReader("../../Story.txt");
         public static string StoryScript = StoryFile.ReadToEnd();
 
         /* all useless in the face of     GetStoriesBySection
+
         public static string GetStoryById(string StoryID="00.00.00", string scriptStory = "") {
             Regex rx1 = new Regex($@"%StoryID%{StoryID}\:(?:\r\n|\r|\n)*((?:[^%]|\r\n|\r|\n)*)(?:\r\n|\r|\n)%End%");
             Match m1 = rx1.Match(scriptStory != "" ? scriptStory : StoryScript);
@@ -170,6 +169,7 @@ namespace TextAdventure
             string tempScript = m1.Groups[0].Value;
             Regex rx2 = RetrieveNest(@"%Story[A-Za-z]+%(.*)", @"\:");
             MatchCollection m2 = rx2.Matches(tempScript);
+
             List<string> returnValue = new List<string>();
             foreach (Match section in m2)
             {
@@ -184,12 +184,14 @@ namespace TextAdventure
             string tempScript = m1.Groups[0].Value;
             Regex rx2 = RetrieveNest(@"%Story[A-Za-z]+%(.*)", @"\*");
             MatchCollection m2 = rx2.Matches(tempScript);
+
             List<List<string>> returnValue = new List<List<string>>();
             foreach(Match section in m2)
             {
                 List<string> tempReturn = GetStoriesByPage(section.Groups[1].Value, tempScript);
                 returnValue.Add(tempReturn);
             }
+
             return returnValue;
         }
         
@@ -213,7 +215,7 @@ namespace TextAdventure
                     switch (SectionLevel)
                     {
                         case 1:
-                            returnValue = active ? new List<object>() : returnValue;
+                            returnValue = active ? new List<object>():returnValue;
                             tempReturn = GetStoriesBySection(SectionLevel - 1, section.Groups[1].Value, tempScript);
                             ((List<object>)returnValue).Add(tempReturn);
                             break;
@@ -257,11 +259,8 @@ namespace TextAdventure
             }
             return returnValue;
         }
-        
-        static void Main(string[] args)
-        {
-            StoryFile.Close();
-            List<List<object>> test = (List<List<object>>)GetStoriesBySection(2, "Adventure1");
+        static void Main(string[] args) {StoryFile.Close();
+            List<List<object>> test = (List<List<object>>)GetStoriesBySection(2,"Adventure1");
             Console.WriteLine(test[1][0]);
             //Literal num = "5";
             //int[] a = { 5 };
