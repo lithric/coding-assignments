@@ -1,0 +1,84 @@
+﻿%StoryChapter%Divergence^
+
+%StoryPage%FirstNight*
+
+%StoryID%00.00.00:
+you travel down a dirt road at night.
+It's cold and dark.
+You see cottages with lit homes and warm fires. 
+You wish you were in one of them.
+You see some sticks near one of the cottages.
+Maybe you can grab some firewood?
+How many do you grab?
+%End%
+
+%StoryPage%Decision*
+
+%StoryID%00.01.00:
+you don't feel the need to steal firewood from other people's homes. 
+So you keep going, 
+feeling the cold biting deeper as you weigh on the standings of your morals.
+
+
+Press Enter to see how you did...
+%End%
+
+%StoryID%00.01.01:
+You don't grab much, {0} firewood, just enough to support you on your journey.
+Do you know where you're going? 
+No. 
+But you know that you're cold.
+
+
+Press Enter to see how you did...
+%End%
+
+%StoryID%00.01.02:
+You grab a generous amount of firewood.
+About {0} firewood.
+This will definitely help you on your journey. 
+Don't feel like dying to the cold any time soon and you're not going to.
+Time to set up camp.
+
+
+Press Enter to see how you did...
+%End%
+
+%StoryID%00.01.03:
+Wow, that's alot of firewood. 
+{0} firewood!?
+Who even has that much!? 
+anyway, you grab the wood and hope that they don't notice all of their firewood is gone.
+Time to set up camp.
+
+
+Press Enter to see how you did...
+%End%
+
+%StoryPage%FreezeTest*
+
+%StoryID%00.02.00:
+you're holding on for dear life.
+Freezing and dying in the cold, you can choose to give up or live.
+enter 'give up' or 'live'
+%End%
+
+%StoryID%00.02.01:
+calling out for help, 
+the house you looked at for firewood is now inviting you in. Go in? (yes or no)
+%End%
+
+%StoryID%00.02.02:
+you decided not to go in. You need to survive another way. (enter to continue)
+%End%
+
+%StoryPage%Winner*
+%StoryID%00.03.00:
+{0} survived the night! (scum ending 1/3)
+%End%
+%StoryID%00.03.01:
+{0}, you did not survive. (bad ending 2/3)
+%End%
+%StoryID%00.03.02:
+{0} survived the night! (good ending 3/3)
+%End%
