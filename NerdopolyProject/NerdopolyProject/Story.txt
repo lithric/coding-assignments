@@ -1,5 +1,7 @@
 ﻿%StoryID%00.00.00:
 hello name!
 
+
+
 %StoryID%00.00.00:
 hello bob!
