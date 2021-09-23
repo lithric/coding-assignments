@@ -27,7 +27,7 @@ namespace NerdopolyProject
             {
                 nestName = $"({nestName})%";
             }
-            Regex rx1 = new Regex($@"%Story(?:{nestName})+([^ \n\t])*%*({nestLabel})({denote})\n((?!%Story.*%.*[{higherText}]).*[^{higherText}]|\n)*.(?!.)");
+            Regex rx1 = new Regex($@"%Story(?:{nestName})+([^ \n\t])*%*({nestLabel})({denote})\n((?!.*%Story.*%.*[{higherText}]).*[^{higherText}]|\n)*.(?!.)");
             MatchCollection m1 = rx1.Matches(StoryScript);
             return "";
         }
