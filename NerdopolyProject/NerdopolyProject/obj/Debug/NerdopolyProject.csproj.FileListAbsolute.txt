@@ -1,0 +1,7 @@
+C:\Users\oliver_elion\Documents\coding assignments\NerdopolyProject\NerdopolyProject\bin\Debug\NerdopolyProject.exe.config
+C:\Users\oliver_elion\Documents\coding assignments\NerdopolyProject\NerdopolyProject\bin\Debug\NerdopolyProject.exe
+C:\Users\oliver_elion\Documents\coding assignments\NerdopolyProject\NerdopolyProject\bin\Debug\NerdopolyProject.pdb
+C:\Users\oliver_elion\Documents\coding assignments\NerdopolyProject\NerdopolyProject\obj\Debug\NerdopolyProject.csproj.AssemblyReference.cache
+C:\Users\oliver_elion\Documents\coding assignments\NerdopolyProject\NerdopolyProject\obj\Debug\NerdopolyProject.csproj.CoreCompileInputs.cache
+C:\Users\oliver_elion\Documents\coding assignments\NerdopolyProject\NerdopolyProject\obj\Debug\NerdopolyProject.exe
+C:\Users\oliver_elion\Documents\coding assignments\NerdopolyProject\NerdopolyProject\obj\Debug\NerdopolyProject.pdb
