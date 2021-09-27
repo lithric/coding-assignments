@@ -1,7 +1,25 @@
-﻿%StoryID%00.00.00:
+﻿%StoryPage%Intro*
+
+%StoryID%00.00.00:
 hello name!
 
 
 
 %StoryID%00.00.00:
 hello bob!
+
+%StoryPage%Intro*
+
+%StoryID%00.02.00:
+hello gird!
+
+%StoryID%00.02.00:
+hello third!
+
+%StoryPage%Beginning*
+
+%StoryID%00.01.00:
+hello bring!
+
+%StoryID%00.01.01:
+hello ding!

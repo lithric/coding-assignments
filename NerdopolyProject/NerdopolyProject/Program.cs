@@ -9,7 +9,8 @@ namespace NerdopolyProject
     {
         static void Main(string[] args)
         {
-            Story.RetrieveNest("00.00.00",@"\:");
+            Func<int, List<object>> test = (Func<int, List<object>>)Story.GetStoriesByPage("Intro");
+            Console.WriteLine(((Func<int,string>)test(0)[0])(0));
             Console.ReadLine();
         }
     }
