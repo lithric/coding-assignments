@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.IO;
+using System.Diagnostics;
 class StoryObject
 {
     public string name;
@@ -38,36 +39,71 @@ namespace NerdopolyProject
             return returnValue;
         }
 
-        public static object GetStoryByID(string label, string scriptStory = "")
+        public static StoryObject GetStoryByID(string label, string scriptStory = "")
         {
-            object returnValue = new object();
+            StoryObject returnValue;
             Func<int, StoryObject> temp1 = (Func<int, StoryObject>)RetrieveNest(label,@"\:",scriptStory);
-            if (temp1(0).total > 1)
+            returnValue = temp1(0);
+            return returnValue;
+        }
+        public static List<StoryObject> GetStoriesByPage(string label, string scriptStory = "")
+        {
+            List<StoryObject> returnValue = new List<StoryObject>();
+            Func<int, StoryObject> temp1 = (Func<int, StoryObject>)RetrieveNest(label, @"\*", scriptStory);
+            string tempReturn1 = temp1(0).text;
+            Func<int, StoryObject> temp2 = (Func<int, StoryObject>)RetrieveNest(".*", @"\:", tempReturn1);
+            for (int i=0; i<temp2(0).total; i++)
             {
-                returnValue = (Func<int, string>)((x) => { return temp1(x).text; });
-            } else
-            {
-                returnValue = temp1(0).text;
+                returnValue.Add(temp2(i));
             }
             return returnValue;
         }
-        public static object GetStoriesByPage(string label, string scriptStory = "")
+        public static List<List<StoryObject>> GetStoriesByChapter(string label, string scriptStory = "")
+        {
+            List<List<StoryObject>> returnValue = new List<List<StoryObject>>();
+            Func<int, StoryObject> temp1 = (Func<int, StoryObject>)RetrieveNest(label, @"\^", scriptStory);
+            string tempReturn1 = temp1(0).text;
+            Func<int, StoryObject> temp2 = (Func<int, StoryObject>)RetrieveNest(".*", @"\*", tempReturn1);
+            for (int i=0; i<temp2(0).total; i++)
+            {
+                List<StoryObject> temp3 = GetStoriesByPage(temp2(i).label);
+                returnValue.Add(temp3);
+            }
+            return returnValue;
+        }
+        public static List<List<List<StoryObject>>> GetStoriesByBook(string label, string scriptStory = "")
+        {
+            List<List<List<StoryObject>>> returnValue = new List<List<List<StoryObject>>>();
+            Func<int, StoryObject> temp1 = (Func<int, StoryObject>)RetrieveNest(label, @"\#", scriptStory);
+            string tempReturn1 = temp1(0).text;
+            Func<int, StoryObject> temp2 = (Func<int, StoryObject>)RetrieveNest(".*", @"\^", tempReturn1);
+            for (int i = 0; i < temp2(0).total; i++)
+            {
+                List<List<StoryObject>> temp3 = GetStoriesByChapter(temp2(i).label);
+                returnValue.Add(temp3);
+            }
+            return returnValue;
+        }
+
+        public static object GetStoriesBySection(string label, string denote, string scriptStory = "")
         {
             object returnValue = new object();
-            Func<int, StoryObject> temp1 = (Func<int, StoryObject>)RetrieveNest(label, @"\*", scriptStory);
-            Func<int, StoryObject> temp2 = (Func<int, StoryObject>)RetrieveNest(".*",@"\:",temp1(0).text);
-            int totalR = temp2(0).total;
-            returnValue = (Func<int, List<object>>)((page) => {
-                List<object> tempReturn = new List<object>();
-                Func<int, StoryObject> temp1Val = (Func<int, StoryObject>)RetrieveNest(".*", @"\:", temp1(page).text);
-                for (int i=0; i < totalR; i++)
+            int SectionLevel = Array.IndexOf(SectionSymbolList, denote);
+            if (SectionLevel < 1)
+            {
+                returnValue = new List<object>();
+                Func<int, StoryObject> temp1 = (Func<int, StoryObject>)RetrieveNest(label, SectionSymbolList[SectionLevel], scriptStory);
+                string tempReturn1 = temp1(0).text;
+                Func<int, StoryObject> temp2 = (Func<int, StoryObject>)RetrieveNest(".*", SectionSymbolList[SectionLevel - 1], tempReturn1);
+                for (int i = 0; i < temp2(0).total; i++)
                 {
-                    object tempVal = GetStoryByID(temp1Val(i).label,temp1(page).text);
-                    tempReturn.Add(tempVal);
+                    object temp3 = GetStoriesBySection(temp2(i).label, SectionSymbolList[SectionLevel - 1]);
+                    ((List<object>)returnValue).Add(temp3);
                 }
-                return tempReturn;
-            });
-            // returnValue(0)[0]
+            } else
+            {
+                returnValue = GetStoryByID(label);
+            }
             return returnValue;
         }
     }

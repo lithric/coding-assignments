@@ -1,20 +1,16 @@
-﻿%StoryPage%Intro*
+﻿%StoryBook%Tens#
+
+%StoryChapter%Adv1^
+
+%StoryPage%Intro*
 
 %StoryID%00.00.00:
 hello name!
 
 
 
-%StoryID%00.00.00:
+%StoryID%00.00.01:
 hello bob!
-
-%StoryPage%Intro*
-
-%StoryID%00.02.00:
-hello gird!
-
-%StoryID%00.02.00:
-hello third!
 
 %StoryPage%Beginning*
 

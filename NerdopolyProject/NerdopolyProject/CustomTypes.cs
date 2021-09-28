@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 public struct Literal
 {
@@ -37,6 +38,33 @@ public struct Literal
     public static implicit operator Literal(string x)
     {
         return new Literal(x);
+    }
+    public static implicit operator Literal(List<object> x)
+    {
+        Literal returnValue = "";
+        try
+        {
+            object test = x[0];
+        } catch (Exception)
+        {
+            return 0;
+        }
+        object NestTest(List<object> y)
+        {
+            List<object> tempReturn = new List<object>();
+            try
+            {
+                tempReturn = (List<object>)y[0];
+            } catch(Exception)
+            {
+                returnValue = (int)y[0];
+                return tempReturn;
+            }
+            NestTest(tempReturn);
+            return tempReturn;
+        }
+        NestTest(x);
+        return returnValue;
     }
     public static implicit operator bool(Literal x)
     {
