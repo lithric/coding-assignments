@@ -168,4 +168,42 @@ public struct Literal
         }
     }
 }
-
+public class Calc
+{
+    public static void Prompt(object x)
+    {
+        Console.WriteLine(x);
+    }
+    public static void Prompt(object x, ref object y)
+    {
+        Console.WriteLine(x);
+        y = Console.ReadLine();
+    }
+    public static int ApplyNest(List<object> x)
+    {
+        int depth = 0;
+        try
+        {
+            object test = x[0];
+            depth++;
+        } catch(Exception)
+        {
+            return;
+        }
+        void NestTest(List<object> xT)
+        {
+            List<object> test = new List<object>();
+            try
+            {
+                test = (List<object>)xT[0];
+                depth++;
+            } catch
+            {
+                return;
+            }
+            NestTest(test);
+        }
+        NestTest(x);
+        return depth;
+    }
+}

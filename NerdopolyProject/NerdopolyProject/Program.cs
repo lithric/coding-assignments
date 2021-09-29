@@ -9,8 +9,9 @@ namespace NerdopolyProject
     {
         static void Main(string[] args)
         {
-            object test = Story.GetStoriesBySection("Tens",@"\#");
-            Console.WriteLine(test);
+            List<object> test = (List<object>)Story.GetStoriesBySection("Intro",@"\*");
+            object y = new object();
+            int a = Calc.ApplyNest(test);
             Console.ReadLine();
         }
     }

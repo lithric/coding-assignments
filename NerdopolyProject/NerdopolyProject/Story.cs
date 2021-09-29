@@ -12,9 +12,11 @@ class StoryObject
     public string label;
     public string denote;
     public string text;
+    public string prev;
     public int total = 0;
-    public StoryObject(Match m, MatchCollection mr = null)
+    public StoryObject(Match m, MatchCollection mr = null, string scriptStory = "")
     {
+        prev = scriptStory;
         name = m.Groups[1].Value;
         label = m.Groups[2].Value;
         denote = m.Groups[3].Value;
@@ -35,7 +37,7 @@ namespace NerdopolyProject
             string higherText = String.Join("",new ArraySegment<string>(SectionSymbolList, layerValue, SectionSymbolList.Length - layerValue));
             Regex rx1 = new Regex($@"%Story([^ \r\n\t]*)%({nestLabel})({denote})[\r\n]((?:(?!.*%Story.*%.*[{higherText}]).*[^{higherText}]|[\r\n])*[^\r\n])(?![^\r\n])");
             MatchCollection m1 = rx1.Matches(scriptStory != "" ? scriptStory:StoryScript);
-            Func<int, StoryObject> returnValue = (x) => { return new StoryObject(m1[x], m1); };
+            Func<int, StoryObject> returnValue = (x) => { return new StoryObject(m1[x], m1, scriptStory); };
             return returnValue;
         }
 
@@ -89,15 +91,13 @@ namespace NerdopolyProject
         {
             object returnValue = new object();
             int SectionLevel = Array.IndexOf(SectionSymbolList, denote);
-            if (SectionLevel < 1)
+            if (SectionLevel > 0)
             {
                 returnValue = new List<object>();
-                Func<int, StoryObject> temp1 = (Func<int, StoryObject>)RetrieveNest(label, SectionSymbolList[SectionLevel], scriptStory);
-                string tempReturn1 = temp1(0).text;
-                Func<int, StoryObject> temp2 = (Func<int, StoryObject>)RetrieveNest(".*", SectionSymbolList[SectionLevel - 1], tempReturn1);
-                for (int i = 0; i < temp2(0).total; i++)
+                Func<int, StoryObject> temp = (Func<int, StoryObject>)RetrieveNest(".*", SectionSymbolList[SectionLevel - 1], ((Func<int, StoryObject>)RetrieveNest(label, SectionSymbolList[SectionLevel], scriptStory))(0).text);
+                for (int i = 0; i < temp(0).total; i++)
                 {
-                    object temp3 = GetStoriesBySection(temp2(i).label, SectionSymbolList[SectionLevel - 1]);
+                    object temp3 = GetStoriesBySection(temp(i).label, SectionSymbolList[SectionLevel - 1]);
                     ((List<object>)returnValue).Add(temp3);
                 }
             } else
