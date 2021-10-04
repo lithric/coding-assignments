@@ -179,7 +179,7 @@ public class Calc
         Console.WriteLine(x);
         y = Console.ReadLine();
     }
-    public static int ApplyNest(List<object> x)
+    public static int Depth(List<object> x)
     {
         int depth = 0;
         try
@@ -188,7 +188,7 @@ public class Calc
             depth++;
         } catch(Exception)
         {
-            return;
+            return 0;
         }
         void NestTest(List<object> xT)
         {
