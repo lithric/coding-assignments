@@ -101,34 +101,34 @@ namespace NerdopolyProject
                     switch (SectionLevel)
                     {
                         case 1:
-                            returnValue = active ? new List<object>() : returnValue;
-                            tempReturn = GetStoriesBySection(temp(i).label, SectionSymbolList[SectionLevel - 1]);
-                            ((List<object>)returnValue).Add(tempReturn);
+                            returnValue = active ? new List<StoryObject>() : returnValue;
+                            tempReturn = (StoryObject)GetStoriesBySection(temp(i).label, SectionSymbolList[SectionLevel - 1]);
+                            ((List<StoryObject>)returnValue).Add((StoryObject)tempReturn);
                             break;
                         case 2:
-                            returnValue = active ? new List<List<object>>() : returnValue;
-                            tempReturn = (List<object>)GetStoriesBySection(temp(i).label, SectionSymbolList[SectionLevel - 1]);
-                            ((List<List<object>>)returnValue).Add((List<object>)tempReturn);
+                            returnValue = active ? new List<List<StoryObject>>() : returnValue;
+                            tempReturn = (List<StoryObject>)GetStoriesBySection(temp(i).label, SectionSymbolList[SectionLevel - 1]);
+                            ((List<List<StoryObject>>)returnValue).Add((List<StoryObject>)tempReturn);
                             break;
                         case 3:
-                            returnValue = active ? new List<List<List<object>>>() : returnValue;
-                            tempReturn = (List<List<object>>)GetStoriesBySection(temp(i).label, SectionSymbolList[SectionLevel - 1]);
-                            ((List<List<List<object>>>)returnValue).Add((List<List<object>>)tempReturn);
+                            returnValue = active ? new List<List<List<StoryObject>>>() : returnValue;
+                            tempReturn = (List<List<StoryObject>>)GetStoriesBySection(temp(i).label, SectionSymbolList[SectionLevel - 1]);
+                            ((List<List<List<StoryObject>>>)returnValue).Add((List<List<StoryObject>>)tempReturn);
                             break;
                         case 4:
-                            returnValue = active ? new List<List<List<List<object>>>>() : returnValue;
-                            tempReturn = (List<List<List<object>>>)GetStoriesBySection(temp(i).label, SectionSymbolList[SectionLevel - 1]);
-                            ((List<List<List<List<object>>>>)returnValue).Add((List<List<List<object>>>)tempReturn);
+                            returnValue = active ? new List<List<List<List<StoryObject>>>>() : returnValue;
+                            tempReturn = (List<List<List<StoryObject>>>)GetStoriesBySection(temp(i).label, SectionSymbolList[SectionLevel - 1]);
+                            ((List<List<List<List<StoryObject>>>>)returnValue).Add((List<List<List<StoryObject>>>)tempReturn);
                             break;
                         case 5:
-                            returnValue = active ? new List<List<List<List<List<object>>>>>() : returnValue;
-                            tempReturn = (List<List<List<List<object>>>>)GetStoriesBySection(temp(i).label, SectionSymbolList[SectionLevel - 1]);
-                            ((List<List<List<List<List<object>>>>>)returnValue).Add((List<List<List<List<object>>>>)tempReturn);
+                            returnValue = active ? new List<List<List<List<List<StoryObject>>>>>() : returnValue;
+                            tempReturn = (List<List<List<List<StoryObject>>>>)GetStoriesBySection(temp(i).label, SectionSymbolList[SectionLevel - 1]);
+                            ((List<List<List<List<List<StoryObject>>>>>)returnValue).Add((List<List<List<List<StoryObject>>>>)tempReturn);
                             break;
                         case 6:
-                            returnValue = active ? new List<List<List<List<List<List<object>>>>>>() : returnValue;
-                            tempReturn = (List<List<List<List<List<object>>>>>)GetStoriesBySection(temp(i).label, SectionSymbolList[SectionLevel - 1]);
-                            ((List<List<List<List<List<List<object>>>>>>)returnValue).Add((List<List<List<List<List<object>>>>>)tempReturn);
+                            returnValue = active ? new List<List<List<List<List<List<StoryObject>>>>>>() : returnValue;
+                            tempReturn = (List<List<List<List<List<StoryObject>>>>>)GetStoriesBySection(temp(i).label, SectionSymbolList[SectionLevel - 1]);
+                            ((List<List<List<List<List<List<StoryObject>>>>>>)returnValue).Add((List<List<List<List<List<StoryObject>>>>>)tempReturn);
                             break;
                     }
                 }
