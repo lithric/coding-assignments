@@ -48,6 +48,8 @@
     <Compile Include="CalcIO.cs" />
     <Compile Include="ClassExamples.cs" />
     <Compile Include="Codecademy.cs" />
+    <Compile Include="Lectures\Threading_Demo\ThreadingDemo.cs" />
+    <Compile Include="Lectures\Threading_Demo\MyThreading.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StoryBoard.cs" />

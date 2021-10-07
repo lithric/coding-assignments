@@ -1,21 +1,10 @@
-﻿%StoryBook%Tens#
+﻿%StoryBook%Game1#
 
 %StoryChapter%Adv1^
 
 %StoryPage%Intro*
 
 %StoryID%00.00.00:
-hello name!
+Hello!
 
-
-
-%StoryID%00.00.01:
-hello bob!
-
-%StoryPage%Beginning*
-
-%StoryID%00.01.00:
-hello bring!
-
-%StoryID%00.01.01:
-hello ding!
+Are you ready to start your adventure?

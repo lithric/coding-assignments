@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.IO;
+using Microsoft.Win32.SafeHandles;
 
 public struct Literal
 {
@@ -207,3 +210,34 @@ public class Calc
         return depth;
     }
 }
+public class App
+{
+    public static void SetPixel(int x, int y,ConsoleColor color)
+    {
+        Console.BackgroundColor = color;
+        Console.SetCursorPosition(x, y);
+        Console.Write("  ");
+        Console.SetCursorPosition(0, 0);
+        Console.ResetColor();
+    }
+    public static void DrawRow(int x1, int x2, int row, ConsoleColor color)
+    {
+        Console.BackgroundColor = color;
+        Console.SetCursorPosition(x1, row);
+        Console.Write(string.Concat(Enumerable.Repeat("  ", x2)));
+        Console.SetCursorPosition(0, 0);
+        Console.ResetColor();
+    }
+    public static void DrawRect(int x1, int x2, int row1, int row2, ConsoleColor color)
+    {
+        Console.BackgroundColor = color;
+        for (int i = row1; i < row2+row1; i++)
+        {
+            Console.SetCursorPosition(x1, i);
+            Console.Write(string.Concat(Enumerable.Repeat("  ", x2)));
+        }
+        Console.SetCursorPosition(0, 0);
+        Console.ResetColor();
+    }
+}
+

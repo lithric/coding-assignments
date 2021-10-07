@@ -164,8 +164,9 @@ namespace AllCodingProjectsFromNowUntilTheEnd
             //Codecademy.lesson2P6.Start();
             //ClassExamples.Start();
             //Codecademy.ArraysAndLoops.lesson1P7.Start();
-            Codecademy.ClassesAndObjects.lesson1P12.Start();
-            Console.ReadLine();
+            //Codecademy.ClassesAndObjects.lesson1P12.Start();
+            ThreadingDemo.Start();
+            Console.ReadKey();
         }
     }
 }
