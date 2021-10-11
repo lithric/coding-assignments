@@ -212,7 +212,23 @@ public class Calc
 }
 public class App
 {
-    public static void SetPixel(int x, int y,ConsoleColor color)
+    private const int STD_OUTPUT_HANDLE = -11;
+    private const uint ENABLE_VIRTUAL_TERMINAL_PROCESSING = 0x0004;
+    private const uint DISABLE_NEWLINE_AUTO_RETURN = 0x0008;
+
+    [DllImport("kernel32.dll")]
+    private static extern bool GetConsoleMode(IntPtr hConsoleHandle, out uint lpMode);
+
+    [DllImport("kernel32.dll")]
+    private static extern bool SetConsoleMode(IntPtr hConsoleHandle, uint dwMode);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    private static extern IntPtr GetStdHandle(int nStdHandle);
+
+    [DllImport("kernel32.dll")]
+    public static extern uint GetLastError();
+
+    public static void DrawPixel(int x, int y,ConsoleColor color)
     {
         Console.BackgroundColor = color;
         Console.SetCursorPosition(x, y);
@@ -220,11 +236,31 @@ public class App
         Console.SetCursorPosition(0, 0);
         Console.ResetColor();
     }
-    public static void DrawRow(int x1, int x2, int row, ConsoleColor color)
+    public static void DrawRow(int row, ConsoleColor color)
+    {
+        Console.BackgroundColor = color;
+        int x = Console.WindowWidth/2;
+        Console.SetCursorPosition(0, row);
+        Console.Write(string.Concat(Enumerable.Repeat("  ", x)));
+        Console.SetCursorPosition(0, 0);
+        Console.ResetColor();
+    }
+    public static void DrawRow(int row, int x1, int x2, ConsoleColor color)
     {
         Console.BackgroundColor = color;
         Console.SetCursorPosition(x1, row);
         Console.Write(string.Concat(Enumerable.Repeat("  ", x2)));
+        Console.SetCursorPosition(0, 0);
+        Console.ResetColor();
+    }
+    public static void DrawColumn(int column, int y1, int y2, ConsoleColor color)
+    {
+        Console.BackgroundColor = color;
+        Console.ForegroundColor = ConsolColor.Black;
+        Console.SetCursorPosition(0, y1);
+        string indent = string.Concat(Enumerable.Repeat("██", column));
+        string text = string.Concat(Enumerable.Repeat(indent + "  \n", y2));
+        Console.Write(text);
         Console.SetCursorPosition(0, 0);
         Console.ResetColor();
     }
