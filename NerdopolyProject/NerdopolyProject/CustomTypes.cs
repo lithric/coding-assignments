@@ -215,29 +215,27 @@ public class App
     private const int STD_OUTPUT_HANDLE = -11;
     private const uint ENABLE_VIRTUAL_TERMINAL_PROCESSING = 0x0004;
     private const uint DISABLE_NEWLINE_AUTO_RETURN = 0x0008;
+    public static string DrawMode = "METRIC";
+    public static ConsoleColor DefaultColor = ConsoleColor.Gray;
 
-    [DllImport("kernel32.dll")]
-    private static extern bool GetConsoleMode(IntPtr hConsoleHandle, out uint lpMode);
-
-    [DllImport("kernel32.dll")]
-    private static extern bool SetConsoleMode(IntPtr hConsoleHandle, uint dwMode);
-
-    [DllImport("kernel32.dll", SetLastError = true)]
-    private static extern IntPtr GetStdHandle(int nStdHandle);
-
-    [DllImport("kernel32.dll")]
-    public static extern uint GetLastError();
-
-    public static void DrawPixel(int x, int y,ConsoleColor color)
+    public static void DrawPixel(int x, int y, ConsoleColor color = ConsoleColor.Gray)
     {
+        if (color == ConsoleColor.Gray)
+        {
+            color = DefaultColor;
+        }
         Console.BackgroundColor = color;
-        Console.SetCursorPosition(x, y);
+        Console.SetCursorPosition((x/2)*2, y);
         Console.Write("  ");
         Console.SetCursorPosition(0, 0);
         Console.ResetColor();
     }
-    public static void DrawRow(int row, ConsoleColor color)
+    public static void DrawRow(int row, ConsoleColor color = ConsoleColor.Gray)
     {
+        if (color == ConsoleColor.Gray)
+        {
+            color = DefaultColor;
+        }
         Console.BackgroundColor = color;
         int x = Console.WindowWidth/2;
         Console.SetCursorPosition(0, row);
@@ -245,32 +243,110 @@ public class App
         Console.SetCursorPosition(0, 0);
         Console.ResetColor();
     }
-    public static void DrawRow(int row, int x1, int x2, ConsoleColor color)
+    public static void DrawRow(int row, int length, ConsoleColor color = ConsoleColor.Gray)
     {
-        Console.BackgroundColor = color;
-        Console.SetCursorPosition(x1, row);
-        Console.Write(string.Concat(Enumerable.Repeat("  ", x2)));
-        Console.SetCursorPosition(0, 0);
-        Console.ResetColor();
-    }
-    public static void DrawColumn(int column, int y1, int y2, ConsoleColor color)
-    {
-        Console.BackgroundColor = color;
-        Console.ForegroundColor = ConsolColor.Black;
-        Console.SetCursorPosition(0, y1);
-        string indent = string.Concat(Enumerable.Repeat("██", column));
-        string text = string.Concat(Enumerable.Repeat(indent + "  \n", y2));
-        Console.Write(text);
-        Console.SetCursorPosition(0, 0);
-        Console.ResetColor();
-    }
-    public static void DrawRect(int x1, int x2, int row1, int row2, ConsoleColor color)
-    {
-        Console.BackgroundColor = color;
-        for (int i = row1; i < row2+row1; i++)
+        if (color == ConsoleColor.Gray)
         {
-            Console.SetCursorPosition(x1, i);
-            Console.Write(string.Concat(Enumerable.Repeat("  ", x2)));
+            color = DefaultColor;
+        }
+        Console.BackgroundColor = color;
+        int x = Console.WindowWidth / 2;
+        Console.SetCursorPosition(0, row);
+        Console.Write(string.Concat(Enumerable.Repeat("  ",Math.Min(length/2,x))));
+        Console.SetCursorPosition(0, 0);
+        Console.ResetColor();
+    }
+    public static void DrawRow(int row, int x1, int x2, ConsoleColor color = ConsoleColor.Gray)
+    {
+        if (color == ConsoleColor.Gray)
+        {
+            color = DefaultColor;
+        }
+        Console.BackgroundColor = color;
+        int x = Console.WindowWidth / 2;
+        int end = Math.Min(Math.Max(x2/2-x1/2,0),x);
+        if (DrawMode == "METRIC")
+        {
+            end = Math.Min(x2/2, x-x1/2);
+        }
+        Console.SetCursorPosition((x1/2)*2, row);
+        Console.Write(string.Concat(Enumerable.Repeat("  ",end)));
+        Console.SetCursorPosition(0, 0);
+        Console.ResetColor();
+    }
+    public static void DrawColumn(int column, ConsoleColor color = ConsoleColor.Gray)
+    {
+        if (color == ConsoleColor.Gray)
+        {
+            color = DefaultColor;
+        }
+        Console.BackgroundColor = color;
+        int y = Console.WindowHeight;
+        for (int i = 0; i < y; i++)
+        {
+            Console.SetCursorPosition((column / 2) * 2, i);
+            Console.Write("  ");
+        }
+        Console.SetCursorPosition(0, 0);
+        Console.ResetColor();
+    }
+    public static void DrawColumn(int column, int length, ConsoleColor color = ConsoleColor.Gray)
+    {
+        if (color == ConsoleColor.Gray)
+        {
+            color = DefaultColor;
+        }
+        Console.BackgroundColor = color;
+        int y = Console.WindowHeight;
+        for (int i = 0; i<Math.Min(length,y); i++)
+        {
+            Console.SetCursorPosition((column / 2) * 2, i);
+            Console.Write("  ");
+        }
+        Console.SetCursorPosition(0, 0);
+        Console.ResetColor();
+    }
+    public static void DrawColumn(int column, int y1, int y2, ConsoleColor color = ConsoleColor.Gray)
+    {
+        if (color == ConsoleColor.Gray)
+        {
+            color = DefaultColor;
+        }
+        Console.BackgroundColor = color;
+        int y = Console.WindowHeight;
+        int end = Math.Min(y2, y);
+        if (DrawMode == "METRIC")
+        {
+            end = Math.Min(y2+y1, y-y1);
+        }
+        for (int i = y1; i < end; i++)
+        {
+            Console.SetCursorPosition((column/2)*2, i);
+            Console.Write("  ");
+        }
+        Console.SetCursorPosition(0, 0);
+        Console.ResetColor();
+    }
+    public static void DrawRect(int x1, int y1, int x2, int y2, ConsoleColor color = ConsoleColor.Gray)
+    {
+        if (color == ConsoleColor.Gray)
+        {
+            color = DefaultColor;
+        }
+        Console.BackgroundColor = color;
+        int x = Console.WindowWidth / 2;
+        int y = Console.WindowHeight;
+        int endX = Math.Min(Math.Max(x2/2 - x1/2,0), x);
+        int endY = Math.Min(y2, y);
+        if (DrawMode == "METRIC")
+        {
+            endX = Math.Min(x2/2, x-x1/2);
+            endY = Math.Min(y2+y1, y-y1);
+        }
+        for (int i = y1; i < endY; i++)
+        {
+            Console.SetCursorPosition((x1/2)*2, i);
+            Console.Write(string.Concat(Enumerable.Repeat("  ", endX)));
         }
         Console.SetCursorPosition(0, 0);
         Console.ResetColor();
