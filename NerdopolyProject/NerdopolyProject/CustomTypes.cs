@@ -242,9 +242,9 @@ public class App
         Console.BackgroundColor = color;
         if (write)
         {
-            PixelMap[x / 2][y] = color;
+            PixelMap[x][y] = color;
         }
-        Console.SetCursorPosition((x/2)*2, y);
+        Console.SetCursorPosition(Math.Min(x*2,Console.WindowWidth-1), Math.Min(y,Console.WindowHeight-1));
         Console.Write("  ");
         Console.SetCursorPosition(0, 0);
         Console.ResetColor();
@@ -274,7 +274,7 @@ public class App
         }
         Console.BackgroundColor = color;
         int x = Console.WindowWidth / 2;
-        int endX = Math.Min(length / 2, x);
+        int endX = Math.Min(length, x);
         for (int i = 0; i < endX; i++)
         {
             PixelMap[i][row] = color;
@@ -292,16 +292,16 @@ public class App
         }
         Console.BackgroundColor = color;
         int x = Console.WindowWidth / 2;
-        int endX = Math.Min(Math.Max(x2/2-x1/2,0),x);
+        int endX = Math.Min(Math.Max(x2-x1,0),x);
         if (DrawMode == "METRIC")
         {
-            endX = Math.Min(x2/2, x-x1/2);
+            endX = Math.Min(x2, x-x1);
         }
-        for (int i = x1/2; i < endX; i++)
+        for (int i = x1; i < endX; i++)
         {
             PixelMap[i][row] = color;
         }
-        Console.SetCursorPosition((x1/2)*2, row);
+        Console.SetCursorPosition(x1*2, row);
         Console.Write(string.Concat(Enumerable.Repeat("  ",endX)));
         Console.SetCursorPosition(0, 0);
         Console.ResetColor();
@@ -317,7 +317,7 @@ public class App
         PixelMap[column] = Enumerable.Repeat(color,y).ToList();
         for (int i = 0; i < y; i++)
         {
-            Console.SetCursorPosition((column / 2) * 2, i);
+            Console.SetCursorPosition(column * 2, i);
             Console.Write("  ");
         }
         Console.SetCursorPosition(0, 0);
@@ -335,7 +335,7 @@ public class App
         PixelMap[column] = Enumerable.Repeat(color, endY).ToList();
         for (int i = 0; i<endY; i++)
         {
-            Console.SetCursorPosition((column / 2) * 2, i);
+            Console.SetCursorPosition(column * 2, i);
             Console.Write("  ");
         }
         Console.SetCursorPosition(0, 0);
@@ -357,7 +357,7 @@ public class App
         PixelMap[column].InsertRange(y1,Enumerable.Repeat(color,endY-y1));
         for (int i = y1; i < endY; i++)
         {
-            Console.SetCursorPosition((column/2)*2, i);
+            Console.SetCursorPosition(column*2, i);
             Console.Write("  ");
         }
         Console.SetCursorPosition(0, 0);
@@ -372,20 +372,20 @@ public class App
         Console.BackgroundColor = color;
         int x = Console.WindowWidth / 2;
         int y = Console.WindowHeight;
-        int endX = Math.Min(Math.Max(x2 / 2 - x1 / 2, 0), x);
+        int endX = Math.Min(Math.Max(x2 - x1, 0), x);
         int endY = Math.Min(y2, y);
         if (DrawMode == "METRIC")
         {
-            endX = Math.Min(x2 / 2, x - x1 / 2);
+            endX = Math.Min(x2, x - x1);
             endY = Math.Min(y2 + y1, y - y1);
         }
-        for (int i = x1 / 2; i < endX; i++)
+        for (int i = x1; i < endX; i++)
         {
-            PixelMap[i].InsertRange(y1,Enumerable.Repeat(color,endY-y1+1));
+            PixelMap[i].InsertRange(y1,Enumerable.Repeat(color,endY-y1));
         }
         for (int i = y1; i < endY; i++)
         {
-            Console.SetCursorPosition((x1/2)*2, i);
+            Console.SetCursorPosition(x1*2, i);
             Console.Write(string.Concat(Enumerable.Repeat("  ", endX)));
         }
         Console.SetCursorPosition(0, 0);
