@@ -1,0 +1,7 @@
+C:\Users\oliver_elion\Documents\coding assignments\linq demonstration\linq demonstration\bin\Debug\linq demonstration.exe.config
+C:\Users\oliver_elion\Documents\coding assignments\linq demonstration\linq demonstration\bin\Debug\linq demonstration.exe
+C:\Users\oliver_elion\Documents\coding assignments\linq demonstration\linq demonstration\bin\Debug\linq demonstration.pdb
+C:\Users\oliver_elion\Documents\coding assignments\linq demonstration\linq demonstration\obj\Debug\linq demonstration.csproj.AssemblyReference.cache
+C:\Users\oliver_elion\Documents\coding assignments\linq demonstration\linq demonstration\obj\Debug\linq demonstration.csproj.CoreCompileInputs.cache
+C:\Users\oliver_elion\Documents\coding assignments\linq demonstration\linq demonstration\obj\Debug\linq demonstration.exe
+C:\Users\oliver_elion\Documents\coding assignments\linq demonstration\linq demonstration\obj\Debug\linq demonstration.pdb

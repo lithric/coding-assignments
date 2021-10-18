@@ -328,15 +328,13 @@ public class App
         {
             color = DefaultColor;
         }
-        Console.BackgroundColor = color;
         int y = Console.WindowHeight;
         int endY = Math.Min(length, y);
         PixelMap[map][column] = Enumerable.Repeat(color, endY).ToList();
-        for (int i = 0; i<endY; i++)
-        {
-            Console.SetCursorPosition(column * 2, i);
-            Console.Write("  ");
-        }
+        Console.BackgroundColor = color;
+        Console.Write(string.Concat(Enumerable.Repeat("  \n", endY)));
+        Console.BackgroundColor = DefaultColor;
+        Console.MoveBufferArea(0, 0, 2, endY, column, 0);
         Console.SetCursorPosition(0, 0);
         Console.ResetColor();
     }
