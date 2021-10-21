@@ -32,7 +32,7 @@ namespace NerdopolyProject
             Console.SetWindowSize(250, 60);
             App.CreatePixelMap();
             App.DrawRect(0, 0, 250/2, 60, 0);
-            App.DrawColumn(20/2, 10, 40, 0, ConsoleColor.Yellow);
+            App.DrawColumn(20/2, 10, 40, 0, ConsoleColor.Red);
             App.DrawPixel(125/2, 30, 0, ConsoleColor.Green, false);
             //App.DrawPixel(20, 50, 0, ConsoleColor.Green);
             //App.DrawRow(10,0,ConsoleColor.Red);
