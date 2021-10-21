@@ -218,7 +218,18 @@ public class App
     public static List<List<List<ConsoleColor>>> PixelMap = new List<List<List<ConsoleColor>>>() { };
     public static string DrawMode = "METRIC";
     public static ConsoleColor DefaultColor = ConsoleColor.Gray;
+    public static Func<string, int> Win = (string dir) => {
+        return dir == "x" ? Console.WindowWidth : dir == "px" ? Console.WindowWidth/2: Console.WindowHeight; 
+    }; 
 
+    public static void Write(string text,int width,int height,int x, int y, int map = 0)
+    {
+        Console.SetCursorPosition(0, Win("y")*(map+1));
+        Console.Write(text);
+        Console.BackgroundColor = DefaultColor;
+        Console.MoveBufferArea(0, Win("y")*(map+1), width, height, x, y);
+        Console.SetCursorPosition(0, 0);
+    }
     public static void CreatePixelMap(ConsoleColor color = ConsoleColor.Black)
     {
         PixelMap.Add(new List<List<ConsoleColor>>());
@@ -246,10 +257,7 @@ public class App
             PixelMap[map][x][y] = color;
         }
         Console.BackgroundColor = color;
-        Console.Write("  ");
-        Console.BackgroundColor = DefaultColor;
-        Console.MoveBufferArea(0, 0, 2, 1, x*2, y);
-        Console.SetCursorPosition(0, 0);
+        Write("  ",2,1,x*2,y,map);
     }
     public static void DrawRow(int row, int map = 0, ConsoleColor color = ConsoleColor.Gray)
     {
@@ -257,16 +265,13 @@ public class App
         {
             color = DefaultColor;
         }
-        int x = Console.WindowWidth/2;
+        int x = Win("px");
         foreach (List<ConsoleColor> pixel in PixelMap[map])
         {
             pixel[row] = color;
         }
         Console.BackgroundColor = color;
-        Console.Write(new string(' ',x*2));
-        Console.BackgroundColor = DefaultColor;
-        Console.MoveBufferArea(0, 0, x*2, 1, 0, row);
-        Console.SetCursorPosition(0, 0);
+        Write(new string(' ', x * 2), x * 2, 1, 0, row,map);
     }
     public static void DrawRow(int row, int length, int map = 0, ConsoleColor color = ConsoleColor.Gray)
     {
@@ -281,10 +286,7 @@ public class App
             PixelMap[map][i][row] = color;
         }
         Console.BackgroundColor = color;
-        Console.Write(new string(' ',endX*2));
-        Console.BackgroundColor = DefaultColor;
-        Console.MoveBufferArea(0, 0, x * 2, 1, 0, row);
-        Console.SetCursorPosition(0, 0);
+        Write(new string(' ', endX * 2),endX*2,1,0,row,map);
     }
     public static void DrawRow(int row, int x1, int x2, int map = 0, ConsoleColor color = ConsoleColor.Gray)
     {
@@ -303,10 +305,7 @@ public class App
             PixelMap[map][i][row] = color;
         }
         Console.BackgroundColor = color;
-        Console.Write(string.Concat(Enumerable.Repeat("  ",endX)));
-        Console.BackgroundColor = DefaultColor;
-        Console.MoveBufferArea(0, 0, endX*2, 1, x1*2, row);
-        Console.SetCursorPosition(0, 0);
+        Write(new string(' ', endX * 2), endX * 2, 1, x1 * 2, row,map);
     }
     public static void DrawColumn(int column, int map = 0, ConsoleColor color = ConsoleColor.Gray)
     {
@@ -317,10 +316,7 @@ public class App
         int y = Console.WindowHeight;
         PixelMap[map][column] = Enumerable.Repeat(color,y).ToList();
         Console.BackgroundColor = color;
-        Console.Write(string.Concat(Enumerable.Repeat("  \n", y)));
-        Console.BackgroundColor = DefaultColor;
-        Console.MoveBufferArea(0, 0, 2, y, column, 0);
-        Console.SetCursorPosition(0, 0);
+        Write(string.Concat(Enumerable.Repeat("  \n", y)),2,y+Win("y"),column*2,0,map);
     }
     public static void DrawColumn(int column, int length, int map = 0, ConsoleColor color = ConsoleColor.Gray)
     {
@@ -332,11 +328,7 @@ public class App
         int endY = Math.Min(length, y);
         PixelMap[map][column] = Enumerable.Repeat(color, endY).ToList();
         Console.BackgroundColor = color;
-        Console.Write(string.Concat(Enumerable.Repeat("  \n", endY)));
-        Console.BackgroundColor = DefaultColor;
-        Console.MoveBufferArea(0, 0, 2, endY, column, 0);
-        Console.SetCursorPosition(0, 0);
-        Console.ResetColor();
+        Write(string.Concat(Enumerable.Repeat("  \n", endY)),2,endY,column*2,0,map);
     }
     public static void DrawColumn(int column, int y1, int y2, int map = 0, ConsoleColor color = ConsoleColor.Gray)
     {
@@ -352,13 +344,7 @@ public class App
             endY = Math.Min(y2+y1, y-y1);
         }
         PixelMap[map][column].InsertRange(y1,Enumerable.Repeat(color,endY-y1));
-        for (int i = y1; i < endY; i++)
-        {
-            Console.SetCursorPosition(column*2, i);
-            Console.Write("  ");
-        }
-        Console.SetCursorPosition(0, 0);
-        Console.ResetColor();
+        Write(string.Concat(Enumerable.Repeat("  \n", y2)),2,endY,column*2,y1,map);
     }
     public static void DrawRect(int x1, int y1, int x2, int y2, int map = 0, ConsoleColor color = ConsoleColor.Gray)
     {
@@ -380,17 +366,14 @@ public class App
             PixelMap[map][i].InsertRange(y1,Enumerable.Repeat(color,endY-y1));
         }
         Console.BackgroundColor = color;
-        Console.Write(string.Concat(Enumerable.Repeat(new string(' ',endX*2)+"\n",endY)));
-        Console.BackgroundColor = DefaultColor;
-        Console.MoveBufferArea(0,0,endX,endY,x1,y1);
-        //for (int i = y1; i < endY; i++)
-        //{
-        //    Console.SetCursorPosition(x1*2, i);
-            //Console.Write(string.Concat(Enumerable.Repeat("  ", endX)));
-        //    Console.Write(new string(' ', endX * 2));
-        //}
-        Console.SetCursorPosition(0, 0);
-        Console.ResetColor();
+        if (endX >= Win("px"))
+        {
+            Write(string.Concat(Enumerable.Repeat(new string(' ', endX * 2), endY)), endX * 2, endY, x1, y1,map);
+        }
+        else
+        {
+            Write(string.Concat(Enumerable.Repeat(new string(' ', endX * 2) + "\n", endY)), endX * 2, endY, x1, y1,map);
+        }
     }
 }
 

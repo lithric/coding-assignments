@@ -31,14 +31,37 @@ namespace NerdopolyProject
             //List<List<List<StoryObject>>> game1Story = (List<List<List<StoryObject>>>)Story.GetStoriesBySection("Game1",@"\#");
             Console.SetWindowSize(250, 60);
             App.CreatePixelMap();
-            App.DrawRect(0, 0, 250/2-1, 60, 0);
-            //App.DrawColumn(20/2, 10, 40, 0, ConsoleColor.Yellow);
-            //App.DrawPixel(125/2, 30, 0, ConsoleColor.Green, false);
+            App.DrawRect(0, 0, 250/2, 60, 0);
+            App.DrawColumn(20/2, 10, 40, 0, ConsoleColor.Yellow);
+            App.DrawPixel(125/2, 30, 0, ConsoleColor.Green, false);
             //App.DrawPixel(20, 50, 0, ConsoleColor.Green);
             //App.DrawRow(10,0,ConsoleColor.Red);
             //App.DrawRow(25, 60, 0, ConsoleColor.Yellow);
             //App.DrawRow(30, 30, 60, 0, ConsoleColor.Blue);
             //App.DrawColumn(40,0,ConsoleColor.Magenta);
+            //App.DrawColumn(60, 30, 0, ConsoleColor.Cyan);
+            //App.DrawColumn(90, 0, 1, 0, ConsoleColor.DarkCyan);
+            while (true)
+            {
+                int charX = charPos[0];
+                int charY = charPos[1];
+                switch(Console.ReadKey().Key)
+                {
+                    case ConsoleKey.W:
+                        charY -= 1;
+                    break;
+                    case ConsoleKey.A:
+                        charX -= 1;
+                    break;
+                    case ConsoleKey.S:
+                        charY += 1;
+                    break;
+                    case ConsoleKey.D:
+                        charX += 1;
+                    break;
+                }
+                UpdatePos(charX,charY);
+            }
             Console.ReadLine();
         }
     }
