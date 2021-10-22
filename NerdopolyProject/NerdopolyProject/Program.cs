@@ -17,12 +17,26 @@ namespace NerdopolyProject
             ConsoleColor coverCol = App.PixelMap[0][newX][newY];
             if (coverCol == ConsoleColor.Red && check)
             {
-                Console.Write("Game Over");
+                Console.BackgroundColor = App.DefaultColor;
+                Task.Run(async delegate
+                {
+                    await Task.Delay(100);
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.SetCursorPosition(0, 0);
+                    Console.Write("Game Over");
+                });
+                Task.Run(async delegate
+                {
+                    await Task.Delay(1000);
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.SetCursorPosition(0, 0);
+                    Console.Write("                              ");
+                });
                 UpdatePos(250 / 4, 60 / 2,false);
                 return;
             }
-            App.DrawPixel(charPos[0], charPos[1], 0, underCol, false);
-            App.DrawPixel(newX, newY, 0, ConsoleColor.Green, false);
+            App.DrawPixel(pos: (charPos[0], charPos[1]),color: underCol,map: 0,write: false);
+            App.DrawPixel(pos: (newX, newY), color: ConsoleColor.Green,map: 0,write: false);
             charPos[0] = newX;
             charPos[1] = newY;
         }
@@ -30,12 +44,14 @@ namespace NerdopolyProject
         {
             //List<List<List<StoryObject>>> game1Story = (List<List<List<StoryObject>>>)Story.GetStoriesBySection("Game1",@"\#");
             Console.SetWindowSize(250, 60);
+            Console.CursorVisible = false;
             App.CreatePixelMap();
-            App.DrawRect(0, 0, 250/2, 60, 0);
-            App.DrawColumn(20/2, 10, 40, 0, ConsoleColor.Red);
-            App.DrawPixel(125/2, 30, 0, ConsoleColor.Green, false);
-            //App.DrawPixel(20, 50, 0, ConsoleColor.Green);
-            //App.DrawRow(10,0,ConsoleColor.Red);
+            App.DrawRect(pos: (0, 0, 250/2, 60) , map: 0);
+            App.DrawColumn(pos: (20/2, 10, 40) , ConsoleColor.Red, 0);
+            App.DrawPixel(pos: (125/2, 30),color: ConsoleColor.Green,map: 0,write: false);
+            App.DrawPixel(pos: (20, 50),color: ConsoleColor.Green);
+            App.DrawRow(pos: (10,20) ,color: ConsoleColor.Red);
+            App.DrawRect(pos: (0, 0, 20, 20), map: 0);
             //App.DrawRow(25, 60, 0, ConsoleColor.Yellow);
             //App.DrawRow(30, 30, 60, 0, ConsoleColor.Blue);
             //App.DrawColumn(40,0,ConsoleColor.Magenta);
@@ -45,7 +61,7 @@ namespace NerdopolyProject
             {
                 int charX = charPos[0];
                 int charY = charPos[1];
-                switch(Console.ReadKey().Key)
+                switch(Console.ReadKey(false).Key)
                 {
                     case ConsoleKey.W:
                         charY -= 1;
