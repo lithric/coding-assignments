@@ -4,10 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 namespace NerdopolyProject
 {
     class Program
     {
+        [Flags]
+        private enum ConsoleModes : uint
+        {
+            ENABLE_INSERT_MODE = 0x0020
+        }
         public static List<int> charPos = new List<int> { 125/2, 30 };
         public static void UpdatePos(int newX,int newY, bool check = true)
         {
@@ -15,6 +21,7 @@ namespace NerdopolyProject
             newY = Math.Max(Math.Min(newY, Console.WindowHeight - 1), 0);
             ConsoleColor underCol = App.Pixel(charPos[0],charPos[1],map:"Start");
             ConsoleColor coverCol = App.Pixel(newX, newY, map: "Start");
+            /*
             if (coverCol == ConsoleColor.Red && check)
             {
                 Console.BackgroundColor = App.DefaultColor;
@@ -35,6 +42,7 @@ namespace NerdopolyProject
                 UpdatePos(250 / 4, 60 / 2,false);
                 return;
             }
+            */
             App.DrawPixel(pos: (charPos[0], charPos[1]),color: underCol,map: "Char");
             App.DrawPixel(pos: (newX, newY), color: ConsoleColor.Green,map: "Char");
             charPos[0] = newX;
@@ -48,10 +56,11 @@ namespace NerdopolyProject
             App.CreatePixelMap("Start");
             App.CreatePixelMap("Char");
             App.DrawRect(pos: (0, 0, 250/2, 60) ,map: "Start");
-            App.DrawColumn(pos: (20/2, 10, 40) ,color: ConsoleColor.Red,map: "Start");
-            App.DrawPixel(pos: (125/2, 30) ,color: ConsoleColor.Green,map: "Char");
-            App.DrawPixel(pos: (20, 50) ,color: ConsoleColor.Green,map:"Start");
-            App.DrawRow(pos: (10,20) ,color: ConsoleColor.Red,map:"Start");
+            //App.DrawColumn(pos: (100/2, 10, 40) ,color: ConsoleColor.Red,map: "Start");
+            //App.DrawPixel(pos: (125/2, 30) ,color: ConsoleColor.Green,map: "Char");
+            //App.DrawPixel(pos: (20, 50) ,color: ConsoleColor.Green,map:"Start");
+            //App.DrawRect(pos: (0,10,10,1) ,color: ConsoleColor.Red,map:"Start");
+            //App.DrawColumn(pos: (20 / 2, 10, 40), color: ConsoleColor.Red, map: "Start");
             //App.DrawRect(pos: (1, 10, 20, 20), map: 0,color: ConsoleColor.Blue);
             //App.DrawRow(25, 60, 0, ConsoleColor.Yellow);
             //App.DrawRow(30, 30, 60, 0, ConsoleColor.Blue);

@@ -212,6 +212,11 @@ public class Calc
 }
 public class App
 {
+    [Flags]
+    private enum ConsoleModes : uint
+    {
+        ENABLE_INSERT_MODE = 0x0020
+    }
     private const int STD_OUTPUT_HANDLE = -11;
     private const uint ENABLE_VIRTUAL_TERMINAL_PROCESSING = 0x0004;
     private const uint DISABLE_NEWLINE_AUTO_RETURN = 0x0008;
@@ -228,25 +233,19 @@ public class App
     public static void Write(string text, int x, int y, string map = "Start",ConsoleColor? color = null,bool write = true)
     {
         Console.BackgroundColor = color == null ? Console.BackgroundColor:(ConsoleColor)color;
-        if (text.Contains("\n"))
+        string[] bits = text.Split('\n');
+        int i = y;
+        foreach (string line in bits)
         {
-            string[] bits = text.Split('\n');
-            for (int j = 0; j < bits.Length; j++)
+            if (line.Length > Win("px"))
             {
-                PixelMap[map][y+j-1].InsertRange(x-1, Enumerable.Repeat(Console.BackgroundColor, bits[j].Length));
+                PixelMap[map][i].RemoveRange(x, line.Length / Win("px"));
+                //PixelMap[map][i].InsertRange(x, line.Length / Win("px")); this will fix things
             }
-            int i = y;
-            foreach (string line in bits)
-            {
-                Console.SetCursorPosition(x*2,i);
-                Console.Write(line);
-                i++;
-            }
-        }
-        else
-        {
-            Console.SetCursorPosition(x*2, y);
-            Console.Write(text);
+            PixelMap[map][i].RemoveRange(x, line.Length / Win("px"));
+            Console.SetCursorPosition(x*2,i);
+            Console.Write(line);
+            i++;
         }
         Console.BackgroundColor = DefaultColor;
         Console.SetCursorPosition(0, 0);
@@ -266,94 +265,63 @@ public class App
         }
     }
 
-    public static void DrawPixel((int x,int y) pos, ConsoleColor color = ConsoleColor.Gray, string map = "Start", bool write = true)
+    public static void DrawPixel((int x,int y) pos, ConsoleColor? color = null, string map = "Start", bool write = true)
     {
-        if (color == ConsoleColor.Gray)
-        {
-            color = DefaultColor;
-        }
-        Console.BackgroundColor = color;
+        Console.BackgroundColor = color == null ? DefaultColor : (ConsoleColor)color;
         Write("  ",pos.x,pos.y, map: map,write: write);
     }
-    public static void DrawRow(int pos, ConsoleColor color = ConsoleColor.Gray, string map = "Start")
+    public static void DrawRow(int pos, ConsoleColor? color = null, string map = "Start")
     {
-        if (color == ConsoleColor.Gray)
-        {
-            color = DefaultColor;
-        }
+        Console.BackgroundColor = color == null ? DefaultColor : (ConsoleColor)color;
         int x = Win("px");
-        Console.BackgroundColor = color;
         Write(new string(' ', x * 2), 0, pos, map: map);
     }
-    public static void DrawRow((int row, int length) pos, ConsoleColor color = ConsoleColor.Gray, string map = "Start")
+    public static void DrawRow((int row, int length) pos, ConsoleColor? color = null, string map = "Start")
     {
-        if (color == ConsoleColor.Gray)
-        {
-            color = DefaultColor;
-        }
-        int x = Console.WindowWidth / 2;
+        Console.BackgroundColor = color == null ? DefaultColor : (ConsoleColor)color;
+        int x = Win("px");
         int endX = Math.Min(pos.length, x);
-        Console.BackgroundColor = color;
         Write(new string(' ', endX * 2), 0, pos.row, map: map);
     }
-    public static void DrawRow((int row, int x1, int x2) pos, ConsoleColor color = ConsoleColor.Gray, string map = "Start")
+    public static void DrawRow((int row, int x1, int x2) pos, ConsoleColor? color = null, string map = "Start")
     {
-        if (color == ConsoleColor.Gray)
-        {
-            color = DefaultColor;
-        }
-        int x = Console.WindowWidth / 2;
+        Console.BackgroundColor = color == null ? DefaultColor : (ConsoleColor)color;
+        int x = Win("px");
         int endX = Math.Min(Math.Max(pos.x2-pos.x1,0),x);
         if (DrawMode == "METRIC")
         {
             endX = Math.Min(pos.x2, x-pos.x1);
         }
-        Console.BackgroundColor = color;
         Write(new string(' ', endX * 2), pos.x1, pos.row, map: map);
     }
-    public static void DrawColumn(int pos, ConsoleColor color = ConsoleColor.Gray, string map = "Start")
+    public static void DrawColumn(int pos, ConsoleColor? color = null, string map = "Start")
     {
-        if (color == ConsoleColor.Gray)
-        {
-            color = DefaultColor;
-        }
+        Console.BackgroundColor = color == null ? DefaultColor : (ConsoleColor)color;
         int y = Console.WindowHeight;
-        Console.BackgroundColor = color;
         Write(string.Concat(Enumerable.Repeat("  \n", y)), pos, 0, map: map);
     }
-    public static void DrawColumn((int column, int length) pos, ConsoleColor color = ConsoleColor.Gray, string map = "Start")
+    public static void DrawColumn((int column, int length) pos, ConsoleColor? color = null, string map = "Start")
     {
-        if (color == ConsoleColor.Gray)
-        {
-            color = DefaultColor;
-        }
+        Console.BackgroundColor = color == null ? DefaultColor : (ConsoleColor)color;
         int y = Console.WindowHeight;
         int endY = Math.Min(pos.length, y);
-        Console.BackgroundColor = color;
         Write(string.Concat(Enumerable.Repeat("  \n", endY)), pos.column,0, map: map);
     }
-    public static void DrawColumn((int column, int y1, int y2) pos, ConsoleColor color = ConsoleColor.Gray, string map = "Start")
+    public static void DrawColumn((int column, int y1, int y2) pos, ConsoleColor? color = null, string map = "Start")
     {
-        if (color == ConsoleColor.Gray)
-        {
-            color = DefaultColor;
-        }
+        Console.BackgroundColor = color == null ? DefaultColor : (ConsoleColor)color;
         int y = Console.WindowHeight;
         int endY = Math.Min(pos.y2, y);
         if (DrawMode == "METRIC")
         {
             endY = Math.Min(pos.y2+pos.y1, y-pos.y1);
         }
-        Console.BackgroundColor = color;
         Write(string.Concat(Enumerable.Repeat("  \n", pos.y2)), pos.column,pos.y1, map: map);
     }
-    public static void DrawRect((int x1, int y1, int x2, int y2) pos, ConsoleColor color = ConsoleColor.Gray, string map = "Start")
+    public static void DrawRect((int x1, int y1, int x2, int y2) pos, ConsoleColor? color = null, string map = "Start")
     {
-        if (color == ConsoleColor.Gray)
-        {
-            color = DefaultColor;
-        }
-        int x = Console.WindowWidth / 2;
+        Console.BackgroundColor = color == null ? DefaultColor: (ConsoleColor)color;
+        int x = Win("px");
         int y = Console.WindowHeight;
         int endX = Math.Min(Math.Max(pos.x2 - pos.x1, 0), x);
         int endY = Math.Min(pos.y2, y);
@@ -362,7 +330,6 @@ public class App
             endX = Math.Min(pos.x2, x - pos.x1);
             endY = Math.Min(pos.y2, y - pos.y1);
         }
-        Console.BackgroundColor = color;
         if (endX >= Win("px"))
         {
             Write(string.Concat(Enumerable.Repeat(new string(' ', endX * 2), endY)), pos.x1, pos.y1, map: map);
