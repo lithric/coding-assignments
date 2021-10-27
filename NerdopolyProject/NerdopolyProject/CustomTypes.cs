@@ -237,6 +237,10 @@ public class App
         int i = y;
         foreach (string line in bits)
         {
+            if (i >= Win("py") || x >= Win("px"))
+            {
+                break;
+            }
             if (line.Length > Win("px"))
             {
                 PixelMap[map][i].RemoveRange(x, line.Length / Win("px"));
