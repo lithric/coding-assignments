@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using Pastel;
 namespace NerdopolyProject
 {
     class Program
@@ -20,9 +21,9 @@ namespace NerdopolyProject
         {
             newX = Math.Max(Math.Min(newX, Console.WindowWidth/2 - 1), 0);
             newY = Math.Max(Math.Min(newY, Console.WindowHeight - 1), 0);
-            ConsoleColor underCol = App.Pixel(charPos[0],charPos[1],map:"Start");
-            ConsoleColor coverCol = App.Pixel(newX, newY, map:"Start");
-            ConsoleColor deathCheck = App.Pixel(newX, newY, map: "Death");
+            //ConsoleColor underCol = App.Pixel(charPos[0],charPos[1],map:"Start");
+            //ConsoleColor coverCol = App.Pixel(newX, newY, map:"Start");
+            ConsoleColor deathCheck = ConsoleColor.Green;//App.Pixel(newX, newY, map: "Death");
             if (deathCheck == ConsoleColor.Red && check)
             {
                 Console.BackgroundColor = App.DefaultColor;
@@ -43,8 +44,8 @@ namespace NerdopolyProject
                 UpdatePos(250 / 4, 60 / 2,false);
                 return;
             }
-            App.DrawPixel(pos: (charPos[0], charPos[1]),color: underCol,map: "Char");
-            App.DrawPixel(pos: (newX, newY), color: ConsoleColor.Green,map: "Char");
+            //App.DrawPixel(pos: (charPos[0], charPos[1]),color: underCol,map: "Char");
+            //App.DrawPixel(pos: (newX, newY), color: ConsoleColor.Green,map: "Char");
             charPos[0] = newX;
             charPos[1] = newY;
         }
@@ -52,9 +53,9 @@ namespace NerdopolyProject
         {
             while (true)
             {
-                ConsoleColor under = App.Pixel(enemyPos[0], enemyPos[1], map: "Start");
-                App.DrawPixel(pos: (enemyPos[0], enemyPos[1]), color: ConsoleColor.Black, map: "Death", write: false);
-                App.DrawPixel(pos: (enemyPos[0], enemyPos[1]), color: under, map: "Start");
+                //ConsoleColor under = App.Pixel(enemyPos[0], enemyPos[1], map: "Start");
+                //App.DrawPixel(pos: (enemyPos[0], enemyPos[1]), color: ConsoleColor.Black, map: "Death", write: false);
+                //App.DrawPixel(pos: (enemyPos[0], enemyPos[1]), color: under, map: "Start");
                 if (enemyPos[0] > charPos[0])
                 {
                     enemyPos[0] -= 1;
@@ -71,7 +72,7 @@ namespace NerdopolyProject
                 {
                     enemyPos[1] += 1;
                 }
-                App.DrawPixel(pos: (enemyPos[0], enemyPos[1]), color: ConsoleColor.Red, map: "Death");
+                //App.DrawPixel(pos: (enemyPos[0], enemyPos[1]), color: ConsoleColor.Red, map: "Death");
                 Thread.Sleep(400);
             }
         }
@@ -79,8 +80,13 @@ namespace NerdopolyProject
         {
             //List<List<List<StoryObject>>> game1Story = (List<List<List<StoryObject>>>)Story.GetStoriesBySection("Game1",@"\#");
             Console.SetWindowSize(250, 60);
-            Console.CursorVisible = false;
+            //Console.CursorVisible = false;
             App.CreatePixelMap("Start");
+            App.DrawPixel(pos:(125,30),color:"#00FF00",map:"Start");
+            Console.Write(App.Pixel(125/2,30,map:"Start"));
+            /*
+            
+            
             App.CreatePixelMap("Char");
             App.CreatePixelMap("Death", ConsoleColor.Black);
             App.DrawRect(pos: (0, 0, 250/2, 60) ,map: "Start");
@@ -89,6 +95,8 @@ namespace NerdopolyProject
             App.DrawPixel(pos: (20, 50) ,color: ConsoleColor.Green,map:"Start");
             App.DrawRow(pos: (10, 10) ,color: ConsoleColor.Red,map:"Death",write: false);
             App.DrawRow(pos: (10, 10), color: ConsoleColor.White, map: "Start");
+            */
+
             //App.DrawColumn(pos: (20 / 2, 10, 40), color: ConsoleColor.Red, map: "Start");
             //App.DrawRect(pos: (1, 10, 20, 20), map: 0,color: ConsoleColor.Blue);
             //App.DrawRow(25, 60, 0, ConsoleColor.Yellow);
@@ -96,6 +104,8 @@ namespace NerdopolyProject
             //App.DrawColumn(40,0,ConsoleColor.Magenta);
             //App.DrawColumn(60, 30, 0, ConsoleColor.Cyan);
             //App.DrawColumn(90, 0, 1, 0, ConsoleColor.DarkCyan);
+
+            /*
             Thread enemy = new Thread(EnemyAction);
             enemy.Start();
             while (true)
@@ -119,6 +129,7 @@ namespace NerdopolyProject
                 }
                 UpdatePos(charX,charY);
             }
+            */
             Console.ReadLine();
         }
     }

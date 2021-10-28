@@ -5,3 +5,6 @@ C:\Users\oliver_elion\Documents\coding assignments\NerdopolyProject\NerdopolyPro
 C:\Users\oliver_elion\Documents\coding assignments\NerdopolyProject\NerdopolyProject\obj\Debug\NerdopolyProject.csproj.CoreCompileInputs.cache
 C:\Users\oliver_elion\Documents\coding assignments\NerdopolyProject\NerdopolyProject\obj\Debug\NerdopolyProject.exe
 C:\Users\oliver_elion\Documents\coding assignments\NerdopolyProject\NerdopolyProject\obj\Debug\NerdopolyProject.pdb
+C:\Users\oliver_elion\Documents\coding assignments\NerdopolyProject\NerdopolyProject\bin\Debug\Pastel.dll
+C:\Users\oliver_elion\Documents\coding assignments\NerdopolyProject\NerdopolyProject\bin\Debug\Pastel.xml
+C:\Users\oliver_elion\Documents\coding assignments\NerdopolyProject\NerdopolyProject\obj\Debug\NerdopolyProject.csproj.CopyComplete

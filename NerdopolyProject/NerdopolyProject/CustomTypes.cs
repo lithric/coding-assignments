@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.IO;
 using Microsoft.Win32.SafeHandles;
+using Pastel;
 
 public struct Literal
 {
@@ -171,6 +172,58 @@ public struct Literal
         }
     }
 }
+
+public struct Color {
+    public string text;
+    public ConsoleColor color;
+    public static List<ConsoleColor> _colors = new List<ConsoleColor> {ConsoleColor.Black,ConsoleColor.Blue,ConsoleColor.Cyan,ConsoleColor.DarkBlue,ConsoleColor.DarkCyan,ConsoleColor.DarkGray,ConsoleColor.DarkGreen,ConsoleColor.DarkMagenta,ConsoleColor.DarkRed,ConsoleColor.DarkYellow,ConsoleColor.Gray,ConsoleColor.Green,ConsoleColor.Magenta,ConsoleColor.Red,ConsoleColor.White,ConsoleColor.Yellow};
+    public static List<string> colors = (from c in _colors select c.ToString()).ToList();
+    public Color(object val)
+    {
+        string aura = val.GetType().ToString();
+        switch (aura)
+        {
+            case "System.ConsoleColor":
+                text = ((ConsoleColor)val).ToString();
+                color = (ConsoleColor)val;
+            break;
+            case "System.String":
+                if (colors.Contains((string)val))
+                {
+                    int transfer = colors.IndexOf((string)val);
+                    text = (string)val;
+                    color = _colors[transfer];
+                }
+                else
+                {
+                    text = "0";
+                    color = _colors[0];
+                }
+            break;
+            default:
+                text = "0";
+                color = _colors[0];
+            break;
+        }
+    }
+    public static implicit operator Color(string x)
+    {
+        return new Color(x);
+    }
+    public static implicit operator string(Color x)
+    {
+        return x.text;
+    }
+    public static implicit operator Color(ConsoleColor x)
+    {
+        return new Color(x);
+    }
+    public static implicit operator ConsoleColor(Color x)
+    {
+        return x.color;
+    }
+}
+
 public class Calc
 {
     public static void Prompt(object x)
@@ -220,19 +273,18 @@ public class App
     private const int STD_OUTPUT_HANDLE = -11;
     private const uint ENABLE_VIRTUAL_TERMINAL_PROCESSING = 0x0004;
     private const uint DISABLE_NEWLINE_AUTO_RETURN = 0x0008;
-    public static IDictionary<string,List<List<ConsoleColor>>> PixelMap = new Dictionary<string, List<List<ConsoleColor>>>() { };
+    public static IDictionary<string,List<string>> PixelMap = new Dictionary<string, List<string>>() { };
     public static string DrawMode = "METRIC";
     public static ConsoleColor DefaultColor = ConsoleColor.Gray;
     public static Func<string, int> Win = (string dir) => {
         return dir == "x" ? Console.WindowWidth : dir == "px" ? Console.WindowWidth/2: Console.WindowHeight; 
     }; 
-    public static ConsoleColor Pixel(int x,int y,string map = "Start")
+    public static string Pixel(int x,int y,string map = "Start")
     {
-        return PixelMap[map][y][x];
+        return PixelMap[map][y].Substring(0,80);
     }
-    public static void Write(string text, int x, int y, string map = "Start",ConsoleColor? color = null,bool write = true)
+    public static void Write(string text, int x, int y, string map = "Start",string color = null,bool write = true)
     {
-        Console.BackgroundColor = color == null ? Console.BackgroundColor:(ConsoleColor)color;
         string[] bits = text.Split('\n');
         int i = y;
         foreach (string line in bits)
@@ -243,60 +295,51 @@ public class App
             }
             if (line.Length > Win("px"))
             {
-                PixelMap[map][i].RemoveRange(x, line.Length / Win("px"));
-                PixelMap[map][i].InsertRange(x, Enumerable.Repeat(Console.BackgroundColor, line.Length / Win("px")));
+                PixelMap[map][i] = PixelMap[map][i].Remove(x, line.Length / Win("px"));
+                PixelMap[map][i] = PixelMap[map][i].Insert(x, new string(' ', line.Length / Win("px")).PastelBg(color));
             }
             else
             {
-                PixelMap[map][i].RemoveRange(x, line.Length / 2);
-                PixelMap[map][i].InsertRange(x, Enumerable.Repeat(Console.BackgroundColor, line.Length / 2));
+                PixelMap[map][i] = PixelMap[map][i].Remove(x, line.Length / 2);
+                PixelMap[map][i] = PixelMap[map][i].Insert(x, new string(' ',line.Length / 2).PastelBg(color));
             }
             if (write)
             {
                 Console.SetCursorPosition(x * 2, i);
-                Console.Write(line);
+                Console.Write(line.PastelBg(color));
             }
             i++;
         }
-        Console.BackgroundColor = DefaultColor;
         Console.SetCursorPosition(0, 0);
     }
-    public static void CreatePixelMap(string name, ConsoleColor color = ConsoleColor.Gray)
+    public static void CreatePixelMap(string name, string color = "#555555")
     {
-        PixelMap.Add(name, new List<List<ConsoleColor>>());
+        PixelMap.Add(name, new List<string>());
         int mapWidth = Console.WindowWidth / 2;
         int mapHeight = Console.WindowHeight;
         for (int i=0; i<mapHeight; i++)
         {
-            PixelMap[name].Add(new List<ConsoleColor>());
-            for (int j=0; j<mapWidth; j++)
-            {
-                PixelMap[name][i].Add(color);
-            }
+            PixelMap[name].Add(new string(' ',mapWidth).PastelBg(color));
         }
     }
 
-    public static void DrawPixel((int x,int y) pos, ConsoleColor? color = null, string map = "Start", bool write = true)
+    public static void DrawPixel((int x,int y) pos, string color = null, string map = "Start", bool write = true)
     {
-        Console.BackgroundColor = color == null ? DefaultColor : (ConsoleColor)color;
-        Write("  ",pos.x,pos.y, map: map,write: write);
+        Write("  ",pos.x,pos.y, map: map,write: write,color: color);
     }
-    public static void DrawRow(int pos, ConsoleColor? color = null, string map = "Start", bool write = true)
+    public static void DrawRow(int pos, string color = null, string map = "Start", bool write = true)
     {
-        Console.BackgroundColor = color == null ? DefaultColor : (ConsoleColor)color;
         int x = Win("px");
         Write(new string(' ', x * 2), 0, pos, map: map,write: write);
     }
-    public static void DrawRow((int row, int length) pos, ConsoleColor? color = null, string map = "Start",bool write = true)
+    public static void DrawRow((int row, int length) pos, string color = null, string map = "Start",bool write = true)
     {
-        Console.BackgroundColor = color == null ? DefaultColor : (ConsoleColor)color;
         int x = Win("px");
         int endX = Math.Min(pos.length, x);
         Write(new string(' ', endX * 2), 0, pos.row, map: map,write: write);
     }
-    public static void DrawRow((int row, int x1, int x2) pos, ConsoleColor? color = null, string map = "Start", bool write = true)
+    public static void DrawRow((int row, int x1, int x2) pos, string color = null, string map = "Start", bool write = true)
     {
-        Console.BackgroundColor = color == null ? DefaultColor : (ConsoleColor)color;
         int x = Win("px");
         int endX = Math.Min(Math.Max(pos.x2-pos.x1,0),x);
         if (DrawMode == "METRIC")
@@ -305,22 +348,19 @@ public class App
         }
         Write(new string(' ', endX * 2), pos.x1, pos.row, map: map,write:write);
     }
-    public static void DrawColumn(int pos, ConsoleColor? color = null, string map = "Start", bool write = true)
+    public static void DrawColumn(int pos, string color = null, string map = "Start", bool write = true)
     {
-        Console.BackgroundColor = color == null ? DefaultColor : (ConsoleColor)color;
         int y = Console.WindowHeight;
         Write(string.Concat(Enumerable.Repeat("  \n", y)), pos, 0, map: map, write: write);
     }
-    public static void DrawColumn((int column, int length) pos, ConsoleColor? color = null, string map = "Start", bool write = true)
+    public static void DrawColumn((int column, int length) pos, string color = null, string map = "Start", bool write = true)
     {
-        Console.BackgroundColor = color == null ? DefaultColor : (ConsoleColor)color;
         int y = Console.WindowHeight;
         int endY = Math.Min(pos.length, y);
         Write(string.Concat(Enumerable.Repeat("  \n", endY)), pos.column,0, map: map, write: write);
     }
-    public static void DrawColumn((int column, int y1, int y2) pos, ConsoleColor? color = null, string map = "Start", bool write = true)
+    public static void DrawColumn((int column, int y1, int y2) pos, string color = null, string map = "Start", bool write = true)
     {
-        Console.BackgroundColor = color == null ? DefaultColor : (ConsoleColor)color;
         int y = Console.WindowHeight;
         int endY = Math.Min(pos.y2, y);
         if (DrawMode == "METRIC")
@@ -329,9 +369,8 @@ public class App
         }
         Write(string.Concat(Enumerable.Repeat("  \n", pos.y2)), pos.column,pos.y1, map: map, write: write);
     }
-    public static void DrawRect((int x1, int y1, int x2, int y2) pos, ConsoleColor? color = null, string map = "Start", bool write = true)
+    public static void DrawRect((int x1, int y1, int x2, int y2) pos,string color = null, string map = "Start", bool write = true)
     {
-        Console.BackgroundColor = color == null ? DefaultColor: (ConsoleColor)color;
         int x = Win("px");
         int y = Console.WindowHeight;
         int endX = Math.Min(Math.Max(pos.x2 - pos.x1, 0), x);
