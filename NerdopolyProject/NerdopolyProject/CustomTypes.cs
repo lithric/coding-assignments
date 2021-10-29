@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.IO;
 using Microsoft.Win32.SafeHandles;
+using System.Text.RegularExpressions;
 using Pastel;
 
 public struct Literal
@@ -273,7 +274,7 @@ public class App
     private const int STD_OUTPUT_HANDLE = -11;
     private const uint ENABLE_VIRTUAL_TERMINAL_PROCESSING = 0x0004;
     private const uint DISABLE_NEWLINE_AUTO_RETURN = 0x0008;
-    public static IDictionary<string,List<string>> PixelMap = new Dictionary<string, List<string>>() { };
+    public static IDictionary<string,List<List<(string color, string text)>>> PixelMap = new Dictionary<string, List<List<(string color, string text)>>>() { };
     public static string DrawMode = "METRIC";
     public static ConsoleColor DefaultColor = ConsoleColor.Gray;
     public static Func<string, int> Win = (string dir) => {
@@ -281,7 +282,14 @@ public class App
     }; 
     public static string Pixel(int x,int y,string map = "Start")
     {
-        return PixelMap[map][y].Substring(0,80);
+        return PixelMap[map][y][x].color;
+    }
+    public static void DrawPixelMap(string map = "Start")
+    {
+        //string mapString = string.Join("",(from line in PixelMap[map] select Regex.Replace(line, " ","  ")));
+        Console.SetCursorPosition(0, 0);
+        //Console.Write(mapString);
+        Console.SetCursorPosition(0, 0);
     }
     public static void Write(string text, int x, int y, string map = "Start",string color = null,bool write = true)
     {
@@ -295,31 +303,38 @@ public class App
             }
             if (line.Length > Win("px"))
             {
-                PixelMap[map][i] = PixelMap[map][i].Remove(x, line.Length / Win("px"));
-                PixelMap[map][i] = PixelMap[map][i].Insert(x, new string(' ', line.Length / Win("px")).PastelBg(color));
+                //PixelMap[map][i] = PixelMap[map][i].Remove((new string(' ', x).PastelBg(color)).Length, line.Length / Win("px"));
+                //PixelMap[map][i] = PixelMap[map][i].Insert((new string(' ', x).PastelBg(color)).Length, new string(' ', line.Length / Win("px")).PastelBg(color));
             }
             else
             {
-                PixelMap[map][i] = PixelMap[map][i].Remove(x, line.Length / 2);
-                PixelMap[map][i] = PixelMap[map][i].Insert(x, new string(' ',line.Length / 2).PastelBg(color));
-            }
-            if (write)
-            {
-                Console.SetCursorPosition(x * 2, i);
-                Console.Write(line.PastelBg(color));
+                //
+                //PixelMap[map][i] = PixelMap[map][i].Remove((new string(' ',x).PastelBg(color)).Length, line.Length / 2);
+                //PixelMap[map][i] = PixelMap[map][i].Insert((new string(' ',x).PastelBg(color)).Length, new string(' ',line.Length / 2).PastelBg(color));
+                PixelMap[map][i].RemoveRange(x, line.Length / 2);
+                PixelMap[map][i].InsertRange(x, Enumerable.Repeat((color," "),line.Length / 2));
             }
             i++;
+        }
+        if (write)
+        {
+            Console.SetCursorPosition(x * 2, i);
+            Console.Write(text.PastelBg(color));
         }
         Console.SetCursorPosition(0, 0);
     }
     public static void CreatePixelMap(string name, string color = "#555555")
     {
-        PixelMap.Add(name, new List<string>());
+        PixelMap.Add(name, new List<List<(string color,string text)>>());
         int mapWidth = Console.WindowWidth / 2;
         int mapHeight = Console.WindowHeight;
         for (int i=0; i<mapHeight; i++)
         {
-            PixelMap[name].Add(new string(' ',mapWidth).PastelBg(color));
+            PixelMap[name].Add(new List<(string color, string text)>());
+            for (int j=0; j<mapWidth; j++)
+            {
+                PixelMap[name][i].Add((color," "));
+            }
         }
     }
 

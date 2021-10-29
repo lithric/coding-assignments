@@ -82,8 +82,8 @@ namespace NerdopolyProject
             Console.SetWindowSize(250, 60);
             //Console.CursorVisible = false;
             App.CreatePixelMap("Start");
-            App.DrawPixel(pos:(125,30),color:"#00FF00",map:"Start");
-            Console.Write(App.Pixel(125/2,30,map:"Start"));
+            App.DrawPixel(pos:(125/2,30),color:"#00FF00",map:"Start",write: false);
+            App.DrawPixelMap("Start");
             /*
             
             
