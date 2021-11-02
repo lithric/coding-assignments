@@ -276,7 +276,7 @@ public class App
     private const uint DISABLE_NEWLINE_AUTO_RETURN = 0x0008;
     public static IDictionary<string,List<List<(string color, string text)>>> PixelMap = new Dictionary<string, List<List<(string color, string text)>>>() { };
     public static string DrawMode = "METRIC";
-    public static ConsoleColor DefaultColor = ConsoleColor.Gray;
+    public static string DefaultColor = "#555555";
     public static Func<string, int> Win = (string dir) => {
         return dir == "x" ? Console.WindowWidth : dir == "px" ? Console.WindowWidth/2: Console.WindowHeight; 
     }; 
@@ -287,7 +287,23 @@ public class App
     public static void DrawPixelMap(string map = "Start")
     {
         //string mapString = string.Join("",(from line in PixelMap[map] select Regex.Replace(line, " ","  ")));
+        List<(string color, string text)> gain = PixelMap[map].SelectMany(x => x).ToList();
+        List<string> dollar = new List<string>();
+        var step1 = gain;
+        while (true)
+        {
+            List<(string color, string text)> step2 = step1;
+            step1 = step1.SkipWhile(x => x == step1[0]).ToList();
+            int count = step2.Count - step1.Count;
+            dollar.Add(new string(' ',count*2).PastelBg(step2[0].color));
+            if (step1.Count == 0)
+            {
+                break;
+            }
+        }
+        string term = dollar.Aggregate((x, y) => { return x + y; });
         Console.SetCursorPosition(0, 0);
+        Console.Write(term);
         //Console.Write(mapString);
         Console.SetCursorPosition(0, 0);
     }
@@ -295,6 +311,7 @@ public class App
     {
         string[] bits = text.Split('\n');
         int i = y;
+        color = color == null ? DefaultColor : color;
         foreach (string line in bits)
         {
             if (i >= Win("py") || x >= Win("px"))
@@ -303,37 +320,58 @@ public class App
             }
             if (line.Length > Win("px"))
             {
-                //PixelMap[map][i] = PixelMap[map][i].Remove((new string(' ', x).PastelBg(color)).Length, line.Length / Win("px"));
-                //PixelMap[map][i] = PixelMap[map][i].Insert((new string(' ', x).PastelBg(color)).Length, new string(' ', line.Length / Win("px")).PastelBg(color));
+                PixelMap[map][i].RemoveRange(x, line.Length / Win("px"));
+                PixelMap[map][i].InsertRange(x, Enumerable.Repeat((color, " "), line.Length / Win("px")));
+                if (write) { 
+                    PixelMap["SCREEN"][i].RemoveRange(x, line.Length / Win("px")); 
+                    PixelMap["SCREEN"][i].InsertRange(x, Enumerable.Repeat((color, " "), line.Length / Win("px")));
+                };
             }
             else
             {
-                //
-                //PixelMap[map][i] = PixelMap[map][i].Remove((new string(' ',x).PastelBg(color)).Length, line.Length / 2);
-                //PixelMap[map][i] = PixelMap[map][i].Insert((new string(' ',x).PastelBg(color)).Length, new string(' ',line.Length / 2).PastelBg(color));
                 PixelMap[map][i].RemoveRange(x, line.Length / 2);
-                PixelMap[map][i].InsertRange(x, Enumerable.Repeat((color," "),line.Length / 2));
+                PixelMap[map][i].InsertRange(x, Enumerable.Repeat((color, " "), line.Length / 2));
+                if (write)
+                {
+                    PixelMap["SCREEN"][i].RemoveRange(x, line.Length / 2);
+                    PixelMap["SCREEN"][i].InsertRange(x, Enumerable.Repeat((color, " "), line.Length / 2));
+                };
+            }
+            if (write)
+            {
+                Console.SetCursorPosition(x * 2, i);
+                Console.Write(line.PastelBg(color));
             }
             i++;
-        }
-        if (write)
-        {
-            Console.SetCursorPosition(x * 2, i);
-            Console.Write(text.PastelBg(color));
         }
         Console.SetCursorPosition(0, 0);
     }
     public static void CreatePixelMap(string name, string color = "#555555")
     {
-        PixelMap.Add(name, new List<List<(string color,string text)>>());
         int mapWidth = Console.WindowWidth / 2;
         int mapHeight = Console.WindowHeight;
-        for (int i=0; i<mapHeight; i++)
+        if (!PixelMap.ContainsKey("SCREEN"))
         {
-            PixelMap[name].Add(new List<(string color, string text)>());
-            for (int j=0; j<mapWidth; j++)
+            PixelMap.Add("SCREEN", new List<List<(string color, string text)>>());
+            for (int i = 0; i < mapHeight; i++)
             {
-                PixelMap[name][i].Add((color," "));
+                PixelMap["SCREEN"].Add(new List<(string color, string text)>());
+                for (int j = 0; j < mapWidth; j++)
+                {
+                    PixelMap["SCREEN"][i].Add((color, " "));
+                }
+            }
+        }
+        if (name != "SCREEN")
+        {
+            PixelMap.Add(name, new List<List<(string color, string text)>>());
+            for (int i = 0; i < mapHeight; i++)
+            {
+                PixelMap[name].Add(new List<(string color, string text)>());
+                for (int j = 0; j < mapWidth; j++)
+                {
+                    PixelMap[name][i].Add((color, " "));
+                }
             }
         }
     }
@@ -345,13 +383,13 @@ public class App
     public static void DrawRow(int pos, string color = null, string map = "Start", bool write = true)
     {
         int x = Win("px");
-        Write(new string(' ', x * 2), 0, pos, map: map,write: write);
+        Write(new string(' ', x * 2), 0, pos, map: map,write: write,color: color);
     }
     public static void DrawRow((int row, int length) pos, string color = null, string map = "Start",bool write = true)
     {
         int x = Win("px");
         int endX = Math.Min(pos.length, x);
-        Write(new string(' ', endX * 2), 0, pos.row, map: map,write: write);
+        Write(new string(' ', endX * 2), 0, pos.row, map: map,write: write,color: color);
     }
     public static void DrawRow((int row, int x1, int x2) pos, string color = null, string map = "Start", bool write = true)
     {
@@ -361,18 +399,18 @@ public class App
         {
             endX = Math.Min(pos.x2, x-pos.x1);
         }
-        Write(new string(' ', endX * 2), pos.x1, pos.row, map: map,write:write);
+        Write(new string(' ', endX * 2), pos.x1, pos.row, map: map,write:write, color: color);
     }
     public static void DrawColumn(int pos, string color = null, string map = "Start", bool write = true)
     {
         int y = Console.WindowHeight;
-        Write(string.Concat(Enumerable.Repeat("  \n", y)), pos, 0, map: map, write: write);
+        Write(string.Concat(Enumerable.Repeat("  \n", y)), pos, 0, map: map, write: write, color: color);
     }
     public static void DrawColumn((int column, int length) pos, string color = null, string map = "Start", bool write = true)
     {
         int y = Console.WindowHeight;
         int endY = Math.Min(pos.length, y);
-        Write(string.Concat(Enumerable.Repeat("  \n", endY)), pos.column,0, map: map, write: write);
+        Write(string.Concat(Enumerable.Repeat("  \n", endY)), pos.column,0, map: map, write: write, color: color);
     }
     public static void DrawColumn((int column, int y1, int y2) pos, string color = null, string map = "Start", bool write = true)
     {
@@ -382,7 +420,7 @@ public class App
         {
             endY = Math.Min(pos.y2+pos.y1, y-pos.y1);
         }
-        Write(string.Concat(Enumerable.Repeat("  \n", pos.y2)), pos.column,pos.y1, map: map, write: write);
+        Write(string.Concat(Enumerable.Repeat("  \n", pos.y2)), pos.column,pos.y1, map: map, write: write, color: color);
     }
     public static void DrawRect((int x1, int y1, int x2, int y2) pos,string color = null, string map = "Start", bool write = true)
     {
@@ -397,11 +435,11 @@ public class App
         }
         if (endX >= Win("px"))
         {
-            Write(string.Concat(Enumerable.Repeat(new string(' ', endX * 2), endY)), pos.x1, pos.y1, map: map, write: write);
+            Write(string.Concat(Enumerable.Repeat(new string(' ', endX * 2), endY)), pos.x1, pos.y1, map: map, write: write, color: color);
         }
         else
         {
-            Write(string.Concat(Enumerable.Repeat(new string(' ', endX * 2) + "\n", endY)), pos.x1, pos.y1, map: map, write: write);
+            Write(string.Concat(Enumerable.Repeat(new string(' ', endX * 2) + "\n", endY)), pos.x1, pos.y1, map: map, write: write, color: color);
         }
     }
 }
