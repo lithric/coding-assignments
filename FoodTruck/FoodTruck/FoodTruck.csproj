@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{562FA25E-F927-49B2-89E4-E827B7ABD8A6}</ProjectGuid>
+    <ProjectGuid>{E0379E31-64BE-4FA9-A2F3-1DFC4E636CBC}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>linq_demonstration</RootNamespace>
-    <AssemblyName>linq demonstration</AssemblyName>
+    <RootNamespace>FoodTruck</RootNamespace>
+    <AssemblyName>FoodTruck</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,8 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Food.cs" />
+    <Compile Include="Hotdog.cs" />
+    <Compile Include="IMexican.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Taco.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

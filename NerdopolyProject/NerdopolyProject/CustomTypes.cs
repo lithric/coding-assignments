@@ -286,26 +286,22 @@ public class App
     }
     public static void DrawPixelMap(string map = "Start")
     {
-        //string mapString = string.Join("",(from line in PixelMap[map] select Regex.Replace(line, " ","  ")));
-        List<(string color, string text)> gain = PixelMap[map].SelectMany(x => x).ToList();
-        List<string> dollar = new List<string>();
-        var step1 = gain;
-        while (true)
+        string mapString = "";
+        (string color, string text) gain = PixelMap[map].SelectMany(x => x).Aggregate(((string color, string text) acc, (string color, string text) next) =>
         {
-            List<(string color, string text)> step2 = step1;
-            step1 = step1.SkipWhile(x => x == step1[0]).ToList();
-            int count = step2.Count - step1.Count;
-            dollar.Add(new string(' ',count*2).PastelBg(step2[0].color));
-            if (step1.Count == 0)
+            if (acc.color == next.color)
             {
-                break;
+                return (next.color, acc.text + next.text);
             }
-        }
-        string term = dollar.Aggregate((x, y) => { return x + y; });
+            else //(acc.color != next.color)
+            {
+                mapString += new string(' ', acc.text.Length * 2).PastelBg(acc.color);
+                return (next.color, next.text);
+            }
+        });
+        mapString += new string(' ', gain.text.Length * 2).PastelBg(gain.color);
         Console.SetCursorPosition(0, 0);
-        Console.Write(term);
-        //Console.Write(mapString);
-        Console.SetCursorPosition(0, 0);
+        Console.Write(mapString);
     }
     public static void Write(string text, int x, int y, string map = "Start",string color = null,bool write = true)
     {

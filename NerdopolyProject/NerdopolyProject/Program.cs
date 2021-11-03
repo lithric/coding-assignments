@@ -44,8 +44,8 @@ namespace NerdopolyProject
                 UpdatePos(250 / 4, 60 / 2,false);
                 return;
             }
-            App.DrawPixel(pos: (charPos[0], charPos[1]),color: underCol,map: "Char");
-            App.DrawPixel(pos: (newX, newY), color: "#00FF00",map: "Char");
+            App.DrawPixel(pos: (charPos[0], charPos[1]),color: underCol,map: "Char",write:false);
+            App.DrawPixel(pos: (newX, newY), color: "#00FF00",map: "Char",write:false);
             charPos[0] = newX;
             charPos[1] = newY;
         }
@@ -82,9 +82,8 @@ namespace NerdopolyProject
             Console.SetWindowSize(250, 60);
             Console.CursorVisible = false;
             App.CreatePixelMap("Start");
-
-            
-            
+            //App.DrawPixel(pos: (125/2, 15), color: "#00FF00", map: "Start", write: false);
+            //App.DrawPixelMap("Start");
             App.CreatePixelMap("Char");
             App.CreatePixelMap("Death", "#000000");
             App.DrawRect(pos: (0, 0, 250/2, 60) ,map: "Start");

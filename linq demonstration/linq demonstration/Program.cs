@@ -72,8 +72,6 @@ namespace linq_demonstration
             // the goal is to reduce the numbers in database while keeping the same data available
             // data[0](0).item1
             // data[deck number](card number).cardInfo
-            delegate var complexData = (from d in database group d.Value by d.Key).ToDictionary(p => p);
-            Console.WriteLine(complexData);
             List < Func<int, (string, string, string, string)> > data = (from d in database select (Func<int, (string, string, string, string)>)((int x) => { return Manifest(d.Key)[x]; })).ToList();
             // 100x less data stored in the object "data"
             DataUpdate(ref data, "120");

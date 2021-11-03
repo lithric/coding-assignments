@@ -1,0 +1,7 @@
+C:\Users\oliver_elion\Documents\coding assignments\FoodTruck\FoodTruck\bin\Debug\FoodTruck.exe.config
+C:\Users\oliver_elion\Documents\coding assignments\FoodTruck\FoodTruck\bin\Debug\FoodTruck.exe
+C:\Users\oliver_elion\Documents\coding assignments\FoodTruck\FoodTruck\bin\Debug\FoodTruck.pdb
+C:\Users\oliver_elion\Documents\coding assignments\FoodTruck\FoodTruck\obj\Debug\FoodTruck.csproj.AssemblyReference.cache
+C:\Users\oliver_elion\Documents\coding assignments\FoodTruck\FoodTruck\obj\Debug\FoodTruck.csproj.CoreCompileInputs.cache
+C:\Users\oliver_elion\Documents\coding assignments\FoodTruck\FoodTruck\obj\Debug\FoodTruck.exe
+C:\Users\oliver_elion\Documents\coding assignments\FoodTruck\FoodTruck\obj\Debug\FoodTruck.pdb
