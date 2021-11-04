@@ -174,57 +174,6 @@ public struct Literal
     }
 }
 
-public struct Color {
-    public string text;
-    public ConsoleColor color;
-    public static List<ConsoleColor> _colors = new List<ConsoleColor> {ConsoleColor.Black,ConsoleColor.Blue,ConsoleColor.Cyan,ConsoleColor.DarkBlue,ConsoleColor.DarkCyan,ConsoleColor.DarkGray,ConsoleColor.DarkGreen,ConsoleColor.DarkMagenta,ConsoleColor.DarkRed,ConsoleColor.DarkYellow,ConsoleColor.Gray,ConsoleColor.Green,ConsoleColor.Magenta,ConsoleColor.Red,ConsoleColor.White,ConsoleColor.Yellow};
-    public static List<string> colors = (from c in _colors select c.ToString()).ToList();
-    public Color(object val)
-    {
-        string aura = val.GetType().ToString();
-        switch (aura)
-        {
-            case "System.ConsoleColor":
-                text = ((ConsoleColor)val).ToString();
-                color = (ConsoleColor)val;
-            break;
-            case "System.String":
-                if (colors.Contains((string)val))
-                {
-                    int transfer = colors.IndexOf((string)val);
-                    text = (string)val;
-                    color = _colors[transfer];
-                }
-                else
-                {
-                    text = "0";
-                    color = _colors[0];
-                }
-            break;
-            default:
-                text = "0";
-                color = _colors[0];
-            break;
-        }
-    }
-    public static implicit operator Color(string x)
-    {
-        return new Color(x);
-    }
-    public static implicit operator string(Color x)
-    {
-        return x.text;
-    }
-    public static implicit operator Color(ConsoleColor x)
-    {
-        return new Color(x);
-    }
-    public static implicit operator ConsoleColor(Color x)
-    {
-        return x.color;
-    }
-}
-
 public class Calc
 {
     public static void Prompt(object x)
@@ -271,9 +220,6 @@ public class App
     {
         ENABLE_INSERT_MODE = 0x0020
     }
-    private const int STD_OUTPUT_HANDLE = -11;
-    private const uint ENABLE_VIRTUAL_TERMINAL_PROCESSING = 0x0004;
-    private const uint DISABLE_NEWLINE_AUTO_RETURN = 0x0008;
     public static IDictionary<string,List<List<(string color, string text)>>> PixelMap = new Dictionary<string, List<List<(string color, string text)>>>() { };
     public static string DrawMode = "METRIC";
     public static string DefaultColor = "#555555";
@@ -303,7 +249,7 @@ public class App
         Console.SetCursorPosition(0, 0);
         Console.Write(mapString);
     }
-    public static void Write(string text, int x, int y, string map = "Start",string color = null,bool write = true)
+    public static void Write(string text, int x, int y, string map = "Start",string color = null,bool write = true, bool preload = false)
     {
         string[] bits = text.Split('\n');
         int i = y;
@@ -318,7 +264,7 @@ public class App
             {
                 PixelMap[map][i].RemoveRange(x, line.Length / Win("px"));
                 PixelMap[map][i].InsertRange(x, Enumerable.Repeat((color, " "), line.Length / Win("px")));
-                if (write) { 
+                if (write || preload) { 
                     PixelMap["SCREEN"][i].RemoveRange(x, line.Length / Win("px")); 
                     PixelMap["SCREEN"][i].InsertRange(x, Enumerable.Repeat((color, " "), line.Length / Win("px")));
                 };
@@ -327,7 +273,7 @@ public class App
             {
                 PixelMap[map][i].RemoveRange(x, line.Length / 2);
                 PixelMap[map][i].InsertRange(x, Enumerable.Repeat((color, " "), line.Length / 2));
-                if (write)
+                if (write || preload)
                 {
                     PixelMap["SCREEN"][i].RemoveRange(x, line.Length / 2);
                     PixelMap["SCREEN"][i].InsertRange(x, Enumerable.Repeat((color, " "), line.Length / 2));
@@ -372,63 +318,45 @@ public class App
         }
     }
 
-    public static void DrawPixel((int x,int y) pos, string color = null, string map = "Start", bool write = true)
+    public static void DrawPixel((int x,int y) pos, string color = null, string map = "Start", bool write = true, bool preload = false)
     {
         Write("  ",pos.x,pos.y, map: map,write: write,color: color);
     }
-    public static void DrawRow(int pos, string color = null, string map = "Start", bool write = true)
+    public static void DrawRow(int pos, string color = null, string map = "Start", bool write = true, bool preload = false)
     {
         int x = Win("px");
         Write(new string(' ', x * 2), 0, pos, map: map,write: write,color: color);
     }
-    public static void DrawRow((int row, int length) pos, string color = null, string map = "Start",bool write = true)
+    public static void DrawRow((int row, int length) pos, string color = null, string map = "Start",bool write = true, bool preload = false)
     {
         int x = Win("px");
         int endX = Math.Min(pos.length, x);
         Write(new string(' ', endX * 2), 0, pos.row, map: map,write: write,color: color);
     }
-    public static void DrawRow((int row, int x1, int x2) pos, string color = null, string map = "Start", bool write = true)
+    public static void DrawRow((int row, int x1, int x2) pos, string color = null, string map = "Start", bool write = true, bool preload = false)
     {
         int x = Win("px");
-        int endX = Math.Min(Math.Max(pos.x2-pos.x1,0),x);
-        if (DrawMode == "METRIC")
-        {
-            endX = Math.Min(pos.x2, x-pos.x1);
-        }
+        int endX = Math.Min(pos.x2, x-pos.x1);
         Write(new string(' ', endX * 2), pos.x1, pos.row, map: map,write:write, color: color);
     }
-    public static void DrawColumn(int pos, string color = null, string map = "Start", bool write = true)
+    public static void DrawColumn(int pos, string color = null, string map = "Start", bool write = true, bool preload = false)
     {
-        int y = Console.WindowHeight;
-        Write(string.Concat(Enumerable.Repeat("  \n", y)), pos, 0, map: map, write: write, color: color);
+        Write(string.Concat(Enumerable.Repeat("  \n", Win("py"))), pos, 0, map: map, write: write, color: color);
     }
-    public static void DrawColumn((int column, int length) pos, string color = null, string map = "Start", bool write = true)
+    public static void DrawColumn((int column, int length) pos, string color = null, string map = "Start", bool write = true, bool preload = false)
     {
-        int y = Console.WindowHeight;
-        int endY = Math.Min(pos.length, y);
-        Write(string.Concat(Enumerable.Repeat("  \n", endY)), pos.column,0, map: map, write: write, color: color);
+        Write(string.Concat(Enumerable.Repeat("  \n", pos.length)), pos.column,0, map: map, write: write, color: color);
     }
-    public static void DrawColumn((int column, int y1, int y2) pos, string color = null, string map = "Start", bool write = true)
+    public static void DrawColumn((int column, int y1, int y2) pos, string color = null, string map = "Start", bool write = true, bool preload = false)
     {
-        int y = Console.WindowHeight;
-        int endY = Math.Min(pos.y2, y);
-        if (DrawMode == "METRIC")
-        {
-            endY = Math.Min(pos.y2+pos.y1, y-pos.y1);
-        }
         Write(string.Concat(Enumerable.Repeat("  \n", pos.y2)), pos.column,pos.y1, map: map, write: write, color: color);
     }
-    public static void DrawRect((int x1, int y1, int x2, int y2) pos,string color = null, string map = "Start", bool write = true)
+    public static void DrawRect((int x1, int y1, int x2, int y2) pos,string color = null, string map = "Start", bool write = true, bool preload = false)
     {
         int x = Win("px");
         int y = Console.WindowHeight;
-        int endX = Math.Min(Math.Max(pos.x2 - pos.x1, 0), x);
-        int endY = Math.Min(pos.y2, y);
-        if (DrawMode == "METRIC")
-        {
-            endX = Math.Min(pos.x2, x - pos.x1);
-            endY = Math.Min(pos.y2, y - pos.y1);
-        }
+        int endX = Math.Min(pos.x2, x - pos.x1);
+        int endY = Math.Min(pos.y2, y - pos.y1);
         if (endX >= Win("px"))
         {
             Write(string.Concat(Enumerable.Repeat(new string(' ', endX * 2), endY)), pos.x1, pos.y1, map: map, write: write, color: color);

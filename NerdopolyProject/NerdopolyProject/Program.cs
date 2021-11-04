@@ -44,8 +44,8 @@ namespace NerdopolyProject
                 UpdatePos(250 / 4, 60 / 2,false);
                 return;
             }
-            App.DrawPixel(pos: (charPos[0], charPos[1]),color: underCol,map: "Char",write:false);
-            App.DrawPixel(pos: (newX, newY), color: "#00FF00",map: "Char",write:false);
+            App.DrawPixel(pos: (charPos[0], charPos[1]),color: underCol,map: "Char");
+            App.DrawPixel(pos: (newX, newY), color: "#00FF00",map: "Char");
             charPos[0] = newX;
             charPos[1] = newY;
         }
