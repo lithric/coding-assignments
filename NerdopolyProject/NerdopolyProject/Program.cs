@@ -47,7 +47,7 @@ namespace NerdopolyProject
             App.DrawPixel(pos: (newX, newY), color: ConsoleColor.Green,map: "Char");
             charPos[0] = newX;
             charPos[1] = newY;
-        }
+        }/*
         public static void EnemyAction()
         {
             while (true)
@@ -75,12 +75,25 @@ namespace NerdopolyProject
                 Thread.Sleep(400);
             }
         }
+        */
+        public static async Task Method1()
+        {
+            await Task.Run(() => {
+                for (int i = 0; i < 100; i++)
+                {
+                    Console.WriteLine(" Method 1");
+                    // Do something
+                    Task.Delay(100).Wait();
+                }
+            });
+        }
         static void Main(string[] args)
         {
             //List<List<List<StoryObject>>> game1Story = (List<List<List<StoryObject>>>)Story.GetStoriesBySection("Game1",@"\#");
             Console.SetWindowSize(250, 60);
             Console.CursorVisible = false;
             App.CreatePixelMap("Start");
+<<<<<<< Updated upstream
             App.CreatePixelMap("Char");
             App.CreatePixelMap("Death", ConsoleColor.Black);
             App.DrawRect(pos: (0, 0, 250/2, 60) ,map: "Start");
@@ -89,6 +102,19 @@ namespace NerdopolyProject
             App.DrawPixel(pos: (20, 50) ,color: ConsoleColor.Green,map:"Start");
             App.DrawRow(pos: (10, 10) ,color: ConsoleColor.Red,map:"Death",write: false);
             App.DrawRow(pos: (10, 10), color: ConsoleColor.White, map: "Start");
+=======
+            //App.DrawPixel(pos: (125/2, 15), color: "#00FF00", map: "Start", write: false);
+            //App.DrawPixelMap("Start");
+            //App.CreatePixelMap("Char");
+            //App.CreatePixelMap("Death", "#000000");
+            App.DrawRect(pos: (0, 0, 250/2, 60) ,map: "Start",write: false);
+            App.DrawColumn(pos: (30/2, 10, 40) ,color: "#FF0000",map: "Start",write: false);
+            //App.DrawPixel(pos: (125/2, 30) ,color: "#00FF00",map: "Char");
+            App.DrawPixel(pos: (20, 50) ,color: "#00FF00", map:"Start",write: false);
+            //App.DrawRow(pos: (10, 10) ,color: "#FF0000", map:"Death",write: false);
+            App.DrawRow(pos: (10, 10), color: "#FFFFFF", map: "Start",write: false);
+            App.DrawPixelMap("Start");
+>>>>>>> Stashed changes
             //App.DrawColumn(pos: (20 / 2, 10, 40), color: ConsoleColor.Red, map: "Start");
             //App.DrawRect(pos: (1, 10, 20, 20), map: 0,color: ConsoleColor.Blue);
             //App.DrawRow(25, 60, 0, ConsoleColor.Yellow);
@@ -96,6 +122,7 @@ namespace NerdopolyProject
             //App.DrawColumn(40,0,ConsoleColor.Magenta);
             //App.DrawColumn(60, 30, 0, ConsoleColor.Cyan);
             //App.DrawColumn(90, 0, 1, 0, ConsoleColor.DarkCyan);
+            /*
             Thread enemy = new Thread(EnemyAction);
             enemy.Start();
             while (true)
@@ -119,6 +146,7 @@ namespace NerdopolyProject
                 }
                 UpdatePos(charX,charY);
             }
+            */
             Console.ReadLine();
         }
     }

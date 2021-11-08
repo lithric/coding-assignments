@@ -228,7 +228,39 @@ public class App
     }; 
     public static ConsoleColor Pixel(int x,int y,string map = "Start")
     {
+<<<<<<< Updated upstream
         return PixelMap[map][y][x];
+=======
+        string mapString = "";
+        List<string> mapStringList = new List<string>();
+        Func<(string color, string text), string> convert = (acc) => { mapString += new string(' ', acc.text.Length * 2).PastelBg(acc.color); return ""; };
+        Func<(string color, string text), string> convertA = (acc) => { mapString += new string(' ', acc.text.Length * 2).PastelBg(acc.color); return ""; };
+        // bottom level function
+        // returns first line of color
+        (string color, string text) gain = PixelMap[map].SelectMany(x => x).Aggregate(((string color, string text) acc, (string color, string text) next) =>
+        {
+            return (next.color, (acc.color == next.color ? acc.text : convert(acc)) + next.text);
+        });
+        List<(string color, string text)> gore = PixelMap[map].Aggregate((spider, ant) =>
+        {
+            spider.Add(ant.Aggregate((acc, next) =>
+            {
+                string ok = "";
+                if (acc.color == next.color)
+                {
+                    return (next.color, acc.text + next.text);
+                }
+                else
+                {
+                    ok += new string(' ', acc.text.Length * 2).PastelBg(acc.color);
+                    return (next.color, next.text);
+                }
+            }));
+        });
+        mapString += new string(' ', gain.text.Length * 2).PastelBg(gain.color);
+        Console.SetCursorPosition(0, 0);
+        Console.Write(gore[0]);
+>>>>>>> Stashed changes
     }
     public static void Write(string text, int x, int y, string map = "Start",ConsoleColor? color = null,bool write = true)
     {
