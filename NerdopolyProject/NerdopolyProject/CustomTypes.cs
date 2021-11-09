@@ -226,6 +226,27 @@ public class App
     public static Func<string, int> Win = (string dir) => {
         return dir == "x" ? Console.WindowWidth : dir == "px" ? Console.WindowWidth/2: Console.WindowHeight; 
     }; 
+    public static IEnumerable<IEnumerable<T>> Compress<T>(IEnumerable<T> obj,int stretch = 1)
+    {
+        List<IEnumerable<T>> returnValue = new List<IEnumerable<T>>();
+        int rep = 1;
+        var lastElm = obj.Aggregate((acc,next) => 
+        {
+            rep++;
+            if (Equals(acc,next))
+            {
+                return next;
+            }
+            else //(acc.color != next.color)
+            {
+                returnValue.Add(Enumerable.Repeat(acc,rep*stretch));
+                rep = 0;
+                return next;
+            }
+        });
+        returnValue.Add(Enumerable.Repeat(lastElm,rep*stretch));
+        return returnValue.AsEnumerable();
+    }
     public static string Pixel(int x,int y,string map = "Start")
     {
         return PixelMap[map][y][x].color;
@@ -233,6 +254,7 @@ public class App
     public static void DrawPixelMap(string map = "Start")
     {
         string mapString = "";
+        List<string> listMap = new List<string>();
         (string color, string text) gain = PixelMap[map].SelectMany(x => x).Aggregate(((string color, string text) acc, (string color, string text) next) =>
         {
             if (acc.color == next.color)
@@ -246,8 +268,9 @@ public class App
             }
         });
         mapString += new string(' ', gain.text.Length * 2).PastelBg(gain.color);
+        var gore = Compress(PixelMap[map][12],2).ToList();
+        Console.Write(gore.Count);
         Console.SetCursorPosition(0, 0);
-        Console.Write(mapString);
     }
     public static void Write(string text, int x, int y, string map = "Start",string color = null,bool write = true, bool preload = false)
     {
