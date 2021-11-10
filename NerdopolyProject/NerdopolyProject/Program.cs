@@ -31,21 +31,18 @@ namespace NerdopolyProject
                 {
                     await Task.Delay(100);
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.SetCursorPosition(0, 0);
-                    Console.Write("Game Over");
                 });
                 Task.Run(async delegate
                 {
                     await Task.Delay(1000);
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.SetCursorPosition(0, 0);
-                    Console.Write("                              ");
                 });
                 UpdatePos(250 / 4, 60 / 2,false);
                 return;
             }
-            App.DrawPixel(pos: (charPos[0], charPos[1]),color: underCol,map: "Char");
-            App.DrawPixel(pos: (newX, newY), color: "#00FF00",map: "Char");
+            App.DrawPixel(pos: (charPos[0], charPos[1]),color: underCol,map: "Char",preload: true);
+            App.DrawPixel(pos: (newX, newY), color: "#00FF00",map: "Char",preload: true);
+            App.DrawPixelMap("SCREEN");
             charPos[0] = newX;
             charPos[1] = newY;
         }
@@ -84,15 +81,15 @@ namespace NerdopolyProject
             App.CreatePixelMap("Start");
             //App.DrawPixel(pos: (125/2, 15), color: "#00FF00", map: "Start", write: false);
             //App.DrawPixelMap("Start");
-            //App.CreatePixelMap("Char");
-            //App.CreatePixelMap("Death", "#000000");
+            App.CreatePixelMap("Char");
+            App.CreatePixelMap("Death", "#000000");
             App.DrawRect(pos: (0, 0, 250/2, 60) ,map: "Start",write:false);
-            App.DrawColumn(pos: (30/2, 10, 40) ,color: "#FF0000",map: "Start",write:false);
-            //App.DrawPixel(pos: (125/2, 30) ,color: "#00FF00",map: "Char");
-            App.DrawPixel(pos: (20, 50) ,color: "#00FF00", map:"Start",write:false);
-            //App.DrawRow(pos: (10, 10) ,color: "#FF0000", map:"Death",write: false);
-            App.DrawRow(pos: (10, 10), color: "#FFFFFF", map: "Start",write:false);
-            App.DrawPixelMap("Start");
+            App.DrawColumn(pos: (30/2, 10, 40) ,color: "#FF0000",map: "Start", preload: true);
+            App.DrawPixel(pos: (125/2, 30) ,color: "#00FF00",map: "Char",preload: true);
+            App.DrawPixel(pos: (20, 50) ,color: "#00FF00", map:"Start",preload:true);
+            App.DrawRow(pos: (10, 10) ,color: "#FF0000", map:"Death",write: false);
+            App.DrawRow(pos: (10, 10), color: "#FFFFFF", map: "Start",preload:true);
+            App.DrawPixelMap("SCREEN");
             //App.DrawColumn(pos: (20 / 2, 10, 40), color: ConsoleColor.Red, map: "Start");
             //App.DrawRect(pos: (1, 10, 20, 20), map: 0,color: ConsoleColor.Blue);
             //App.DrawRow(25, 60, 0, ConsoleColor.Yellow);
@@ -103,6 +100,7 @@ namespace NerdopolyProject
             /*
             Thread enemy = new Thread(EnemyAction);
             enemy.Start();
+            */
             while (true)
             {
                 int charX = charPos[0];
@@ -124,7 +122,6 @@ namespace NerdopolyProject
                 }
                 UpdatePos(charX, charY);
             }
-            */
             Console.ReadLine();
         }
     }

@@ -247,30 +247,38 @@ public class App
         returnValue.Add(Enumerable.Repeat(lastElm,rep*stretch));
         return returnValue.AsEnumerable();
     }
+    private static List<string> MapWork(List<List<(string color,string text)>> map)
+    {
+        List<string> data = Enumerable.Repeat(" ",map.Count).ToList();
+        Parallel.For(0,map.Count, (i) =>
+        {
+            string down = "";
+            var (color, text) = map[i].Aggregate(((string color, string text) acc, (string color, string text) next) =>
+            {
+                if (acc.color == next.color)
+                {
+                    return (next.color, acc.text + next.text);
+                }
+                else //(acc.color != next.color)
+                {
+                    down += new string(' ', acc.text.Length * 2).PastelBg(acc.color);
+                    return (next.color, next.text);
+                }
+            });
+            down += new string(' ', text.Length * 2).PastelBg(color);
+            data[i] = down;
+        });
+        return data;
+    }
     public static string Pixel(int x,int y,string map = "Start")
     {
         return PixelMap[map][y][x].color;
     }
     public static void DrawPixelMap(string map = "Start")
     {
-        string mapString = "";
-        List<string> listMap = new List<string>();
-        (string color, string text) gain = PixelMap[map].SelectMany(x => x).Aggregate(((string color, string text) acc, (string color, string text) next) =>
-        {
-            if (acc.color == next.color)
-            {
-                return (next.color, acc.text + next.text);
-            }
-            else //(acc.color != next.color)
-            {
-                mapString += new string(' ', acc.text.Length * 2).PastelBg(acc.color);
-                return (next.color, next.text);
-            }
-        });
-        mapString += new string(' ', gain.text.Length * 2).PastelBg(gain.color);
-        var gore = Compress(PixelMap[map][12],2).ToList();
-        Console.Write(gore.Count);
+        string mapString = string.Concat(MapWork(PixelMap[map]));
         Console.SetCursorPosition(0, 0);
+        Console.Write(mapString);
     }
     public static void Write(string text, int x, int y, string map = "Start",string color = null,bool write = true, bool preload = false)
     {
@@ -302,14 +310,13 @@ public class App
                     PixelMap["SCREEN"][i].InsertRange(x, Enumerable.Repeat((color, " "), line.Length / 2));
                 };
             }
-            if (write)
+            if (write && !preload)
             {
                 Console.SetCursorPosition(x * 2, i);
                 Console.Write(line.PastelBg(color));
             }
             i++;
         }
-        Console.SetCursorPosition(0, 0);
     }
     public static void CreatePixelMap(string name, string color = "#555555")
     {
