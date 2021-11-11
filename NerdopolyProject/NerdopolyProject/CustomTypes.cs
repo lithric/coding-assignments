@@ -249,10 +249,27 @@ public class App
     }
     private static List<string> MapWork(List<List<(string color,string text)>> map)
     {
-        List<string> data = Enumerable.Repeat(" ",map.Count).ToList();
+        List<string> data = Enumerable.Repeat("  ",map.Count).ToList();
         Parallel.For(0,map.Count, (i) =>
         {
             string down = "";
+            var watch = new Stopwatch();
+            watch.Start();
+            List<int> place1 = new List<int>() {0};
+            int overhead = 0;
+            while (overhead < map[i].Count)
+            {
+                place1.Add(Math.Abs(map[i].Skip(place1.Last()).ToList().FindIndex(x => x != map[i][place1.Last()])) - 1);
+                overhead = place1.Last();
+                if (overhead == 0)
+                {
+                    break;
+                }
+            }
+            watch.Stop();
+            Console.WriteLine(watch.ElapsedMilliseconds);
+            //int place2 = place1+1 >= map.Count ? map.Count - 1: map[i].FindIndex(x => x != map[i][place1+1]) - 1;
+            //int place3 = place2+1 >= map.Count ? map.Count - 1: map[i].FindIndex(x => x != map[i][place2 + 1]) - 1;
             var (color, text) = map[i].Aggregate(((string color, string text) acc, (string color, string text) next) =>
             {
                 if (acc.color == next.color)
@@ -261,11 +278,11 @@ public class App
                 }
                 else //(acc.color != next.color)
                 {
-                    down += new string(' ', acc.text.Length * 2).PastelBg(acc.color);
+                    down += acc.text.PastelBg(acc.color);
                     return (next.color, next.text);
                 }
             });
-            down += new string(' ', text.Length * 2).PastelBg(color);
+            down += text.PastelBg(color);
             data[i] = down;
         });
         return data;
@@ -278,7 +295,7 @@ public class App
     {
         string mapString = string.Concat(MapWork(PixelMap[map]));
         Console.SetCursorPosition(0, 0);
-        Console.Write(mapString);
+        //Console.Write(mapString);
     }
     public static void Write(string text, int x, int y, string map = "Start",string color = null,bool write = true, bool preload = false)
     {
@@ -294,26 +311,26 @@ public class App
             if (line.Length > Win("px"))
             {
                 PixelMap[map][i].RemoveRange(x, line.Length / Win("px"));
-                PixelMap[map][i].InsertRange(x, Enumerable.Repeat((color, " "), line.Length / Win("px")));
+                PixelMap[map][i].InsertRange(x, Enumerable.Repeat((color, "  "), line.Length / Win("px")));
                 if (write || preload) { 
                     PixelMap["SCREEN"][i].RemoveRange(x, line.Length / Win("px")); 
-                    PixelMap["SCREEN"][i].InsertRange(x, Enumerable.Repeat((color, " "), line.Length / Win("px")));
+                    PixelMap["SCREEN"][i].InsertRange(x, Enumerable.Repeat((color, "  "), line.Length / Win("px")));
                 };
             }
             else
             {
                 PixelMap[map][i].RemoveRange(x, line.Length / 2);
-                PixelMap[map][i].InsertRange(x, Enumerable.Repeat((color, " "), line.Length / 2));
+                PixelMap[map][i].InsertRange(x, Enumerable.Repeat((color, "  "), line.Length / 2));
                 if (write || preload)
                 {
                     PixelMap["SCREEN"][i].RemoveRange(x, line.Length / 2);
-                    PixelMap["SCREEN"][i].InsertRange(x, Enumerable.Repeat((color, " "), line.Length / 2));
+                    PixelMap["SCREEN"][i].InsertRange(x, Enumerable.Repeat((color, "  "), line.Length / 2));
                 };
             }
             if (write && !preload)
             {
-                Console.SetCursorPosition(x * 2, i);
-                Console.Write(line.PastelBg(color));
+                //Console.SetCursorPosition(x * 2, i);
+                //Console.Write(line.PastelBg(color));
             }
             i++;
         }
@@ -330,7 +347,7 @@ public class App
                 PixelMap["SCREEN"].Add(new List<(string color, string text)>());
                 for (int j = 0; j < mapWidth; j++)
                 {
-                    PixelMap["SCREEN"][i].Add((color, " "));
+                    PixelMap["SCREEN"][i].Add((color, "  "));
                 }
             }
         }
@@ -342,7 +359,7 @@ public class App
                 PixelMap[name].Add(new List<(string color, string text)>());
                 for (int j = 0; j < mapWidth; j++)
                 {
-                    PixelMap[name][i].Add((color, " "));
+                    PixelMap[name][i].Add((color, "  "));
                 }
             }
         }
