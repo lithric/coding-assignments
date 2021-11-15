@@ -255,19 +255,30 @@ public class App
             string down = "";
             var watch = new Stopwatch();
             watch.Start();
-            List<int> place1 = new List<int>() {0};
-            int overhead = 0;
-            while (overhead < map[i].Count)
+            List<int> place1 = new List<int>() {};
+            string compiled = "";
+            while (true)
             {
-                place1.Add(Math.Abs(map[i].Skip(place1.Last()).ToList().FindIndex(x => x != map[i][place1.Last()])) - 1);
-                overhead = place1.Last();
-                if (overhead == 0)
+                int addVal = map[i].Skip(place1.Sum()).ToList().FindIndex(x => x != map[i][place1.Sum()]);
+                if (addVal == -1)
+                {
+                    addVal = map[i].Count - place1.Sum();
+                    compiled += new string(' ', addVal * 2).PastelBg(map[i][addVal - 1].color);
+                    break;
+                }
+                compiled += new string(' ',addVal*2).PastelBg(map[i][addVal-1].color);
+                place1.Add(addVal);
+                if (place1.Sum() >= map[i].Count)
                 {
                     break;
                 }
             }
             watch.Stop();
-            Console.WriteLine(watch.ElapsedMilliseconds);
+            //Console.WriteLine("ok");
+            //Console.WriteLine(string.Concat(Enumerable.Repeat(map[i][place1[0]-1].text,place1[0])).PastelBg(map[i][place1[0]-1].color));
+            //Console.WriteLine(place1.Count == 1 ? "":place1[1].ToString());
+            //Console.WriteLine(place1.Count);
+            //Console.WriteLine(compiled);
             //int place2 = place1+1 >= map.Count ? map.Count - 1: map[i].FindIndex(x => x != map[i][place1+1]) - 1;
             //int place3 = place2+1 >= map.Count ? map.Count - 1: map[i].FindIndex(x => x != map[i][place2 + 1]) - 1;
             var (color, text) = map[i].Aggregate(((string color, string text) acc, (string color, string text) next) =>
