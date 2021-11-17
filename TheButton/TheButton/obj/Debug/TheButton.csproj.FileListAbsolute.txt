@@ -1,0 +1,15 @@
+C:\Users\oliver_elion\Documents\coding assignments\TheButton\TheButton\bin\Debug\TheButton.exe.config
+C:\Users\oliver_elion\Documents\coding assignments\TheButton\TheButton\bin\Debug\TheButton.exe
+C:\Users\oliver_elion\Documents\coding assignments\TheButton\TheButton\bin\Debug\TheButton.pdb
+C:\Users\oliver_elion\Documents\coding assignments\TheButton\TheButton\obj\Debug\TheButton.csproj.AssemblyReference.cache
+C:\Users\oliver_elion\Documents\coding assignments\TheButton\TheButton\obj\Debug\MainWindow.g.cs
+C:\Users\oliver_elion\Documents\coding assignments\TheButton\TheButton\obj\Debug\App.g.cs
+C:\Users\oliver_elion\Documents\coding assignments\TheButton\TheButton\obj\Debug\TheButton_MarkupCompile.cache
+C:\Users\oliver_elion\Documents\coding assignments\TheButton\TheButton\obj\Debug\TheButton_MarkupCompile.lref
+C:\Users\oliver_elion\Documents\coding assignments\TheButton\TheButton\obj\Debug\MainWindow.baml
+C:\Users\oliver_elion\Documents\coding assignments\TheButton\TheButton\obj\Debug\TheButton.g.resources
+C:\Users\oliver_elion\Documents\coding assignments\TheButton\TheButton\obj\Debug\TheButton.Properties.Resources.resources
+C:\Users\oliver_elion\Documents\coding assignments\TheButton\TheButton\obj\Debug\TheButton.csproj.GenerateResource.cache
+C:\Users\oliver_elion\Documents\coding assignments\TheButton\TheButton\obj\Debug\TheButton.csproj.CoreCompileInputs.cache
+C:\Users\oliver_elion\Documents\coding assignments\TheButton\TheButton\obj\Debug\TheButton.exe
+C:\Users\oliver_elion\Documents\coding assignments\TheButton\TheButton\obj\Debug\TheButton.pdb

@@ -318,7 +318,7 @@ public class App
             i++;
         }
     }
-    public static void CreatePixelMap(string name, string color = "#555555")
+    public static void CreatePixelMap(string name, string color = "555555")
     {
         int mapWidth = Console.WindowWidth / 2;
         int mapHeight = Console.WindowHeight;

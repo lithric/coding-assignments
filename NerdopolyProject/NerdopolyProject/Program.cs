@@ -84,12 +84,12 @@ namespace NerdopolyProject
             App.CreatePixelMap("Char");
             App.CreatePixelMap("Death", "#000000");
             App.DrawRect(pos: (0, 0, 250/2, 60) ,map: "Start",write:false);
-            App.DrawColumn(pos: (30/2, 10, 40) ,color: "#FF0000",map: "Start", preload: true);
-            App.DrawPixel(pos: (125/2, 30) ,color: "#00FF00",map: "Char",preload: true);
+            App.DrawColumn(pos: (30/2, 10, 40) ,color: "FF0000",map: "Start", preload: true);
+            App.DrawPixel(pos: (125/2, 30) ,color: "00FF00",map: "Char",preload: true);
             App.DrawPixel(pos: (20, 50) ,color: "#00FF00", map:"Start",preload:true);
             App.DrawRow(pos: (10, 10) ,color: "#FF0000", map:"Death",write: false);
             App.DrawRow(pos: (10, 10), color: "#FFFFFF", map: "Start",preload:true);
-            App.DrawPixelMap("SCREEN");
+            //App.DrawPixelMap("SCREEN");
             //App.DrawColumn(pos: (20 / 2, 10, 40), color: ConsoleColor.Red, map: "Start");
             //App.DrawRect(pos: (1, 10, 20, 20), map: 0,color: ConsoleColor.Blue);
             //App.DrawRow(25, 60, 0, ConsoleColor.Yellow);
