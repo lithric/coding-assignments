@@ -1,0 +1,15 @@
+C:\Users\oliver_elion\Documents\coding assignments\SuperBasicCalc\SuperBasicCalc\bin\Debug\SuperBasicCalc.exe.config
+C:\Users\oliver_elion\Documents\coding assignments\SuperBasicCalc\SuperBasicCalc\bin\Debug\SuperBasicCalc.exe
+C:\Users\oliver_elion\Documents\coding assignments\SuperBasicCalc\SuperBasicCalc\bin\Debug\SuperBasicCalc.pdb
+C:\Users\oliver_elion\Documents\coding assignments\SuperBasicCalc\SuperBasicCalc\obj\Debug\SuperBasicCalc.csproj.AssemblyReference.cache
+C:\Users\oliver_elion\Documents\coding assignments\SuperBasicCalc\SuperBasicCalc\obj\Debug\MainWindow.g.cs
+C:\Users\oliver_elion\Documents\coding assignments\SuperBasicCalc\SuperBasicCalc\obj\Debug\App.g.cs
+C:\Users\oliver_elion\Documents\coding assignments\SuperBasicCalc\SuperBasicCalc\obj\Debug\SuperBasicCalc_MarkupCompile.cache
+C:\Users\oliver_elion\Documents\coding assignments\SuperBasicCalc\SuperBasicCalc\obj\Debug\SuperBasicCalc_MarkupCompile.lref
+C:\Users\oliver_elion\Documents\coding assignments\SuperBasicCalc\SuperBasicCalc\obj\Debug\MainWindow.baml
+C:\Users\oliver_elion\Documents\coding assignments\SuperBasicCalc\SuperBasicCalc\obj\Debug\SuperBasicCalc.g.resources
+C:\Users\oliver_elion\Documents\coding assignments\SuperBasicCalc\SuperBasicCalc\obj\Debug\SuperBasicCalc.Properties.Resources.resources
+C:\Users\oliver_elion\Documents\coding assignments\SuperBasicCalc\SuperBasicCalc\obj\Debug\SuperBasicCalc.csproj.GenerateResource.cache
+C:\Users\oliver_elion\Documents\coding assignments\SuperBasicCalc\SuperBasicCalc\obj\Debug\SuperBasicCalc.csproj.CoreCompileInputs.cache
+C:\Users\oliver_elion\Documents\coding assignments\SuperBasicCalc\SuperBasicCalc\obj\Debug\SuperBasicCalc.exe
+C:\Users\oliver_elion\Documents\coding assignments\SuperBasicCalc\SuperBasicCalc\obj\Debug\SuperBasicCalc.pdb

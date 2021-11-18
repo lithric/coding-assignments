@@ -1,0 +1,28 @@
+﻿<Window x:Class="SuperBasicCalc.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SuperBasicCalc"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid x:Name="WindowBase">
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF0DBFB7" Offset="0"/>
+                <GradientStop Color="Red" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Label Content="Enter Number 1:" HorizontalAlignment="Left" Margin="126,92,0,0" VerticalAlignment="Top" FontSize="24"/>
+        <Label Content="Enter Number 2:" HorizontalAlignment="Left" Margin="126,151,0,0" VerticalAlignment="Top" FontSize="24"/>
+        <Label Content="ANSWER:" HorizontalAlignment="Left" Margin="123,293,0,0" VerticalAlignment="Top" FontSize="36"/>
+        <TextBox x:Name="Number1Input" HorizontalAlignment="Left" Height="42" Margin="321,96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" FontSize="24" Background="Transparent" BorderBrush="#00ABADB3" Text="0"/>
+        <TextBox x:Name="Number2Input" HorizontalAlignment="Left" Height="42" Margin="321,156,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="1.02,0.723" FontSize="24" Background="Transparent" BorderBrush="#00ABADB3" Text="0"/>
+        <Button x:Name="AddButton" Content="➕" HorizontalAlignment="Left" Margin="142,203,0,0" VerticalAlignment="Top" Width="37" RenderTransformOrigin="0.112,0.497" Click="AddNumbers" HorizontalContentAlignment="Center" Height="37" FontSize="27" Padding="0,0,5,0" VerticalContentAlignment="Top" Background="#FF36E42E" Foreground="White"/>
+        <TextBlock x:Name="Answer" HorizontalAlignment="Left" Margin="290,301,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" FontSize="36" Height="50" RenderTransformOrigin="0.56,0.068"/>
+        <Button x:Name="SubButton" Content="➖" HorizontalAlignment="Left" Margin="200,203,0,0" VerticalAlignment="Top" Width="37" RenderTransformOrigin="0.112,0.497" Click="SubNumbers" HorizontalContentAlignment="Center" Height="37" FontSize="27" Padding="0,-2,5,0" VerticalContentAlignment="Top" Background="#FF36E42E" Foreground="White"/>
+        <Button x:Name="MultButton" Content="✖" HorizontalAlignment="Left" Margin="262,203,0,0" VerticalAlignment="Top" Width="37" RenderTransformOrigin="0.112,0.497" Click="MultNumbers" HorizontalContentAlignment="Center" Height="37" FontSize="26" Padding="0" VerticalContentAlignment="Top" Background="#FF36E42E" Foreground="White"/>
+        <Button x:Name="DivButton" Content="➗" HorizontalAlignment="Left" Margin="321,203,0,0" VerticalAlignment="Top" Width="37" RenderTransformOrigin="0.112,0.497" Click="DivNumbers" HorizontalContentAlignment="Center" Height="37" FontSize="25" Padding="0" VerticalContentAlignment="Top" Background="#FF36E42E" Foreground="White"/>
+
+    </Grid>
+</Window>
