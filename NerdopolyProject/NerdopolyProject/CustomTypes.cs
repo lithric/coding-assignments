@@ -280,7 +280,7 @@ public class App
         Console.SetCursorPosition(0, 0);
         Console.Write(mapString);
     }
-    public static void Write(string text, int x, int y, string map = "Start",string color = null,bool write = true, bool preload = false)
+    public static void Write(string text, int x, int y, string map = "Start",string color = null,bool write = true, bool preload = false,bool fast = false)
     {
         string[] bits = text.Split('\n');
         int i = y;
@@ -310,10 +310,10 @@ public class App
                     PixelMap["SCREEN"][i].InsertRange(x, Enumerable.Repeat((color, "  "), line.Length / 2));
                 };
             }
-            if (write && !preload)
+            if (write && preload)
             {
-                //Console.SetCursorPosition(x * 2, i);
-                //Console.Write(line.PastelBg(color));
+                Console.SetCursorPosition(x * 2, i);
+                Console.Write(line.PastelBg(color));
             }
             i++;
         }

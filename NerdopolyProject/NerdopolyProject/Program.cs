@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using Pastel;
+using System.Diagnostics;
 namespace NerdopolyProject
 {
     class Program
@@ -15,6 +16,73 @@ namespace NerdopolyProject
         {
             ENABLE_INSERT_MODE = 0x0020
         }
+        [DllImport("kernel32.dll")]
+        private extern static IntPtr GetStdHandle(int nStdHandle);
+
+        [StructLayout(LayoutKind.Sequential)]
+        struct CHAR_INFO
+        {
+            public char AsciiChar;
+            public short Attributes;
+        }
+        [StructLayout(LayoutKind.Sequential)]
+        struct SMALL_RECT
+        {
+            public short Left;
+            public short Top;
+            public short Right;
+            public short Bottom;
+        }
+
+        
+
+        [StructLayout(LayoutKind.Sequential)]
+        struct COORD
+        {
+            public short X;
+            public short Y;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        struct CONSOLE_SCREEN_BUFFER_INFO
+        {
+
+            public COORD dwSize;
+            public COORD dwCursorPosition;
+            public short wAttributes;
+            public SMALL_RECT srWindow;
+            public COORD dwMaximumWindowSize;
+
+        }
+        [DllImport("kernel32.dll")]
+        static extern bool ReadConsoleOutput(
+            IntPtr hConsoleOutput,
+            out CHAR_INFO lpBuffer,
+            COORD dwBufferSize,
+            COORD dwBufferCoord,
+            in SMALL_RECT lpReadRegion
+        );
+        
+
+        [DllImport("kernel32.dll")]
+        static extern bool GetConsoleScreenBufferInfo(
+            IntPtr hConsoleOutput,
+            out CONSOLE_SCREEN_BUFFER_INFO lpConsoleScreenBufferInfo
+        );
+        [DllImport("kernel32.dll")]
+        static extern bool SetConsoleTextAttribute(
+            IntPtr hConsoleOutput,
+            short wAttributes
+        );
+        [DllImport("kernel32.dll")]
+        static extern bool SetConsoleMode(
+            IntPtr hConsoleHandle,
+            short dwMode
+        );
+        const int STD_INPUT_HANDLE = -10;
+        const int STD_OUTPUT_HANDLE = -11;
+        const int STD_ERROR_HANDLE = -12;
+
         public static List<int> charPos = new List<int> { 125/2, 30 };
         public static List<int> enemyPos = new List<int> { 120, 10 };
         public static void UpdatePos(int newX,int newY, bool check = true)
@@ -73,9 +141,13 @@ namespace NerdopolyProject
                 Thread.Sleep(400);
             }
         }
+        
         static void Main(string[] args)
         {
             //List<List<List<StoryObject>>> game1Story = (List<List<List<StoryObject>>>)Story.GetStoriesBySection("Game1",@"\#");
+            IntPtr stdout = GetStdHandle(STD_OUTPUT_HANDLE);
+            SetConsoleMode(stdout, 0x0004); // ENABLE_VIRTUAL_TERMINAL_PROCESSING
+            //SetConsoleMode(stdout, 0x0008); // DISABLE_NEWLINE_AUTORETURN
             Console.SetWindowSize(250, 60);
             Console.CursorVisible = false;
             App.CreatePixelMap("Start");
@@ -90,6 +162,16 @@ namespace NerdopolyProject
             App.DrawRow(pos: (10, 10) ,color: "#FF0000", map:"Death",write: false);
             App.DrawRow(pos: (10, 10), color: "#FFFFFF", map: "Start",preload:true);
             //App.DrawPixelMap("SCREEN");
+            Console.WriteLine("\u001b[31mok[0m");
+            CONSOLE_SCREEN_BUFFER_INFO ok;
+            GetConsoleScreenBufferInfo(stdout, out ok);
+            Console.Write(ok.srWindow.Right);
+            /*
+            CHAR_INFO pass1;
+            SMALL_RECT pass2;
+            ReadConsoleOutput(stdout, out pass1, new COORD {X=2,Y=1}, new COORD {X=0,Y=0}, new SMALL_RECT {Left=2,Right=3,Top=0,Bottom=1});
+            Console.Write(pass1.AsciiChar);
+            */
             //App.DrawColumn(pos: (20 / 2, 10, 40), color: ConsoleColor.Red, map: "Start");
             //App.DrawRect(pos: (1, 10, 20, 20), map: 0,color: ConsoleColor.Blue);
             //App.DrawRow(25, 60, 0, ConsoleColor.Yellow);
