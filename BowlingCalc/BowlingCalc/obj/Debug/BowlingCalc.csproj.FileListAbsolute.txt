@@ -1,0 +1,15 @@
+C:\Users\oliver_elion\Documents\coding assignments\BowlingCalc\BowlingCalc\bin\Debug\BowlingCalc.exe.config
+C:\Users\oliver_elion\Documents\coding assignments\BowlingCalc\BowlingCalc\bin\Debug\BowlingCalc.exe
+C:\Users\oliver_elion\Documents\coding assignments\BowlingCalc\BowlingCalc\bin\Debug\BowlingCalc.pdb
+C:\Users\oliver_elion\Documents\coding assignments\BowlingCalc\BowlingCalc\obj\Debug\BowlingCalc.csproj.AssemblyReference.cache
+C:\Users\oliver_elion\Documents\coding assignments\BowlingCalc\BowlingCalc\obj\Debug\MainWindow.g.cs
+C:\Users\oliver_elion\Documents\coding assignments\BowlingCalc\BowlingCalc\obj\Debug\App.g.cs
+C:\Users\oliver_elion\Documents\coding assignments\BowlingCalc\BowlingCalc\obj\Debug\BowlingCalc_MarkupCompile.cache
+C:\Users\oliver_elion\Documents\coding assignments\BowlingCalc\BowlingCalc\obj\Debug\BowlingCalc_MarkupCompile.lref
+C:\Users\oliver_elion\Documents\coding assignments\BowlingCalc\BowlingCalc\obj\Debug\MainWindow.baml
+C:\Users\oliver_elion\Documents\coding assignments\BowlingCalc\BowlingCalc\obj\Debug\BowlingCalc.g.resources
+C:\Users\oliver_elion\Documents\coding assignments\BowlingCalc\BowlingCalc\obj\Debug\BowlingCalc.Properties.Resources.resources
+C:\Users\oliver_elion\Documents\coding assignments\BowlingCalc\BowlingCalc\obj\Debug\BowlingCalc.csproj.GenerateResource.cache
+C:\Users\oliver_elion\Documents\coding assignments\BowlingCalc\BowlingCalc\obj\Debug\BowlingCalc.csproj.CoreCompileInputs.cache
+C:\Users\oliver_elion\Documents\coding assignments\BowlingCalc\BowlingCalc\obj\Debug\BowlingCalc.exe
+C:\Users\oliver_elion\Documents\coding assignments\BowlingCalc\BowlingCalc\obj\Debug\BowlingCalc.pdb

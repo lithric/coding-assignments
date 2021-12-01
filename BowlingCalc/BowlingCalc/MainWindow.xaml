@@ -1,0 +1,61 @@
+﻿<Window x:Class="BowlingCalc.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BowlingCalc"
+        mc:Ignorable="d"
+        Title="Bowling Stats" Height="450" Width="800">
+    <Grid>
+        <Button Content="Exit" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75"/>
+        <Grid Height="419" Margin="0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="456">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="53*"/>
+                <RowDefinition Height="356*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="107*"/>
+                <ColumnDefinition Width="45*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel HorizontalAlignment="Left" Width="136" Grid.Row="1">
+                <Label Content="Name" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <TextBox x:Name="Name" HorizontalAlignment="Left" Height="23" Margin="0,0,-9,0" TextWrapping="Wrap" Text="Enter name here..." VerticalAlignment="Top" Width="120"/>
+                <Label Content="Gender" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <ListBox x:Name="Gender" HorizontalAlignment="Left" Height="63" VerticalAlignment="Top" Width="100">
+                    <RadioButton Content="Male" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <RadioButton Content="Female" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <RadioButton Content="Other" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                </ListBox>
+                <ItemsControl HorizontalAlignment="Left" VerticalAlignment="Top" Width="136">
+                    <Label Content="Game 1" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="-2.605,-1.472" Margin="0"/>
+                    <TextBox x:Name="Game1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="Score" VerticalAlignment="Top" Width="120" MaxLength="5" Margin="0"/>
+                    <Label Content="Game 2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0"/>
+                    <TextBox x:Name="Game2" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="Score" VerticalAlignment="Top" Width="120" Margin="0"/>
+                    <Label Content="Game 3" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0"/>
+                    <TextBox x:Name="Game3" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="Score" VerticalAlignment="Top" Width="120" Margin="0"/>
+                </ItemsControl>
+                <Button Content="Calculate" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75"/>
+                <Button Content="Clear" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Margin="0,0,0,8" Grid.Row="1">
+                <StackPanel VerticalAlignment="Top" Margin="0,30,0,0">
+                    <Label Content="Series Total" VerticalAlignment="Top" Padding="0,5,5,5" FontSize="20"/>
+                    <TextBlock x:Name="SeriesTotal" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" RenderTransformOrigin="0.751,0.516" Height="28" FontSize="20" Margin="0,0,42,0"/>
+                </StackPanel>
+                <StackPanel VerticalAlignment="Top" Margin="0,20,0,0">
+                    <Label Content="Average" VerticalAlignment="Top" Padding="0,5,5,5" FontSize="20"/>
+                    <TextBlock x:Name="Average" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" RenderTransformOrigin="0.751,0.516" FontSize="20" Margin="0,0,41,0"/>
+                </StackPanel>
+                <StackPanel VerticalAlignment="Top" Margin="0,20,0,0">
+                    <Label Content="Handicap" VerticalAlignment="Top" Padding="0,5,5,5" FontSize="20"/>
+                    <TextBlock x:Name="Handicap" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" RenderTransformOrigin="0.751,0.516" FontSize="20" Margin="0,0,43,0"/>
+                </StackPanel>
+                <StackPanel VerticalAlignment="Top" Margin="0,20,0,0">
+                    <Label Content="High Game" VerticalAlignment="Top" Padding="0,5,5,5" FontSize="20"/>
+                    <TextBlock x:Name="HighGame" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" RenderTransformOrigin="0.751,0.516" FontSize="20" Margin="0,0,41,0"/>
+                </StackPanel>
+            </StackPanel>
+            <TextBlock TextWrapping="Wrap" Text="Bowling Calculator" Grid.ColumnSpan="2" FontSize="40" HorizontalAlignment="Center"/>
+        </Grid>
+    </Grid>
+</Window>
