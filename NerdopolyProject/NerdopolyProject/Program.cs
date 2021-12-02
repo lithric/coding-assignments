@@ -125,7 +125,7 @@ namespace NerdopolyProject
                 {
                     enemyPos[0] -= 1;
                 }
-                else
+                else if (enemyPos[0] < charPos[0])
                 {
                     enemyPos[0] += 1;
                 }
@@ -133,20 +133,27 @@ namespace NerdopolyProject
                 {
                     enemyPos[1] -= 1;
                 }
-                else
+                else if (enemyPos[1] < charPos[1])
                 {
                     enemyPos[1] += 1;
                 }
+                if (enemyPos[0] + 1000*enemyPos[1] == charPos[0] + 1000*charPos[1])
+                {
+                    enemyPos = new List<int> { 120, 10 };
+                    UpdatePos(250 / 4, 60 / 2, false);
+                }
                 App.DrawPixel(pos: (enemyPos[0], enemyPos[1]), color: "#FF0000", map: "Death");
-                Thread.Sleep(400);
+                Thread.Sleep(100);
             }
         }
         
         static void Main(string[] args)
         {
             //List<List<List<StoryObject>>> game1Story = (List<List<List<StoryObject>>>)Story.GetStoriesBySection("Game1",@"\#");
+            /*
             IntPtr stdout = GetStdHandle(STD_OUTPUT_HANDLE);
             SetConsoleMode(stdout, 0x0004); // ENABLE_VIRTUAL_TERMINAL_PROCESSING
+            */
             //SetConsoleMode(stdout, 0x0008); // DISABLE_NEWLINE_AUTORETURN
             Console.SetWindowSize(250, 60);
             Console.CursorVisible = false;
@@ -161,11 +168,11 @@ namespace NerdopolyProject
             App.DrawPixel(pos: (20, 50) ,color: "#00FF00", map:"Start",preload:true);
             App.DrawRow(pos: (10, 10) ,color: "#FF0000", map:"Death",write: false);
             App.DrawRow(pos: (10, 10), color: "#FFFFFF", map: "Start",preload:true);
-            //App.DrawPixelMap("SCREEN");
-            Console.WriteLine("\u001b[31mok[0m");
-            CONSOLE_SCREEN_BUFFER_INFO ok;
-            GetConsoleScreenBufferInfo(stdout, out ok);
-            Console.Write(ok.srWindow.Right);
+            App.DrawPixelMap("SCREEN");
+            //Console.WriteLine("\u001b[31mok[0m");
+            //CONSOLE_SCREEN_BUFFER_INFO ok;
+            //GetConsoleScreenBufferInfo(stdout, out ok);
+            //Console.Write(ok.srWindow.Right);
             /*
             CHAR_INFO pass1;
             SMALL_RECT pass2;
@@ -179,14 +186,12 @@ namespace NerdopolyProject
             //App.DrawColumn(40,0,ConsoleColor.Magenta);
             //App.DrawColumn(60, 30, 0, ConsoleColor.Cyan);
             //App.DrawColumn(90, 0, 1, 0, ConsoleColor.DarkCyan);
-            /*
             Thread enemy = new Thread(EnemyAction);
             enemy.Start();
-            */
             while (true)
             {
-                int charX = charPos[0];
-                int charY = charPos[1];
+                int charX = 0;
+                int charY = 0;
                 switch (Console.ReadKey(true).Key)
                 {
                     case ConsoleKey.W:
@@ -202,7 +207,7 @@ namespace NerdopolyProject
                         charX += 1;
                         break;
                 }
-                UpdatePos(charX, charY);
+                UpdatePos(charPos[0] + charX, charPos[1] + charY);
             }
             Console.ReadLine();
         }

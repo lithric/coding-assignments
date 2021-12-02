@@ -310,7 +310,7 @@ public class App
                     PixelMap["SCREEN"][i].InsertRange(x, Enumerable.Repeat((color, "  "), line.Length / 2));
                 };
             }
-            if (write && preload)
+            if (write && !preload)
             {
                 Console.SetCursorPosition(x * 2, i);
                 Console.Write(line.PastelBg(color));
