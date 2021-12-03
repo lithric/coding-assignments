@@ -13,3 +13,4 @@ C:\Users\oliver_elion\Documents\coding assignments\BowlingCalc\BowlingCalc\obj\D
 C:\Users\oliver_elion\Documents\coding assignments\BowlingCalc\BowlingCalc\obj\Debug\BowlingCalc.csproj.CoreCompileInputs.cache
 C:\Users\oliver_elion\Documents\coding assignments\BowlingCalc\BowlingCalc\obj\Debug\BowlingCalc.exe
 C:\Users\oliver_elion\Documents\coding assignments\BowlingCalc\BowlingCalc\obj\Debug\BowlingCalc.pdb
+C:\Users\oliver_elion\Documents\coding assignments\BowlingCalc\BowlingCalc\obj\Debug\BowlingCalc.csproj.ResolveComReference.cache

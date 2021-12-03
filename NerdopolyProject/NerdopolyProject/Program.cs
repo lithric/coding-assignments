@@ -16,8 +16,6 @@ namespace NerdopolyProject
         {
             ENABLE_INSERT_MODE = 0x0020
         }
-        [DllImport("kernel32.dll")]
-        private extern static IntPtr GetStdHandle(int nStdHandle);
 
         [StructLayout(LayoutKind.Sequential)]
         struct CHAR_INFO
@@ -75,9 +73,15 @@ namespace NerdopolyProject
             short wAttributes
         );
         [DllImport("kernel32.dll")]
+        static extern IntPtr GetStdHandle(int nStdHandle);
+
+        [DllImport("kernel32.dll")]
+        static extern bool GetConsoleMode(IntPtr h, out int mode);
+
+        [DllImport("kernel32.dll")]
         static extern bool SetConsoleMode(
             IntPtr hConsoleHandle,
-            short dwMode
+            int dwMode
         );
         const int STD_INPUT_HANDLE = -10;
         const int STD_OUTPUT_HANDLE = -11;
@@ -150,10 +154,10 @@ namespace NerdopolyProject
         static void Main(string[] args)
         {
             //List<List<List<StoryObject>>> game1Story = (List<List<List<StoryObject>>>)Story.GetStoriesBySection("Game1",@"\#");
-            /*
             IntPtr stdout = GetStdHandle(STD_OUTPUT_HANDLE);
-            SetConsoleMode(stdout, 0x0004); // ENABLE_VIRTUAL_TERMINAL_PROCESSING
-            */
+            var esc = '\x1b';
+            GetConsoleMode(stdout, out int _mode);
+            SetConsoleMode(stdout, _mode | 4); // ENABLE_VIRTUAL_TERMINAL_PROCESSING
             //SetConsoleMode(stdout, 0x0008); // DISABLE_NEWLINE_AUTORETURN
             Console.SetWindowSize(250, 60);
             Console.CursorVisible = false;
@@ -161,14 +165,15 @@ namespace NerdopolyProject
             //App.DrawPixel(pos: (125/2, 15), color: "#00FF00", map: "Start", write: false);
             //App.DrawPixelMap("Start");
             App.CreatePixelMap("Char");
-            App.CreatePixelMap("Death", "#000000");
+            App.CreatePixelMap("Death", "");
             App.DrawRect(pos: (0, 0, 250/2, 60) ,map: "Start",write:false);
             App.DrawColumn(pos: (30/2, 10, 40) ,color: "FF0000",map: "Start", preload: true);
             App.DrawPixel(pos: (125/2, 30) ,color: "00FF00",map: "Char",preload: true);
             App.DrawPixel(pos: (20, 50) ,color: "#00FF00", map:"Start",preload:true);
             App.DrawRow(pos: (10, 10) ,color: "#FF0000", map:"Death",write: false);
-            App.DrawRow(pos: (10, 10), color: "#FFFFFF", map: "Start",preload:true);
+            //App.DrawRow(pos: (10, 10), color: "#FFFFFF", map: "Start",preload:true);
             App.DrawPixelMap("SCREEN");
+            App.DrawPixelMap("Death");
             //Console.WriteLine("\u001b[31mok[0m");
             //CONSOLE_SCREEN_BUFFER_INFO ok;
             //GetConsoleScreenBufferInfo(stdout, out ok);
@@ -186,8 +191,10 @@ namespace NerdopolyProject
             //App.DrawColumn(40,0,ConsoleColor.Magenta);
             //App.DrawColumn(60, 30, 0, ConsoleColor.Cyan);
             //App.DrawColumn(90, 0, 1, 0, ConsoleColor.DarkCyan);
+            /*
             Thread enemy = new Thread(EnemyAction);
             enemy.Start();
+            */
             while (true)
             {
                 int charX = 0;

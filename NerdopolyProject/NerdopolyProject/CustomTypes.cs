@@ -213,6 +213,20 @@ public class Calc
         return depth;
     }
 }
+
+public static class StringExtensions
+{
+    public static string Right(this string s,int count)
+    {
+        return s + $"\x1b[{count}C";
+    }
+    public static string Column(this string s, int count)
+    {
+        return s + $"\x1b[{count}G";
+    }
+}
+
+
 public class App
 {
     [Flags]
@@ -261,11 +275,11 @@ public class App
                 }
                 else //(acc.color != next.color)
                 {
-                    down += acc.text.PastelBg(acc.color);
+                    down += acc.color != "" ? acc.text.PastelBg(acc.color):"".Right(acc.text.Length);
                     return (next.color, next.text);
                 }
             });
-            down += text.PastelBg(color);
+            down += color != "" ? text.PastelBg(color):"".Right(text.Length);
             data[i] = down;
         });
         return data;
@@ -274,12 +288,15 @@ public class App
     {
         return PixelMap[map][y][x].color;
     }
-    public static void DrawPixelMap(string map = "Start")
+    public static void DrawPixelMap(string map = "Start", bool write = true, bool preload = false)
     {
-        string mapString = string.Concat(MapWork(PixelMap[map]));
+        var mapString = MapWork(PixelMap[map]);
         Console.SetCursorPosition(0, 0);
-        Console.Write(mapString);
-    }
+        if (write && !preload)
+        {
+            Console.Write(string.Concat(from str in mapString select '\n' + str).Substring(1));
+        }
+    } // get some text or text command that skips characters instead of replacing them
     public static void Write(string text, int x, int y, string map = "Start",string color = null,bool write = true, bool preload = false,bool fast = false)
     {
         string[] bits = text.Split('\n');
@@ -350,36 +367,36 @@ public class App
 
     public static void DrawPixel((int x,int y) pos, string color = null, string map = "Start", bool write = true, bool preload = false)
     {
-        Write("  ",pos.x,pos.y, map: map,write: write,color: color);
+        Write("  ",pos.x,pos.y, map: map,write: write,color: color,preload: preload);
     }
     public static void DrawRow(int pos, string color = null, string map = "Start", bool write = true, bool preload = false)
     {
         int x = Win("px");
-        Write(new string(' ', x * 2), 0, pos, map: map,write: write,color: color);
+        Write(new string(' ', x * 2), 0, pos, map: map,write: write,color: color,preload: preload);
     }
     public static void DrawRow((int row, int length) pos, string color = null, string map = "Start",bool write = true, bool preload = false)
     {
         int x = Win("px");
         int endX = Math.Min(pos.length, x);
-        Write(new string(' ', endX * 2), 0, pos.row, map: map,write: write,color: color);
+        Write(new string(' ', endX * 2), 0, pos.row, map: map,write: write,color: color,preload: preload);
     }
     public static void DrawRow((int row, int x1, int x2) pos, string color = null, string map = "Start", bool write = true, bool preload = false)
     {
         int x = Win("px");
         int endX = Math.Min(pos.x2, x-pos.x1);
-        Write(new string(' ', endX * 2), pos.x1, pos.row, map: map,write:write, color: color);
+        Write(new string(' ', endX * 2), pos.x1, pos.row, map: map,write:write, color: color,preload: preload);
     }
     public static void DrawColumn(int pos, string color = null, string map = "Start", bool write = true, bool preload = false)
     {
-        Write(string.Concat(Enumerable.Repeat("  \n", Win("py"))), pos, 0, map: map, write: write, color: color);
+        Write(string.Concat(Enumerable.Repeat("  \n", Win("py"))), pos, 0, map: map, write: write, color: color,preload: preload);
     }
     public static void DrawColumn((int column, int length) pos, string color = null, string map = "Start", bool write = true, bool preload = false)
     {
-        Write(string.Concat(Enumerable.Repeat("  \n", pos.length)), pos.column,0, map: map, write: write, color: color);
+        Write(string.Concat(Enumerable.Repeat("  \n", pos.length)), pos.column,0, map: map, write: write, color: color,preload: preload);
     }
     public static void DrawColumn((int column, int y1, int y2) pos, string color = null, string map = "Start", bool write = true, bool preload = false)
     {
-        Write(string.Concat(Enumerable.Repeat("  \n", pos.y2)), pos.column,pos.y1, map: map, write: write, color: color);
+        Write(string.Concat(Enumerable.Repeat("  \n", pos.y2)), pos.column,pos.y1, map: map, write: write, color: color,preload: preload);
     }
     public static void DrawRect((int x1, int y1, int x2, int y2) pos,string color = null, string map = "Start", bool write = true, bool preload = false)
     {
@@ -389,11 +406,11 @@ public class App
         int endY = Math.Min(pos.y2, y - pos.y1);
         if (endX >= Win("px"))
         {
-            Write(string.Concat(Enumerable.Repeat(new string(' ', endX * 2), endY)), pos.x1, pos.y1, map: map, write: write, color: color);
+            Write(string.Concat(Enumerable.Repeat(new string(' ', endX * 2), endY)), pos.x1, pos.y1, map: map, write: write, color: color,preload: preload);
         }
         else
         {
-            Write(string.Concat(Enumerable.Repeat(new string(' ', endX * 2) + "\n", endY)), pos.x1, pos.y1, map: map, write: write, color: color);
+            Write(string.Concat(Enumerable.Repeat(new string(' ', endX * 2) + "\n", endY)), pos.x1, pos.y1, map: map, write: write, color: color,preload: preload);
         }
     }
 }

@@ -37,20 +37,20 @@
                 <Button Content="Calculate" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75"/>
                 <Button Content="Clear" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75"/>
             </StackPanel>
-            <StackPanel Grid.Column="1" Margin="0,0,0,8" Grid.Row="1">
-                <StackPanel VerticalAlignment="Top" Margin="0,30,0,0">
+            <StackPanel Grid.Column="1" Grid.Row="1">
+                <StackPanel VerticalAlignment="Top" Margin="0">
                     <Label Content="Series Total" VerticalAlignment="Top" Padding="0,5,5,5" FontSize="20"/>
                     <TextBlock x:Name="SeriesTotal" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" RenderTransformOrigin="0.751,0.516" Height="28" FontSize="20" Margin="0,0,42,0"/>
                 </StackPanel>
-                <StackPanel VerticalAlignment="Top" Margin="0,20,0,0">
+                <StackPanel VerticalAlignment="Top" Margin="0,25,0,0">
                     <Label Content="Average" VerticalAlignment="Top" Padding="0,5,5,5" FontSize="20"/>
                     <TextBlock x:Name="Average" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" RenderTransformOrigin="0.751,0.516" FontSize="20" Margin="0,0,41,0"/>
                 </StackPanel>
-                <StackPanel VerticalAlignment="Top" Margin="0,20,0,0">
+                <StackPanel VerticalAlignment="Top" Margin="0,25,0,0">
                     <Label Content="Handicap" VerticalAlignment="Top" Padding="0,5,5,5" FontSize="20"/>
                     <TextBlock x:Name="Handicap" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" RenderTransformOrigin="0.751,0.516" FontSize="20" Margin="0,0,43,0"/>
                 </StackPanel>
-                <StackPanel VerticalAlignment="Top" Margin="0,20,0,0">
+                <StackPanel VerticalAlignment="Top" Margin="0,25,0,0">
                     <Label Content="High Game" VerticalAlignment="Top" Padding="0,5,5,5" FontSize="20"/>
                     <TextBlock x:Name="HighGame" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" RenderTransformOrigin="0.751,0.516" FontSize="20" Margin="0,0,41,0"/>
                 </StackPanel>
