@@ -35,6 +35,7 @@ namespace BowlingCalc
             //Excel.Range range;
             //xlApp = new Excel.Application();
             //xlWorkBook = xlApp.Workbooks.Open(@"d:\ExcelTest.xls");
+            /*
             var bank = new List<Account>
             {
                 new Account
@@ -49,6 +50,7 @@ namespace BowlingCalc
                 }
             };
             DisplayData(bank);
+            */
             InitializeComponent();
         }
 
@@ -73,6 +75,44 @@ namespace BowlingCalc
         public static void GetData()
         {
 
+        }
+
+        private void nameChanged(object sender, KeyEventArgs e)
+        {
+            DisplayName.Text = Name.Text;
+        }
+
+        private void doCalculations(object sender, RoutedEventArgs e)
+        {
+            List<int> scores = new List<int>();
+            foreach(var temp in Games.Items)
+            {
+                if (temp.GetType() != typeof(Label))
+                {
+                    bool good = int.TryParse(((TextBox)temp).Text, out int score);
+                    score = good ? score : 0;
+                    scores.Add(score);
+                }
+            }
+            scores.Sort();
+            scores.Reverse();
+            string maxVal = scores[0] != scores[1] ? scores[0].ToString() : "Tie";
+            SeriesTotal.Text = $"{scores.Sum()}";
+            Average.Text = $"{scores.Average()}";
+            Handicap.Text = $"{(200 - scores.Average())*0.8}";
+            HighGame.Text = $"{maxVal}";
+        }
+
+        private void genderChanged(object sender, RoutedEventArgs e)
+        {
+            foreach(var temp in Gender.Items)
+            {
+                RadioButton radio = (RadioButton)temp;
+                if ((bool)radio.IsChecked)
+                {
+                    DisplayGender.Text = radio.Content.ToString();
+                }
+            }
         }
     }
 }
