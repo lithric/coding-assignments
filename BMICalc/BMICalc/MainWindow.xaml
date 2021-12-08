@@ -34,16 +34,16 @@
         <Label Content="Height Inches:" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Height="26" Width="85" Grid.Row="4" Margin="0,1,0,0"/>
         <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="2" Grid.Row="2" x:Name="xLastNameBox"/>
         <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="2" Grid.Row="1" x:Name="xFirstNameBox"/>
-        <Button Content="Submit" HorizontalAlignment="Left" Margin="0,27,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1" Height="20" Grid.Row="6" x:Name="SubmitBtn"/>
+        <Button Content="Submit" HorizontalAlignment="Left" Margin="0,27,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1" Height="20" Grid.Row="6" x:Name="SubmitBtn" Click="SubmitBtn_Click"/>
         <Button x:Name="ClearBtn" Content="Clear" HorizontalAlignment="Left" Margin="0,27,0,0" VerticalAlignment="Top" Width="75" Grid.Column="2" Height="20" Grid.Row="6" Click="ClearBtn_Click"/>
         <Button x:Name="ImportBtn" Content="Import" HorizontalAlignment="Left" Margin="0,27,0,0" VerticalAlignment="Top" Width="75" Grid.Column="4" Height="20" Grid.Row="6"/>
         <Button x:Name="ExitBtn" Content="Exit" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="75" Grid.Column="6" Height="20" Grid.Row="6" Margin="0,0,0,38" Click="ExitBtn_Click"/>
         <TextBox HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="2" Grid.Row="3" x:Name="xPhoneBox"/>
         <TextBox HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="2" Grid.Row="4" x:Name="xHeightInchesBox" Margin="0,1,0,0"/>
         <TextBox HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="2" Grid.Row="5" x:Name="xWeightLbsBox" Margin="0,1,0,0"/>
-        <TextBlock Grid.Column="4" HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="Your BMI Is: " VerticalAlignment="Top" Height="26" Width="118" FontSize="20" FontWeight="Bold" x:Name="xYourBMIResults" Grid.ColumnSpan="2"/>
-        <TextBlock Grid.Column="4" HorizontalAlignment="Left" Grid.Row="2" TextWrapping="Wrap" Text="BMI Results" VerticalAlignment="Top" Grid.ColumnSpan="3" Height="86" Grid.RowSpan="2" Width="296" FontSize="50" FontWeight="Bold"/>
-        <TextBlock Grid.Column="4" HorizontalAlignment="Left" Margin="0,1,0,0" Grid.Row="4" TextWrapping="Wrap" Text="Message: " VerticalAlignment="Top" FontWeight="Bold" FontSize="15" x:Name="xBMIMessage" Height="20" Width="69"/>
+        <TextBlock Grid.Column="4" HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="Your BMI Is: " VerticalAlignment="Top" Height="26" Width="118" FontSize="20" FontWeight="Bold" Grid.ColumnSpan="2"/>
+        <TextBlock x:Name="xYourBMIResults" Grid.Column="4" HorizontalAlignment="Left" Grid.Row="2" TextWrapping="Wrap" Text="BMI Results" VerticalAlignment="Top" Grid.ColumnSpan="3" Height="86" Grid.RowSpan="2" Width="296" FontSize="50" FontWeight="Bold"/>
+        <TextBlock Grid.Column="4" HorizontalAlignment="Left" Margin="0,1,0,0" Grid.Row="4" TextWrapping="Wrap" Text="Message: " VerticalAlignment="Top" FontWeight="Bold" FontSize="15" x:Name="xBMIMessage" Height="49" Width="338" Grid.ColumnSpan="3" Grid.RowSpan="2"/>
         <DataGrid Grid.Column="1" HorizontalAlignment="Left" Height="299" Grid.Row="7" VerticalAlignment="Top" Width="663" Grid.ColumnSpan="6" x:Name="xDataGrid" AutoGenerateColumns="True"/>
     </Grid>
 </Window>
