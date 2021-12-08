@@ -1,0 +1,15 @@
+C:\Users\oliver_elion\Documents\coding assignments\BMICalc\BMICalc\bin\Debug\BMICalc.exe.config
+C:\Users\oliver_elion\Documents\coding assignments\BMICalc\BMICalc\bin\Debug\BMICalc.exe
+C:\Users\oliver_elion\Documents\coding assignments\BMICalc\BMICalc\bin\Debug\BMICalc.pdb
+C:\Users\oliver_elion\Documents\coding assignments\BMICalc\BMICalc\obj\Debug\BMICalc.csproj.AssemblyReference.cache
+C:\Users\oliver_elion\Documents\coding assignments\BMICalc\BMICalc\obj\Debug\MainWindow.g.cs
+C:\Users\oliver_elion\Documents\coding assignments\BMICalc\BMICalc\obj\Debug\App.g.cs
+C:\Users\oliver_elion\Documents\coding assignments\BMICalc\BMICalc\obj\Debug\BMICalc_MarkupCompile.cache
+C:\Users\oliver_elion\Documents\coding assignments\BMICalc\BMICalc\obj\Debug\BMICalc_MarkupCompile.lref
+C:\Users\oliver_elion\Documents\coding assignments\BMICalc\BMICalc\obj\Debug\MainWindow.baml
+C:\Users\oliver_elion\Documents\coding assignments\BMICalc\BMICalc\obj\Debug\BMICalc.g.resources
+C:\Users\oliver_elion\Documents\coding assignments\BMICalc\BMICalc\obj\Debug\BMICalc.Properties.Resources.resources
+C:\Users\oliver_elion\Documents\coding assignments\BMICalc\BMICalc\obj\Debug\BMICalc.csproj.GenerateResource.cache
+C:\Users\oliver_elion\Documents\coding assignments\BMICalc\BMICalc\obj\Debug\BMICalc.csproj.CoreCompileInputs.cache
+C:\Users\oliver_elion\Documents\coding assignments\BMICalc\BMICalc\obj\Debug\BMICalc.exe
+C:\Users\oliver_elion\Documents\coding assignments\BMICalc\BMICalc\obj\Debug\BMICalc.pdb
