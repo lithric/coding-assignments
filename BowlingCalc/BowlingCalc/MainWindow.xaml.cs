@@ -98,8 +98,8 @@ namespace BowlingCalc
             scores.Reverse();
             string maxVal = scores[0] != scores[1] ? scores[0].ToString() : "Tie";
             SeriesTotal.Text = $"{scores.Sum()}";
-            Average.Text = $"{scores.Average()}";
-            Handicap.Text = $"{(200 - scores.Average())*0.8}";
+            Average.Text = $"{(int)scores.Average()}";
+            Handicap.Text = $"{(int)((200 - (int)scores.Average())*0.8)}";
             HighGame.Text = $"{maxVal}";
         }
 
