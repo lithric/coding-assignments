@@ -1,0 +1,15 @@
+C:\Users\oliver_elion\Documents\coding assignments\OrdinaryIncremental\OrdinaryIncremental\bin\Debug\OrdinaryIncremental.exe.config
+C:\Users\oliver_elion\Documents\coding assignments\OrdinaryIncremental\OrdinaryIncremental\bin\Debug\OrdinaryIncremental.exe
+C:\Users\oliver_elion\Documents\coding assignments\OrdinaryIncremental\OrdinaryIncremental\bin\Debug\OrdinaryIncremental.pdb
+C:\Users\oliver_elion\Documents\coding assignments\OrdinaryIncremental\OrdinaryIncremental\obj\Debug\OrdinaryIncremental.csproj.AssemblyReference.cache
+C:\Users\oliver_elion\Documents\coding assignments\OrdinaryIncremental\OrdinaryIncremental\obj\Debug\MainWindow.g.cs
+C:\Users\oliver_elion\Documents\coding assignments\OrdinaryIncremental\OrdinaryIncremental\obj\Debug\App.g.cs
+C:\Users\oliver_elion\Documents\coding assignments\OrdinaryIncremental\OrdinaryIncremental\obj\Debug\OrdinaryIncremental_MarkupCompile.cache
+C:\Users\oliver_elion\Documents\coding assignments\OrdinaryIncremental\OrdinaryIncremental\obj\Debug\OrdinaryIncremental_MarkupCompile.lref
+C:\Users\oliver_elion\Documents\coding assignments\OrdinaryIncremental\OrdinaryIncremental\obj\Debug\MainWindow.baml
+C:\Users\oliver_elion\Documents\coding assignments\OrdinaryIncremental\OrdinaryIncremental\obj\Debug\OrdinaryIncremental.g.resources
+C:\Users\oliver_elion\Documents\coding assignments\OrdinaryIncremental\OrdinaryIncremental\obj\Debug\OrdinaryIncremental.Properties.Resources.resources
+C:\Users\oliver_elion\Documents\coding assignments\OrdinaryIncremental\OrdinaryIncremental\obj\Debug\OrdinaryIncremental.csproj.GenerateResource.cache
+C:\Users\oliver_elion\Documents\coding assignments\OrdinaryIncremental\OrdinaryIncremental\obj\Debug\OrdinaryIncremental.csproj.CoreCompileInputs.cache
+C:\Users\oliver_elion\Documents\coding assignments\OrdinaryIncremental\OrdinaryIncremental\obj\Debug\OrdinaryIncremental.exe
+C:\Users\oliver_elion\Documents\coding assignments\OrdinaryIncremental\OrdinaryIncremental\obj\Debug\OrdinaryIncremental.pdb

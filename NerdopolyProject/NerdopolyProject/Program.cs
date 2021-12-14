@@ -115,6 +115,7 @@ namespace NerdopolyProject
             App.DrawPixel(pos: (charPos[0], charPos[1]),color: underCol,map: "Char",preload: true);
             App.DrawPixel(pos: (newX, newY), color: "#00FF00",map: "Char",preload: true);
             App.DrawPixelMap("SCREEN");
+            App.DrawPixelMap("Death");
             charPos[0] = newX;
             charPos[1] = newY;
         }

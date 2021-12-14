@@ -226,7 +226,6 @@ public static class StringExtensions
     }
 }
 
-
 public class App
 {
     [Flags]
@@ -236,7 +235,7 @@ public class App
     }
     public static IDictionary<string,List<List<(string color, string text)>>> PixelMap = new Dictionary<string, List<List<(string color, string text)>>>() { };
     public static string DrawMode = "METRIC";
-    public static string DefaultColor = "#555555";
+    public static string DefaultColor = "555555";
     public static Func<string, int> Win = (string dir) => {
         return dir == "x" ? Console.WindowWidth : dir == "px" ? Console.WindowWidth/2: Console.WindowHeight; 
     }; 
@@ -263,6 +262,7 @@ public class App
     }
     private static List<string> MapWork(List<List<(string color,string text)>> map)
     {
+        string invisStr = "";
         List<string> data = Enumerable.Repeat("  ",map.Count).ToList();
         Parallel.For(0,map.Count, (i) =>
         {
@@ -275,20 +275,20 @@ public class App
                 }
                 else //(acc.color != next.color)
                 {
-                    down += acc.color != "" ? acc.text.PastelBg(acc.color):"".Right(acc.text.Length);
+                    down += acc.color != invisStr ? acc.text.PastelBg(acc.color):"".Right(acc.text.Length);
                     return (next.color, next.text);
                 }
             });
-            down += color != "" ? text.PastelBg(color):"".Right(text.Length);
+            down += color != invisStr ? text.PastelBg(color):"".Right(text.Length);
             data[i] = down;
         });
         return data;
     }
-    public static string Pixel(int x,int y,string map = "Start")
+    public static string Pixel(int x,int y,string map = "SCREEN")
     {
         return PixelMap[map][y][x].color;
     }
-    public static void DrawPixelMap(string map = "Start", bool write = true, bool preload = false)
+    public static void DrawPixelMap(string map = "SCREEN",bool write = true, bool preload = false)
     {
         var mapString = MapWork(PixelMap[map]);
         Console.SetCursorPosition(0, 0);
@@ -297,36 +297,25 @@ public class App
             Console.Write(string.Concat(from str in mapString select '\n' + str).Substring(1));
         }
     } // get some text or text command that skips characters instead of replacing them
-    public static void Write(string text, int x, int y, string map = "Start",string color = null,bool write = true, bool preload = false,bool fast = false)
+    public static void Write(string text, int x, int y, string map = "SCREEN",string color = null,bool write = true, bool preload = false)
     {
         string[] bits = text.Split('\n');
         int i = y;
         color = color == null ? DefaultColor : color;
         foreach (string line in bits)
         {
+            int lineRange = line.Length / (line.Length < Win("px") ? 2:Win("px"));
             if (i >= Win("py") || x >= Win("px"))
             {
                 break;
             }
-            if (line.Length > Win("px"))
+            PixelMap[map][i].RemoveRange(x, lineRange);
+            PixelMap[map][i].InsertRange(x, Enumerable.Repeat((color, "  "), lineRange));
+            if (write || preload)
             {
-                PixelMap[map][i].RemoveRange(x, line.Length / Win("px"));
-                PixelMap[map][i].InsertRange(x, Enumerable.Repeat((color, "  "), line.Length / Win("px")));
-                if (write || preload) { 
-                    PixelMap["SCREEN"][i].RemoveRange(x, line.Length / Win("px")); 
-                    PixelMap["SCREEN"][i].InsertRange(x, Enumerable.Repeat((color, "  "), line.Length / Win("px")));
-                };
-            }
-            else
-            {
-                PixelMap[map][i].RemoveRange(x, line.Length / 2);
-                PixelMap[map][i].InsertRange(x, Enumerable.Repeat((color, "  "), line.Length / 2));
-                if (write || preload)
-                {
-                    PixelMap["SCREEN"][i].RemoveRange(x, line.Length / 2);
-                    PixelMap["SCREEN"][i].InsertRange(x, Enumerable.Repeat((color, "  "), line.Length / 2));
-                };
-            }
+                PixelMap["SCREEN"][i].RemoveRange(x, lineRange);
+                PixelMap["SCREEN"][i].InsertRange(x, Enumerable.Repeat((color, "  "), lineRange));
+            };
             if (write && !preload)
             {
                 Console.SetCursorPosition(x * 2, i);
@@ -347,7 +336,7 @@ public class App
                 PixelMap["SCREEN"].Add(new List<(string color, string text)>());
                 for (int j = 0; j < mapWidth; j++)
                 {
-                    PixelMap["SCREEN"][i].Add((color, "  "));
+                    PixelMap["SCREEN"][i].Add((DefaultColor, "  "));
                 }
             }
         }
@@ -365,40 +354,40 @@ public class App
         }
     }
 
-    public static void DrawPixel((int x,int y) pos, string color = null, string map = "Start", bool write = true, bool preload = false)
+    public static void DrawPixel((int x,int y) pos, string color = null, string map = "SCREEN", bool write = true, bool preload = false)
     {
         Write("  ",pos.x,pos.y, map: map,write: write,color: color,preload: preload);
     }
-    public static void DrawRow(int pos, string color = null, string map = "Start", bool write = true, bool preload = false)
+    public static void DrawRow(int pos, string color = null, string map = "SCREEN", bool write = true, bool preload = false)
     {
         int x = Win("px");
         Write(new string(' ', x * 2), 0, pos, map: map,write: write,color: color,preload: preload);
     }
-    public static void DrawRow((int row, int length) pos, string color = null, string map = "Start",bool write = true, bool preload = false)
+    public static void DrawRow((int row, int length) pos, string color = null, string map = "SCREEN",bool write = true, bool preload = false)
     {
         int x = Win("px");
         int endX = Math.Min(pos.length, x);
         Write(new string(' ', endX * 2), 0, pos.row, map: map,write: write,color: color,preload: preload);
     }
-    public static void DrawRow((int row, int x1, int x2) pos, string color = null, string map = "Start", bool write = true, bool preload = false)
+    public static void DrawRow((int row, int x1, int x2) pos, string color = null, string map = "SCREEN", bool write = true, bool preload = false)
     {
         int x = Win("px");
         int endX = Math.Min(pos.x2, x-pos.x1);
         Write(new string(' ', endX * 2), pos.x1, pos.row, map: map,write:write, color: color,preload: preload);
     }
-    public static void DrawColumn(int pos, string color = null, string map = "Start", bool write = true, bool preload = false)
+    public static void DrawColumn(int pos, string color = null, string map = "SCREEN", bool write = true, bool preload = false)
     {
         Write(string.Concat(Enumerable.Repeat("  \n", Win("py"))), pos, 0, map: map, write: write, color: color,preload: preload);
     }
-    public static void DrawColumn((int column, int length) pos, string color = null, string map = "Start", bool write = true, bool preload = false)
+    public static void DrawColumn((int column, int length) pos, string color = null, string map = "SCREEN", bool write = true, bool preload = false)
     {
         Write(string.Concat(Enumerable.Repeat("  \n", pos.length)), pos.column,0, map: map, write: write, color: color,preload: preload);
     }
-    public static void DrawColumn((int column, int y1, int y2) pos, string color = null, string map = "Start", bool write = true, bool preload = false)
+    public static void DrawColumn((int column, int y1, int y2) pos, string color = null, string map = "SCREEN", bool write = true, bool preload = false)
     {
         Write(string.Concat(Enumerable.Repeat("  \n", pos.y2)), pos.column,pos.y1, map: map, write: write, color: color,preload: preload);
     }
-    public static void DrawRect((int x1, int y1, int x2, int y2) pos,string color = null, string map = "Start", bool write = true, bool preload = false)
+    public static void DrawRect((int x1, int y1, int x2, int y2) pos,string color = null, string map = "SCREEN", bool write = true, bool preload = false)
     {
         int x = Win("px");
         int y = Console.WindowHeight;
