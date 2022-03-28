@@ -1,0 +1,15 @@
+C:\Users\oliver_elion\source\repos\lithric\coding-assignments\PersistantVideoApp\PersistantVideoApp\bin\Debug\PersistantVideoApp.exe.config
+C:\Users\oliver_elion\source\repos\lithric\coding-assignments\PersistantVideoApp\PersistantVideoApp\bin\Debug\PersistantVideoApp.exe
+C:\Users\oliver_elion\source\repos\lithric\coding-assignments\PersistantVideoApp\PersistantVideoApp\bin\Debug\PersistantVideoApp.pdb
+C:\Users\oliver_elion\source\repos\lithric\coding-assignments\PersistantVideoApp\PersistantVideoApp\obj\Debug\PersistantVideoApp.csproj.AssemblyReference.cache
+C:\Users\oliver_elion\source\repos\lithric\coding-assignments\PersistantVideoApp\PersistantVideoApp\obj\Debug\MainWindow.g.cs
+C:\Users\oliver_elion\source\repos\lithric\coding-assignments\PersistantVideoApp\PersistantVideoApp\obj\Debug\App.g.cs
+C:\Users\oliver_elion\source\repos\lithric\coding-assignments\PersistantVideoApp\PersistantVideoApp\obj\Debug\PersistantVideoApp_MarkupCompile.cache
+C:\Users\oliver_elion\source\repos\lithric\coding-assignments\PersistantVideoApp\PersistantVideoApp\obj\Debug\PersistantVideoApp_MarkupCompile.lref
+C:\Users\oliver_elion\source\repos\lithric\coding-assignments\PersistantVideoApp\PersistantVideoApp\obj\Debug\MainWindow.baml
+C:\Users\oliver_elion\source\repos\lithric\coding-assignments\PersistantVideoApp\PersistantVideoApp\obj\Debug\PersistantVideoApp.g.resources
+C:\Users\oliver_elion\source\repos\lithric\coding-assignments\PersistantVideoApp\PersistantVideoApp\obj\Debug\PersistantVideoApp.Properties.Resources.resources
+C:\Users\oliver_elion\source\repos\lithric\coding-assignments\PersistantVideoApp\PersistantVideoApp\obj\Debug\PersistantVideoApp.csproj.GenerateResource.cache
+C:\Users\oliver_elion\source\repos\lithric\coding-assignments\PersistantVideoApp\PersistantVideoApp\obj\Debug\PersistantVideoApp.csproj.CoreCompileInputs.cache
+C:\Users\oliver_elion\source\repos\lithric\coding-assignments\PersistantVideoApp\PersistantVideoApp\obj\Debug\PersistantVideoApp.exe
+C:\Users\oliver_elion\source\repos\lithric\coding-assignments\PersistantVideoApp\PersistantVideoApp\obj\Debug\PersistantVideoApp.pdb
