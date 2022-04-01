@@ -84,6 +84,7 @@
     <Content Include="browser.css" />
     <Content Include="browser.html" />
     <Content Include="browser.js" />
+    <Content Include="browser.py" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,6 +1,5 @@
-﻿import webgazer from 'webgazer';
-function seeingElm() {
+﻿function seeingElm() {
     alert("ok");
 }
 
-export {seeingElm};
+seeingElm();
